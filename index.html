@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-L3NVNOXyUFvJhzUXM1YjqhxssJoItKHMEsHEPHSx2CM='; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-b3cxWyNSIZsrTRvnmK5AAuY4EXIdfvIM5oxoTvUtqVc='; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Skyworth Log Prism</title>
 <meta name="description" content="Skyworth Log Prism turns Android logcat and other text logs into a visual, searchable troubleshooting report, entirely in your browser.">
@@ -127,8 +127,8 @@ code,.mono{font-family:var(--mono);font-size:.92em}
 .rn h3{display:flex;align-items:center;gap:10px;margin:0;font-size:17px}
 .rn-v{display:inline-block;padding:3px 11px;border-radius:999px;background:var(--grad);color:#fff;font:800 14px var(--font-display)}
 .rn time{font-size:13px;color:var(--muted);font-weight:600}
-/* Two or three sentences a release. */
-.rn p{margin:8px 0 0;line-height:1.6;font-size:14.5px;color:var(--text-2)}
+/* Two or three brief points a release. */
+.rn ul{margin:8px 0 0;padding-left:20px;display:grid;gap:4px;line-height:1.55;font-size:14.5px;color:var(--text-2)}
 .rn+.rn{border-top:1px solid var(--line);padding-top:16px}
 .sf-note{color:var(--muted);text-align:right}
 .sf-note .i{width:14px;height:14px;vertical-align:-2px;margin-right:6px;color:var(--ok-fg)}
@@ -1233,11 +1233,19 @@ kbd{font:600 11.5px var(--mono);padding:2px 7px;border-radius:6px;border:1px sol
   <div class="dlg-b">
     <section class="rn">
       <h3><span class="rn-v">2.0.0</span><time datetime="2026-09-29">29 September 2026</time></h3>
-      <p>A log now opens on a plain-language Summary: the main problem, what to do about it, and a status for each part of the box. You can open whole capture folders and bug reports, compare two logs, check many boxes at once, and share a safe copy with private details hidden. Your team's known issues, and what to capture next, show where they apply.</p>
+      <ul>
+        <li>A plain-language Summary: the main problem and what to do about it.</li>
+        <li>Capture folders and bug reports, compare two logs, and check many boxes at once.</li>
+        <li>A safe copy to share, your team's known issues, and what to capture next.</li>
+      </ul>
     </section>
     <section class="rn">
       <h3><span class="rn-v">1.0.0</span><time datetime="2026-09-25">25 September 2026</time></h3>
-      <p>The first release: an Overview and a searchable Explorer for Android logcat, with firmware update, network and request diagnosis. Describe a problem in your own words to find its likely cause, and save everything as one offline HTML report.</p>
+      <ul>
+        <li>An Overview and a searchable Explorer for Android logcat.</li>
+        <li>Update, network and request diagnosis, and Investigate in your own words.</li>
+        <li>One offline HTML report with the whole log.</li>
+      </ul>
     </section>
   </div>
 </dialog>
@@ -1357,7 +1365,7 @@ const Seal = (function () {
   };
 })();
 /* seal:end */
-const SEAL = '1ac9c86339fc6c0791b46e2b8189ab58558e30873bc92afd00d106ed5d23ce6e';
+const SEAL = '65d4e08a314fd50139cdb106a61ca6ca3237d91df57c3876a4065f7e300cd535';
 // Where the full editor may be served from, besides disk: this machine and the official
 // GitHub Pages site. Reports are shared, so they open from anywhere.
 const HOSTS = ['localhost', '127.0.0.1', '[::1]', 'be-free-sky.github.io'];
