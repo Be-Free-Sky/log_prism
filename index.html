@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-O2cML6gToC08fUUs+ELyuFna390ai33+L+n347Afab4='; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-+MYHk4I79ma/5YcNxcBz+9dMydWRpMu1iLsuCF9+IxI='; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Skyworth Log Prism</title>
 <meta name="description" content="Skyworth Log Prism turns Android logcat and other text logs into a visual, searchable troubleshooting report, entirely in your browser.">
@@ -119,6 +119,17 @@ code,.mono{font-family:var(--mono);font-size:.92em}
 .sf-copy{line-height:1.6}
 .sf-copy b{color:var(--text)}
 .sf-tm{color:var(--muted)}
+.sf-ver{color:var(--muted)}
+.sf-ver .linkbtn{font-size:inherit;padding:0 2px}
+/* Release notes */
+.notes-dlg{width:min(660px,calc(100vw - 24px))}
+.notes-dlg .dlg-b{max-height:min(72vh,680px);overflow:auto;gap:18px}
+.rn h3{display:flex;align-items:center;gap:10px;margin:0;font-size:17px}
+.rn-v{display:inline-block;padding:3px 11px;border-radius:999px;background:var(--grad);color:#fff;font:800 14px var(--font-display)}
+.rn time{font-size:13px;color:var(--muted);font-weight:600}
+.rn-lede{margin:8px 0;color:var(--text-2);font-weight:600}
+.rn ul{margin:0;padding-left:20px;display:grid;gap:6px;line-height:1.55;font-size:14px}
+.rn+.rn{border-top:1px solid var(--line);padding-top:16px}
 .sf-note{color:var(--muted);text-align:right}
 .sf-note .i{width:14px;height:14px;vertical-align:-2px;margin-right:6px;color:var(--ok-fg)}
 .ov-foot{border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--lift)}
@@ -1090,7 +1101,7 @@ kbd{font:600 11.5px var(--mono);padding:2px 7px;border-radius:6px;border:1px sol
       <div class="feat"><div class="feat-ic a"><svg class="i"><use href="#i-lock"/></svg></div><h3>Private, safe to share</h3><p>Nothing is uploaded. A safe copy of the report hides MAC addresses, Wi-Fi names and serials.</p></div>
     </section>
   </main>
-  <footer class="site-foot land-foot"><div class="sf-brand"><svg class="sky-logo" viewBox="0 0 1800 162" role="img" aria-label="SKYWORTH"><use href="#i-skyworth"/></svg><span class="brand-rule" aria-hidden="true"></span><svg class="prism" aria-hidden="true"><use href="#i-logo"/></svg><b>Log Prism</b></div><div class="sf-copy"><div>Copyright &copy; <span class="yr">2026</span> <b>Rahul Kumbhar</b>. All rights reserved.</div><div class="sf-tm">Skyworth Log Prism&trade; by Rahul Kumbhar. SKYWORTH, 创维 and the SKYWORTH logo are trademarks of Skyworth Group.</div></div><div class="sf-note"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg>A single offline page: your log never leaves this browser.</div></footer>
+  <footer class="site-foot land-foot"><div class="sf-brand"><svg class="sky-logo" viewBox="0 0 1800 162" role="img" aria-label="SKYWORTH"><use href="#i-skyworth"/></svg><span class="brand-rule" aria-hidden="true"></span><svg class="prism" aria-hidden="true"><use href="#i-logo"/></svg><b>Log Prism</b></div><div class="sf-copy"><div>Copyright &copy; <span class="yr">2026</span> <b>Rahul Kumbhar</b>. All rights reserved.</div><div class="sf-tm">Skyworth Log Prism&trade; by Rahul Kumbhar. SKYWORTH, 创维 and the SKYWORTH logo are trademarks of Skyworth Group.</div><div class="sf-ver">Version <b>2.0.0</b> &middot; <button type="button" class="linkbtn" data-notes>What's new</button></div></div><div class="sf-note"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg>A single offline page: your log never leaves this browser.</div></footer>
 </div>
 
 <!-- ============================ Workspace ============================ -->
@@ -1217,6 +1228,40 @@ kbd{font:600 11.5px var(--mono);padding:2px 7px;border-radius:6px;border:1px sol
   </div>
 </dialog>
 
+<dialog id="notesDlg" class="notes-dlg" aria-labelledby="notesTitle">
+  <div class="dlg-h"><h2 id="notesTitle">What's new in Skyworth Log Prism</h2><button class="icon-btn sm" data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+  <div class="dlg-b">
+    <section class="rn">
+      <h3><span class="rn-v">2.0.0</span><time datetime="2026-09-29">29 September 2026</time></h3>
+      <p class="rn-lede">Answers in plain words, and tools for more than one log.</p>
+      <ul>
+        <li><b>A Summary anyone can read.</b> A log opens on the main problem in one sentence and what to do about it, a status for the update, internet, storage, apps and the box itself, and the moments in order. Copy it, or print it to PDF.</li>
+        <li><b>Whole capture sets.</b> Drop a folder, several files, a zip or a bug report. Rotated logcat parts are joined in order, and freeze reports (ANR) and crash dumps (tombstones) are explained.</li>
+        <li><b>Storage diagnosis.</b> SD cards, USB drives and the box's own storage: pulled out without ejecting, read errors, damaged files, full, power cuts.</li>
+        <li><b>Safe to share.</b> HTML report now offers a safe copy, with MAC addresses, Wi-Fi names, serial numbers, IP addresses and tokens replaced by stand-ins. It reads and analyses like the original.</li>
+        <li><b>Compare two logs.</b> Before and after, area by area, with what got worse, the error lines that are new, and the numbers.</li>
+        <li><b>Many boxes.</b> One log per box, grouped by the problem each has. Open any box, and download the list as CSV.</li>
+        <li><b>Known issues.</b> Your team's own file of known issues is checked against every log, and a report carries the ones it found.</li>
+        <li><b>What to capture next.</b> When a log cannot answer, the Summary gives the exact <code>adb</code> command that would.</li>
+        <li><b>Easier to read.</b> A colour for each Overview section, counts in colour, and a coloured rail on warning and error lines in the Explorer.</li>
+        <li><b>Changed:</b> the page opens on the Summary, with the Overview and the Explorer a click away. The home page has no header bar.</li>
+      </ul>
+    </section>
+    <section class="rn">
+      <h3><span class="rn-v">1.0.0</span><time datetime="2026-09-25">25 September 2026</time></h3>
+      <p class="rn-lede">The first release.</p>
+      <ul>
+        <li><b>Overview and Explorer</b> for Android logcat and other text logs: levels, tags, processes, packages, exceptions, key events and a timeline, with fast search and filters.</li>
+        <li><b>Firmware update diagnosis</b> for the Skyworth USB upgrade, Local Update and <code>update_engine</code>.</li>
+        <li><b>Network and request analysis:</b> outages and their cause, Wi-Fi signal, DHCP, DNS, and every request with why it failed.</li>
+        <li><b>Investigate:</b> describe the problem in your own words, such as "Netflix froze at 9:56", for the likely cause and fixes.</li>
+        <li><b>HTML report:</b> one offline file with the whole log, bookmarks and search, that opens on phones too.</li>
+        <li><b>Sealed:</b> an altered copy locks itself, and the page makes no network request.</li>
+      </ul>
+    </section>
+  </div>
+</dialog>
+
 <dialog id="shareDlg" class="share-dlg" aria-labelledby="shareTitle" data-editor>
   <div class="dlg-h"><h2 id="shareTitle">Download a report</h2><button class="icon-btn sm" data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
   <div class="dlg-b" id="shareBody"></div>
@@ -1332,12 +1377,13 @@ const Seal = (function () {
   };
 })();
 /* seal:end */
-const SEAL = 'd9f5812b6b3ab5e4dc8dce0bbe054f34a737b21a76e276d70e1a52c1c160d3af';
+const SEAL = 'bbbdbae02b259d2028bbb08fad748913496b057e428f42971b70618f735399c3';
 // Where the full editor may be served from, besides disk: this machine and the official
 // GitHub Pages site. Reports are shared, so they open from anywhere.
 const HOSTS = ['localhost', '127.0.0.1', '[::1]', 'be-free-sky.github.io'];
 const ME = document.currentScript;
 const PRODUCT = 'Skyworth Log Prism';
+const VERSION = '2.0.0';   // also in the footer (.sf-ver) and the release notes (#notesDlg)
 const LOCK_WHY = {
   frame: 'It was opened inside another page.',
   origin: 'It is being served from ' + location.host + ', which is not where Skyworth Log Prism is published.',
@@ -1447,7 +1493,7 @@ function guardStart() {
     if (!why) { guard.strikes = 0; return; }
     if (why !== 'hidden' || ++guard.strikes >= 2) lockdown(why);
   }, 1500);
-  console.log('%cSkyworth Log Prism%c\nThis page is sealed. Changing, hiding or covering the SKYWORTH name, the logo or the credits, or serving the page under another name, locks it.\nCopyright © Rahul Kumbhar. SKYWORTH, 创维 and the SKYWORTH logo are trademarks of Skyworth Group.',
+  console.log('%cSkyworth Log Prism ' + VERSION + '%c\nThis page is sealed. Changing, hiding or covering the SKYWORTH name, the logo or the credits, or serving the page under another name, locks it.\nCopyright © Rahul Kumbhar. SKYWORTH, 创维 and the SKYWORTH logo are trademarks of Skyworth Group.',
     'font:800 16px system-ui,sans-serif;color:#0069c8', 'font:13px system-ui,sans-serif;color:#02457a');
 }
 // Replaces the page with a notice. Its own styles are inline, since the stylesheet is suspect.
@@ -3912,7 +3958,7 @@ async function buildReport(safe) {
   // The still copy was drawn from the original log: it gets the same stand-ins.
   if (safe) for (const s of ['#view-overview', '#view-summary', '#fileMeta']) privScrubDom(doc.querySelector(s), found, safe);
   const meta = {
-    app: 'Log Prism', v: 1, name: S.name, created: created.toISOString(),
+    app: 'Log Prism', v: 1, version: VERSION, name: S.name, created: created.toISOString(),
     source: { name: S.sourceName, size: S.size, lines: D.n },
     bookmarks: Array.from(S.bm.entries()).map(([i, note]) => [i, clean(note)]),
     ask: S.inv ? { text: clean(S.inv.text), pad: S.invPad, cand: S.invCand } : null,
@@ -6160,6 +6206,9 @@ function bind() {
   }
   els.btnKeys.addEventListener('click', () => els.keysDlg.showModal());
   els.keysDlg.addEventListener('click', e => { if (e.target === els.keysDlg || e.target.closest('[data-close]')) els.keysDlg.close(); });
+  const notes = document.getElementById('notesDlg');
+  document.addEventListener('click', e => { if (e.target.closest('[data-notes]')) { e.preventDefault(); notes.showModal(); } });
+  notes.addEventListener('click', e => { if (e.target === notes || e.target.closest('[data-close]')) notes.close(); });
   $$('.tabs [role=tab]').forEach(b => b.addEventListener('click', () => switchView(b.dataset.view)));
 
   // overview
