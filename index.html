@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-+MYHk4I79ma/5YcNxcBz+9dMydWRpMu1iLsuCF9+IxI='; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-L3NVNOXyUFvJhzUXM1YjqhxssJoItKHMEsHEPHSx2CM='; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Skyworth Log Prism</title>
 <meta name="description" content="Skyworth Log Prism turns Android logcat and other text logs into a visual, searchable troubleshooting report, entirely in your browser.">
@@ -127,8 +127,8 @@ code,.mono{font-family:var(--mono);font-size:.92em}
 .rn h3{display:flex;align-items:center;gap:10px;margin:0;font-size:17px}
 .rn-v{display:inline-block;padding:3px 11px;border-radius:999px;background:var(--grad);color:#fff;font:800 14px var(--font-display)}
 .rn time{font-size:13px;color:var(--muted);font-weight:600}
-.rn-lede{margin:8px 0;color:var(--text-2);font-weight:600}
-.rn ul{margin:0;padding-left:20px;display:grid;gap:6px;line-height:1.55;font-size:14px}
+/* Two or three sentences a release. */
+.rn p{margin:8px 0 0;line-height:1.6;font-size:14.5px;color:var(--text-2)}
 .rn+.rn{border-top:1px solid var(--line);padding-top:16px}
 .sf-note{color:var(--muted);text-align:right}
 .sf-note .i{width:14px;height:14px;vertical-align:-2px;margin-right:6px;color:var(--ok-fg)}
@@ -1233,31 +1233,11 @@ kbd{font:600 11.5px var(--mono);padding:2px 7px;border-radius:6px;border:1px sol
   <div class="dlg-b">
     <section class="rn">
       <h3><span class="rn-v">2.0.0</span><time datetime="2026-09-29">29 September 2026</time></h3>
-      <p class="rn-lede">Answers in plain words, and tools for more than one log.</p>
-      <ul>
-        <li><b>A Summary anyone can read.</b> A log opens on the main problem in one sentence and what to do about it, a status for the update, internet, storage, apps and the box itself, and the moments in order. Copy it, or print it to PDF.</li>
-        <li><b>Whole capture sets.</b> Drop a folder, several files, a zip or a bug report. Rotated logcat parts are joined in order, and freeze reports (ANR) and crash dumps (tombstones) are explained.</li>
-        <li><b>Storage diagnosis.</b> SD cards, USB drives and the box's own storage: pulled out without ejecting, read errors, damaged files, full, power cuts.</li>
-        <li><b>Safe to share.</b> HTML report now offers a safe copy, with MAC addresses, Wi-Fi names, serial numbers, IP addresses and tokens replaced by stand-ins. It reads and analyses like the original.</li>
-        <li><b>Compare two logs.</b> Before and after, area by area, with what got worse, the error lines that are new, and the numbers.</li>
-        <li><b>Many boxes.</b> One log per box, grouped by the problem each has. Open any box, and download the list as CSV.</li>
-        <li><b>Known issues.</b> Your team's own file of known issues is checked against every log, and a report carries the ones it found.</li>
-        <li><b>What to capture next.</b> When a log cannot answer, the Summary gives the exact <code>adb</code> command that would.</li>
-        <li><b>Easier to read.</b> A colour for each Overview section, counts in colour, and a coloured rail on warning and error lines in the Explorer.</li>
-        <li><b>Changed:</b> the page opens on the Summary, with the Overview and the Explorer a click away. The home page has no header bar.</li>
-      </ul>
+      <p>A log now opens on a plain-language Summary: the main problem, what to do about it, and a status for each part of the box. You can open whole capture folders and bug reports, compare two logs, check many boxes at once, and share a safe copy with private details hidden. Your team's known issues, and what to capture next, show where they apply.</p>
     </section>
     <section class="rn">
       <h3><span class="rn-v">1.0.0</span><time datetime="2026-09-25">25 September 2026</time></h3>
-      <p class="rn-lede">The first release.</p>
-      <ul>
-        <li><b>Overview and Explorer</b> for Android logcat and other text logs: levels, tags, processes, packages, exceptions, key events and a timeline, with fast search and filters.</li>
-        <li><b>Firmware update diagnosis</b> for the Skyworth USB upgrade, Local Update and <code>update_engine</code>.</li>
-        <li><b>Network and request analysis:</b> outages and their cause, Wi-Fi signal, DHCP, DNS, and every request with why it failed.</li>
-        <li><b>Investigate:</b> describe the problem in your own words, such as "Netflix froze at 9:56", for the likely cause and fixes.</li>
-        <li><b>HTML report:</b> one offline file with the whole log, bookmarks and search, that opens on phones too.</li>
-        <li><b>Sealed:</b> an altered copy locks itself, and the page makes no network request.</li>
-      </ul>
+      <p>The first release: an Overview and a searchable Explorer for Android logcat, with firmware update, network and request diagnosis. Describe a problem in your own words to find its likely cause, and save everything as one offline HTML report.</p>
     </section>
   </div>
 </dialog>
@@ -1377,7 +1357,7 @@ const Seal = (function () {
   };
 })();
 /* seal:end */
-const SEAL = 'bbbdbae02b259d2028bbb08fad748913496b057e428f42971b70618f735399c3';
+const SEAL = '1ac9c86339fc6c0791b46e2b8189ab58558e30873bc92afd00d106ed5d23ce6e';
 // Where the full editor may be served from, besides disk: this machine and the official
 // GitHub Pages site. Reports are shared, so they open from anywhere.
 const HOSTS = ['localhost', '127.0.0.1', '[::1]', 'be-free-sky.github.io'];
