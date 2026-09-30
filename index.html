@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-A0s6iG0Spvljm/Bl48A0YbK8jy3CTncM8D44sByPpBc='; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-HRNpLBgLrrwOpa213OUHnmy1kW5HNH/awWvEvN+jrSA='; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Skyworth Log Prism</title>
 <meta name="description" content="Skyworth Log Prism turns Android logcat and other text logs into a visual, searchable troubleshooting report, entirely in your browser.">
@@ -175,6 +175,25 @@ code,.mono{font-family:var(--mono);font-size:.92em}
 .formats{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;margin:12px 6px 6px;color:var(--muted);font-size:13.5px}
 .formats-alt{margin:4px 6px 6px;text-align:center;color:var(--muted);font-size:13.5px}
 .formats-alt .linkbtn{font-size:inherit;padding:0 2px}
+/* Many boxes: what was chosen, before it is read. */
+.fleet-pick{display:grid;gap:10px;padding:10px 8px 6px}
+.fp-h{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.fp-h b{font-family:var(--font-display);font-size:17px;margin-right:10px;overflow-wrap:anywhere}
+.fp-h span{color:var(--muted);font-size:13.5px}
+.fp-list{list-style:none;margin:0;padding:4px;display:grid;gap:2px;max-height:min(46vh,340px);overflow:auto;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
+.fp-list label,.fp-skip{display:grid;grid-template-columns:22px minmax(0,1fr) auto 70px;gap:10px;align-items:center;padding:7px 10px;border-radius:9px;font-size:14px}
+.fp-list label{cursor:pointer}
+.fp-list label:hover{background:var(--row-hover);box-shadow:inset 0 0 0 1px var(--row-ring)}
+.fp-list input{width:17px;height:17px;margin:0;accent-color:var(--accent)}
+.fp-n{font-family:var(--mono);font-size:13px;font-weight:650;overflow-wrap:anywhere}
+.fp-k{color:var(--text-2);font-size:12.5px;white-space:nowrap}
+.fp-s{color:var(--muted);font-size:12.5px;text-align:right;white-space:nowrap}
+.fp-skip{color:var(--muted)}
+.fp-skip .fp-n{font-weight:450}
+.fp-x{display:grid;place-items:center;color:var(--muted)}
+.fp-x .i{width:14px;height:14px}
+.fp-acts{display:flex;gap:8px;flex-wrap:wrap}
+@media (max-width:520px){.fp-list label,.fp-skip{grid-template-columns:22px minmax(0,1fr) auto}.fp-s{display:none}}
 .fmt{padding:2px 9px;border-radius:999px;background:var(--bg-2);border:1px solid var(--line);font-family:var(--mono);font-size:12.5px;color:var(--text-2)}
 .paste{display:flex;flex-direction:column;gap:10px;padding:4px 6px 6px}
 .paste-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -1085,14 +1104,15 @@ kbd{font:600 11.5px var(--mono);padding:2px 7px;border-radius:6px;border:1px sol
         </div>
       </div>
       <div id="paneFleet" role="tabpanel" hidden>
-        <label id="fleetZone" class="drop" for="fleetFolderInput" tabindex="0">
+        <label id="fleetZone" class="drop" for="fleetInput" tabindex="0">
           <span class="drop-icon"><svg class="i"><use href="#i-boxes"/></svg></span>
           <span class="drop-title">Drop a folder of logs here</span>
-          <span class="drop-sub">or <u>choose a folder</u> &middot; <button type="button" class="linkbtn drop-folder" id="pickFleetFiles">pick log files</button></span>
+          <span class="drop-sub">or <u>pick the log files</u> &middot; <button type="button" class="linkbtn drop-folder" id="pickFleetFolder">choose a whole folder</button></span>
           <input type="file" id="fleetInput" hidden multiple>
           <input type="file" id="fleetFolderInput" hidden webkitdirectory multiple>
         </label>
-        <div class="formats"><span>Every log in the folder is read, one box each (a subfolder is one box). See which boxes share a problem, open any of them, and export the list.</span></div>
+        <div class="formats" id="fleetHint"><span>In the file window, open the folder and press <b>Ctrl+A</b> to take every log in it. You see the list before anything is read; each log is one box, and a subfolder is one box.</span></div>
+        <div id="fleetPick" class="fleet-pick" hidden></div>
       </div>
     </section>
 
@@ -1103,7 +1123,7 @@ kbd{font:600 11.5px var(--mono);padding:2px 7px;border-radius:6px;border:1px sol
       <div class="feat"><div class="feat-ic a"><svg class="i"><use href="#i-lock"/></svg></div><h3>Private, safe to share</h3><p>Nothing is uploaded. A safe copy of the report hides MAC addresses, Wi-Fi names and serials.</p></div>
     </section>
   </main>
-  <footer class="site-foot land-foot"><div class="sf-brand"><svg class="sky-logo" viewBox="0 0 1800 162" role="img" aria-label="SKYWORTH"><use href="#i-skyworth"/></svg><span class="brand-rule" aria-hidden="true"></span><svg class="prism" aria-hidden="true"><use href="#i-logo"/></svg><b>Log Prism</b></div><div class="sf-copy"><div>Copyright &copy; <span class="yr">2026</span> <b>Rahul Kumbhar</b>. All rights reserved.</div><div class="sf-tm">Skyworth Log Prism&trade; by Rahul Kumbhar. SKYWORTH, 创维 and the SKYWORTH logo are trademarks of Skyworth Group.</div><div class="sf-ver">Version <b>2.1.0</b> &middot; <button type="button" class="linkbtn" data-notes>What's new</button></div></div><div class="sf-note"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg>A single offline page: your log never leaves this browser.</div></footer>
+  <footer class="site-foot land-foot"><div class="sf-brand"><svg class="sky-logo" viewBox="0 0 1800 162" role="img" aria-label="SKYWORTH"><use href="#i-skyworth"/></svg><span class="brand-rule" aria-hidden="true"></span><svg class="prism" aria-hidden="true"><use href="#i-logo"/></svg><b>Log Prism</b></div><div class="sf-copy"><div>Copyright &copy; <span class="yr">2026</span> <b>Rahul Kumbhar</b>. All rights reserved.</div><div class="sf-tm">Skyworth Log Prism&trade; by Rahul Kumbhar. SKYWORTH, 创维 and the SKYWORTH logo are trademarks of Skyworth Group.</div><div class="sf-ver">Version <b>2.2.0</b> &middot; <button type="button" class="linkbtn" data-notes>What's new</button></div></div><div class="sf-note"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg>A single offline page: your log never leaves this browser.</div></footer>
 </div>
 
 <!-- ============================ Workspace ============================ -->
@@ -1233,6 +1253,13 @@ kbd{font:600 11.5px var(--mono);padding:2px 7px;border-radius:6px;border:1px sol
 <dialog id="notesDlg" class="notes-dlg" aria-labelledby="notesTitle">
   <div class="dlg-h"><h2 id="notesTitle">What's new in Skyworth Log Prism</h2><button class="icon-btn sm" data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
   <div class="dlg-b">
+    <section class="rn">
+      <h3><span class="rn-v">2.2.0</span><time datetime="2026-09-30">30 September 2026</time></h3>
+      <ul>
+        <li>Many boxes shows what is in the folder before reading it; untick what to leave out.</li>
+        <li>The file window shows every file; Ctrl+A takes a whole folder.</li>
+      </ul>
+    </section>
     <section class="rn">
       <h3><span class="rn-v">2.1.0</span><time datetime="2026-09-30">30 September 2026</time></h3>
       <ul>
@@ -1374,13 +1401,13 @@ const Seal = (function () {
   };
 })();
 /* seal:end */
-const SEAL = '73252d392e94002114a331700cd876ac5206fa657bc385748414c8630ad8087f';
+const SEAL = '194909b9034857a9c6e62c00a6ef0ac9d1fdd6c8ac172fee1969e828ab484d1e';
 // Where the full editor may be served from, besides disk: this machine and the official
 // GitHub Pages site. Reports are shared, so they open from anywhere.
 const HOSTS = ['localhost', '127.0.0.1', '[::1]', 'be-free-sky.github.io'];
 const ME = document.currentScript;
 const PRODUCT = 'Skyworth Log Prism';
-const VERSION = '2.1.0';   // also in the footer (.sf-ver) and the release notes (#notesDlg)
+const VERSION = '2.2.0';   // also in the footer (.sf-ver) and the release notes (#notesDlg)
 const LOCK_WHY = {
   frame: 'It was opened inside another page.',
   origin: 'It is being served from ' + location.host + ', which is not where Skyworth Log Prism is published.',
@@ -5116,6 +5143,51 @@ async function boxesFromDrop(entries) {
   }
   return { boxes, skipped, name: entries.length === 1 && entries[0].isDirectory ? entries[0].name : '' };
 }
+/* ---------- what was chosen, shown before it is read ---------- */
+let FLEET_PICK = null;
+// Picked files carry no folder path; they share the folder they were picked from, which a page cannot see.
+const folderOf = files => ((files[0].webkitRelativePath || '').split('/')[0]) || '';
+function showFleetPick(r, name) {
+  if (!r.boxes.length && !r.skipped.length) { toast('Nothing in that selection.', 'error'); return; }
+  FLEET_PICK = { name: name || '', boxes: r.boxes, skipped: r.skipped, on: r.boxes.map(() => true) };
+  if (els.landing.hidden) showLanding();
+  setLandingTab('fleet');
+  renderFleetPick();
+  const go = document.getElementById('fleetRead'); if (go && !go.disabled) go.focus();
+}
+function fleetPickN() { return FLEET_PICK.on.filter(Boolean).length; }
+function renderFleetPick() {
+  const P = FLEET_PICK, box = els.fleetPick;
+  els.fleetZone.hidden = !!P; els.fleetHint.hidden = !!P; box.hidden = !P;
+  if (!P) { box.innerHTML = ''; return; }
+  const kind = b => b.items.length > 1 ? plural(b.items.length, 'file') + ', one box' : /\.zip$/i.test(b.items[0].path) ? 'zip' : /\.html?$/i.test(b.items[0].path) ? 'saved report' : 'log';
+  const size = b => fmtBytes(b.items.reduce((a, x) => a + (x.size || 0), 0));
+  const rows = P.boxes.map((b, i) => [b, i]).sort((x, y) => x[0].name.localeCompare(y[0].name, undefined, { numeric: true }));
+  const n = fleetPickN(), skipShown = P.skipped.slice(0, 50);
+  box.innerHTML = '<div class="fp-h"><div><b>' + esc(P.name || 'Your selection') + '</b> <span>' + plural(P.boxes.length, 'box', 'boxes') + (P.skipped.length ? ' · ' + plural(P.skipped.length, 'file') + ' skipped' : '') + '</span></div>' +
+      (P.boxes.length > 1 ? '<button type="button" class="linkbtn" data-fpall>' + (n === P.boxes.length ? 'Untick all' : 'Tick all') + '</button>' : '') + '</div>' +
+    '<ul class="fp-list">' + rows.map(([b, i]) => '<li><label><input type="checkbox" data-fp="' + i + '"' + (P.on[i] ? ' checked' : '') + '><span class="fp-n">' + esc(b.name) + '</span><span class="fp-k">' + esc(kind(b)) + '</span><span class="fp-s">' + size(b) + '</span></label></li>').join('') +
+      skipShown.map(s => '<li class="fp-skip"><span class="fp-x">' + ic('x') + '</span><span class="fp-n">' + esc(s) + '</span><span class="fp-k">not a log, skipped</span><span class="fp-s"></span></li>').join('') +
+      (P.skipped.length > skipShown.length ? '<li class="fp-skip"><span class="fp-x"></span><span class="fp-n">and ' + plural(P.skipped.length - skipShown.length, 'more') + '</span></li>' : '') + '</ul>' +
+    '<div class="fp-acts"><button type="button" class="btn btn-primary" id="fleetRead"' + (n ? '' : ' disabled') + '>' + ic('boxes') + '<span>Read ' + plural(n, 'box', 'boxes') + '</span></button><button type="button" class="btn btn-ghost" id="fleetAgain">' + ic('back') + 'Choose again</button></div>';
+}
+function onFleetPickChange(e) {
+  const c = e.target.closest('[data-fp]'); if (!c || !FLEET_PICK) return;
+  FLEET_PICK.on[+c.dataset.fp] = c.checked;
+  const n = fleetPickN(), go = document.getElementById('fleetRead');
+  go.disabled = !n; go.querySelector('span').textContent = 'Read ' + plural(n, 'box', 'boxes');
+  const all = els.fleetPick.querySelector('[data-fpall]'); if (all) all.textContent = n === FLEET_PICK.boxes.length ? 'Untick all' : 'Tick all';
+}
+function onFleetPickClick(e) {
+  if (!FLEET_PICK) return;
+  if (e.target.closest('[data-fpall]')) { const on = fleetPickN() !== FLEET_PICK.boxes.length; FLEET_PICK.on = FLEET_PICK.boxes.map(() => on); renderFleetPick(); return; }
+  if (e.target.closest('#fleetAgain')) { FLEET_PICK = null; renderFleetPick(); els.fleetZone.focus(); return; }
+  if (e.target.closest('#fleetRead')) {
+    const P = FLEET_PICK, boxes = P.boxes.filter((b, i) => P.on[i]);
+    FLEET_PICK = null; renderFleetPick();
+    openFleet(boxes, P.name, P.skipped);
+  }
+}
 async function openFleet(boxes, name, skipped) {
   skipped = skipped || [];
   if (!boxes.length) { toast('No logs in that selection' + (skipped.length ? ': ' + plural(skipped.length, 'file') + ' skipped, as not logs.' : '.'), 'error', 7000); return; }
@@ -6130,7 +6202,7 @@ function toast(msg, kind, ms) {
    Wiring
    ========================================================================== */
 function bind() {
-  ['landing', 'workspace', 'backToWs', 'fileInput', 'toFleet', 'dropZone', 'tabFile', 'tabPaste', 'tabFleet', 'paneFleet', 'fleetZone', 'fleetInput', 'fleetFolderInput', 'pickFleetFiles', 'askBox', 'fleetN', 'paneFile', 'panePaste', 'pasteName', 'pasteText', 'pasteGo', 'pasteStats',
+  ['landing', 'workspace', 'backToWs', 'fileInput', 'toFleet', 'dropZone', 'tabFile', 'tabPaste', 'tabFleet', 'paneFleet', 'fleetZone', 'fleetInput', 'fleetFolderInput', 'pickFleetFolder', 'fleetHint', 'fleetPick', 'askBox', 'fleetN', 'paneFile', 'panePaste', 'pasteName', 'pasteText', 'pasteGo', 'pasteStats',
     'fileTitle', 'fileMeta', 'renameInput', 'reportChip', 'btnRename', 'btnDownload', 'btnNew', 'btnKeys', 'tabN', 'wsMain',
     'q', 'searchBox', 'mcount', 'mPrev', 'mNext', 'tCase', 'tRegex', 'tOnly', 'tWrap', 'ctxSel', 'btnTags', 'btnPkgs', 'btnBms', 'tagsN', 'pkgsN', 'bmN', 'lvchips', 'fchips', 'exCount',
     'tlMini', 'ctxBanner', 'invBanner', 'ask', 'askGo', 'askPop', 'lgScroll', 'lgSpacer', 'mm', 'mmCanvas', 'mmView', 'lgEmpty', 'detail', 'dropOverlay', 'loading', 'loadText', 'loadBar', 'tip', 'pop', 'toasts', 'keysDlg'
@@ -6148,10 +6220,13 @@ function bind() {
   els.tabPaste.addEventListener('click', () => setLandingTab('paste'));
   els.tabFleet.addEventListener('click', () => setLandingTab('fleet'));
   // Many boxes: each file a box, each subfolder of a folder a box.
-  els.fleetInput.addEventListener('change', () => { const f = Array.from(els.fleetInput.files); els.fleetInput.value = ''; if (f.length) { const r = boxesFromFiles(f); openFleet(r.boxes, '', r.skipped); } });
-  els.fleetFolderInput.addEventListener('change', () => { const f = Array.from(els.fleetFolderInput.files); els.fleetFolderInput.value = ''; if (f.length) { const r = boxesFromFiles(f); openFleet(r.boxes, (f[0].webkitRelativePath || '').split('/')[0], r.skipped); } });
-  els.pickFleetFiles.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); els.fleetInput.click(); });
-  els.fleetZone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); els.fleetFolderInput.click(); } });
+  // What was chosen is listed first; nothing is read until Read.
+  els.fleetInput.addEventListener('change', () => { const f = Array.from(els.fleetInput.files); els.fleetInput.value = ''; if (f.length) showFleetPick(boxesFromFiles(f), f.length > 1 ? folderOf(f) : ''); });
+  els.fleetFolderInput.addEventListener('change', () => { const f = Array.from(els.fleetFolderInput.files); els.fleetFolderInput.value = ''; if (f.length) showFleetPick(boxesFromFiles(f), (f[0].webkitRelativePath || '').split('/')[0]); });
+  els.pickFleetFolder.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); els.fleetFolderInput.click(); });
+  els.fleetZone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); els.fleetInput.click(); } });
+  els.fleetPick.addEventListener('change', onFleetPickChange);
+  els.fleetPick.addEventListener('click', onFleetPickClick);
   $('#cmpInput').addEventListener('change', e => { const f = Array.from(e.target.files); e.target.value = ''; openCompare(f); });
   $('#knownInput').addEventListener('change', e => { const f = e.target.files[0]; e.target.value = ''; if (f) loadKnownFile(f); });
   els.vCompare.addEventListener('click', onCompareClick);
@@ -6189,9 +6264,9 @@ function bind() {
     // A folder is a set of boxes, wherever it is dropped; so is anything dropped on the Many boxes tab.
     const fleetTab = !els.landing.hidden && !els.paneFleet.hidden;
     if (fleetTab || entries.some(x => x.isDirectory)) {
-      if (!fleetTab) toast('A folder opens in Many boxes: each log in it is one box.', null, 6000);
-      if (entries.length) boxesFromDrop(entries).then(r => openFleet(r.boxes, r.name, r.skipped), err => toast('Could not read that folder: ' + (err.message || err), 'error', 7000));
-      else { const r = boxesFromFiles(files); openFleet(r.boxes, '', r.skipped); }
+      if (!fleetTab) toast('A folder opens in Many boxes: check the list, then Read.', null, 6000);
+      if (entries.length) boxesFromDrop(entries).then(r => showFleetPick(r, r.name), err => toast('Could not read that folder: ' + (err.message || err), 'error', 7000));
+      else showFleetPick(boxesFromFiles(files), '');
       return;
     }
     pickFiles(files, 'capture-set');
