@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-WRGh8RFv666UlkAg02Udqkco2ESrEf2rvmsugP+FvaU='; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-kdDBDTvyVtB2dsHHp+Xdmo3aIDj0EZCgdC8WC44Xvro='; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Skyworth Log Prism</title>
 <meta name="description" content="Skyworth Log Prism turns Android logcat and other text logs into a visual, searchable troubleshooting report, entirely in your browser.">
@@ -3866,10 +3866,10 @@ const PRIV_RULES = [
   { re: /(mfg\/product\/ver\/serial [^\/\r\n]*\/[^\/\r\n]*\/[^\/\r\n]*\/)([^\s\/,]{4,64})()/g, kind: v => NOT_A_VALUE.test(v) ? '' : 'serial' },
   // Wi-Fi names, by the name they are logged under.
   { re: /(\bssid\s*[=:]\s*")([^"\r\n]{1,32})(")/gi, kind: v => NOT_A_VALUE.test(v) ? '' : 'ssid' },
-  // 'Deepak's A17': the closing quote is the one followed by a space, punctuation or the end.
+  // 'Guest's Phone': the closing quote is the one followed by a space, punctuation or the end.
   { re: /(\bssid\s*[=:]?\s*')([^\r\n]{1,32}?)('(?=[\s,.;:)\]]|$))/gi, kind: v => NOT_A_VALUE.test(v) ? '' : 'ssid' },
   { re: /(\bSSID\s*[=:]\s*)([^\s",'<>(){}\[\]]{2,32})()/g, kind: v => NOT_A_VALUE.test(v) || /^[0-9a-f]{16,}$/i.test(v) ? '' : 'ssid' },
-  // wpa_supplicant's scan results: "ssid=OPPO Reno13 Pro 5G freq=2462 …". The name runs to the next key=.
+  // wpa_supplicant's scan results: "ssid=Guest Room 5G freq=5180 …". The name runs to the next key=.
   { re: /(\bssid=)([^\r\n"]{1,32}?)(?=\s+[A-Za-z_]+=|\s*$)()/g, kind: v => NOT_A_VALUE.test(v) || /^[0-9a-f]{16,}$/i.test(v) || /^(?:\\x00)+$/.test(v) ? '' : 'ssid' },
   { re: /(")([^"\r\n]{1,32})("-?(?:WPA_PSK|WPA2_PSK|WPA_EAP|SAE|OWE|NONE|WEP)\b)/g, kind: v => NOT_A_VALUE.test(v) ? '' : 'ssid' },
 ];
