@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-b3cxWyNSIZsrTRvnmK5AAuY4EXIdfvIM5oxoTvUtqVc='; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-A0s6iG0Spvljm/Bl48A0YbK8jy3CTncM8D44sByPpBc='; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Skyworth Log Prism</title>
 <meta name="description" content="Skyworth Log Prism turns Android logcat and other text logs into a visual, searchable troubleshooting report, entirely in your browser.">
@@ -173,6 +173,8 @@ code,.mono{font-family:var(--mono);font-size:.92em}
 .drop-sub{color:var(--text-2);font-size:16px}
 .drop-sub u{color:var(--accent);text-underline-offset:3px;font-weight:650}
 .formats{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;margin:12px 6px 6px;color:var(--muted);font-size:13.5px}
+.formats-alt{margin:4px 6px 6px;text-align:center;color:var(--muted);font-size:13.5px}
+.formats-alt .linkbtn{font-size:inherit;padding:0 2px}
 .fmt{padding:2px 9px;border-radius:999px;background:var(--bg-2);border:1px solid var(--line);font-family:var(--mono);font-size:12.5px;color:var(--text-2)}
 .paste{display:flex;flex-direction:column;gap:10px;padding:4px 6px 6px}
 .paste-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -1061,15 +1063,15 @@ kbd{font:600 11.5px var(--mono);padding:2px 7px;border-radius:6px;border:1px sol
       <div id="paneFile" role="tabpanel">
         <label id="dropZone" class="drop" for="fileInput" tabindex="0">
           <span class="drop-icon"><svg class="i"><use href="#i-upload"/></svg></span>
-          <span class="drop-title">Drop a log, a folder or a .zip here</span>
-          <span class="drop-sub">or <u>browse files</u> &middot; <button type="button" class="linkbtn drop-folder" id="pickFolder">choose a folder</button></span>
+          <span class="drop-title">Drop a log or a .zip here</span>
+          <span class="drop-sub">or <u>browse files</u></span>
           <input type="file" id="fileInput" hidden multiple>
-          <input type="file" id="folderInput" hidden webkitdirectory multiple>
         </label>
         <div class="formats">
-          <span>Reads</span><span class="fmt">.log</span><span class="fmt">.txt</span><span class="fmt">.gz</span><span class="fmt">.zip</span><span class="fmt">folders</span><span class="fmt">bug reports</span>
+          <span>Reads</span><span class="fmt">.log</span><span class="fmt">.txt</span><span class="fmt">.gz</span><span class="fmt">.zip</span><span class="fmt">bug reports</span>
           <span>&middot; logcat parts, ANR traces, crash dumps, dmesg, syslog &middot; UTF-8 &amp; UTF-16</span>
         </div>
+        <p class="formats-alt">A folder of logs, one per box? Use <button type="button" class="linkbtn" id="toFleet">Many boxes</button>.</p>
       </div>
       <div id="panePaste" role="tabpanel" class="paste" hidden>
         <div class="paste-row">
@@ -1083,25 +1085,25 @@ kbd{font:600 11.5px var(--mono);padding:2px 7px;border-radius:6px;border:1px sol
         </div>
       </div>
       <div id="paneFleet" role="tabpanel" hidden>
-        <label id="fleetZone" class="drop" for="fleetInput" tabindex="0">
+        <label id="fleetZone" class="drop" for="fleetFolderInput" tabindex="0">
           <span class="drop-icon"><svg class="i"><use href="#i-boxes"/></svg></span>
-          <span class="drop-title">Drop one log per box</span>
-          <span class="drop-sub">or <u>browse files</u> &middot; <button type="button" class="linkbtn drop-folder" id="pickFleetFolder">choose a folder</button></span>
+          <span class="drop-title">Drop a folder of logs here</span>
+          <span class="drop-sub">or <u>choose a folder</u> &middot; <button type="button" class="linkbtn drop-folder" id="pickFleetFiles">pick log files</button></span>
           <input type="file" id="fleetInput" hidden multiple>
           <input type="file" id="fleetFolderInput" hidden webkitdirectory multiple>
         </label>
-        <div class="formats"><span>Each file, zip or subfolder is one box. See which boxes share a problem, open any of them, and export the list.</span></div>
+        <div class="formats"><span>Every log in the folder is read, one box each (a subfolder is one box). See which boxes share a problem, open any of them, and export the list.</span></div>
       </div>
     </section>
 
     <section class="features" aria-label="Features">
       <div class="feat"><div class="feat-ic b"><svg class="i"><use href="#i-sparkles"/></svg></div><h3>A summary anyone can read</h3><p>The problem and what to do, in plain words, with a status for update, internet, storage and apps.</p></div>
       <div class="feat"><div class="feat-ic c"><svg class="i"><use href="#i-search"/></svg></div><h3>Ask in your own words</h3><p>"Netflix froze at 9:56" finds the moment, names the likely cause and suggests the fix.</p></div>
-      <div class="feat"><div class="feat-ic d"><svg class="i"><use href="#i-layers"/></svg></div><h3>Whole capture sets</h3><p>Drop a folder, a zip or a bug report: parts joined in order, freezes and crash dumps explained.</p></div>
+      <div class="feat"><div class="feat-ic d"><svg class="i"><use href="#i-layers"/></svg></div><h3>Whole capture sets</h3><p>A log's parts, a zip or a bug report: joined in order, freezes and crash dumps explained.</p></div>
       <div class="feat"><div class="feat-ic a"><svg class="i"><use href="#i-lock"/></svg></div><h3>Private, safe to share</h3><p>Nothing is uploaded. A safe copy of the report hides MAC addresses, Wi-Fi names and serials.</p></div>
     </section>
   </main>
-  <footer class="site-foot land-foot"><div class="sf-brand"><svg class="sky-logo" viewBox="0 0 1800 162" role="img" aria-label="SKYWORTH"><use href="#i-skyworth"/></svg><span class="brand-rule" aria-hidden="true"></span><svg class="prism" aria-hidden="true"><use href="#i-logo"/></svg><b>Log Prism</b></div><div class="sf-copy"><div>Copyright &copy; <span class="yr">2026</span> <b>Rahul Kumbhar</b>. All rights reserved.</div><div class="sf-tm">Skyworth Log Prism&trade; by Rahul Kumbhar. SKYWORTH, 创维 and the SKYWORTH logo are trademarks of Skyworth Group.</div><div class="sf-ver">Version <b>2.0.0</b> &middot; <button type="button" class="linkbtn" data-notes>What's new</button></div></div><div class="sf-note"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg>A single offline page: your log never leaves this browser.</div></footer>
+  <footer class="site-foot land-foot"><div class="sf-brand"><svg class="sky-logo" viewBox="0 0 1800 162" role="img" aria-label="SKYWORTH"><use href="#i-skyworth"/></svg><span class="brand-rule" aria-hidden="true"></span><svg class="prism" aria-hidden="true"><use href="#i-logo"/></svg><b>Log Prism</b></div><div class="sf-copy"><div>Copyright &copy; <span class="yr">2026</span> <b>Rahul Kumbhar</b>. All rights reserved.</div><div class="sf-tm">Skyworth Log Prism&trade; by Rahul Kumbhar. SKYWORTH, 创维 and the SKYWORTH logo are trademarks of Skyworth Group.</div><div class="sf-ver">Version <b>2.1.0</b> &middot; <button type="button" class="linkbtn" data-notes>What's new</button></div></div><div class="sf-note"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg>A single offline page: your log never leaves this browser.</div></footer>
 </div>
 
 <!-- ============================ Workspace ============================ -->
@@ -1231,6 +1233,13 @@ kbd{font:600 11.5px var(--mono);padding:2px 7px;border-radius:6px;border:1px sol
 <dialog id="notesDlg" class="notes-dlg" aria-labelledby="notesTitle">
   <div class="dlg-h"><h2 id="notesTitle">What's new in Skyworth Log Prism</h2><button class="icon-btn sm" data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
   <div class="dlg-b">
+    <section class="rn">
+      <h3><span class="rn-v">2.1.0</span><time datetime="2026-09-30">30 September 2026</time></h3>
+      <ul>
+        <li>A folder opens in Many boxes: every log in it is read and listed.</li>
+        <li>Upload file takes one log, the parts of one log, or a zip.</li>
+      </ul>
+    </section>
     <section class="rn">
       <h3><span class="rn-v">2.0.0</span><time datetime="2026-09-29">29 September 2026</time></h3>
       <ul>
@@ -1365,13 +1374,13 @@ const Seal = (function () {
   };
 })();
 /* seal:end */
-const SEAL = '65d4e08a314fd50139cdb106a61ca6ca3237d91df57c3876a4065f7e300cd535';
+const SEAL = '73252d392e94002114a331700cd876ac5206fa657bc385748414c8630ad8087f';
 // Where the full editor may be served from, besides disk: this machine and the official
 // GitHub Pages site. Reports are shared, so they open from anywhere.
 const HOSTS = ['localhost', '127.0.0.1', '[::1]', 'be-free-sky.github.io'];
 const ME = document.currentScript;
 const PRODUCT = 'Skyworth Log Prism';
-const VERSION = '2.0.0';   // also in the footer (.sf-ver) and the release notes (#notesDlg)
+const VERSION = '2.1.0';   // also in the footer (.sf-ver) and the release notes (#notesDlg)
 const LOCK_WHY = {
   frame: 'It was opened inside another page.',
   origin: 'It is being served from ' + location.host + ', which is not where Skyworth Log Prism is published.',
@@ -5080,30 +5089,36 @@ async function dirEntries(dir) {
   do { batch = await new Promise((res, rej) => rd.readEntries(res, rej)); out.push(...batch); } while (batch.length);
   return out;
 }
-// Picked files: each one a box. A picked folder: each subfolder a box, and each file directly inside it.
+// Pictures, apps, documents and the system's own files are not logs: a folder often holds some.
+const NOT_LOG = /(^|\/)(\.ds_store|thumbs\.db|desktop\.ini)$|\.(png|jpe?g|gif|bmp|webp|svg|ico|heic|pdf|docx?|xlsx?|pptx?|odt|mp4|mkv|avi|mov|mp3|wav|m4a|apk|aab|exe|msi|dll|so|bin|img|iso|jar|class|dex|db|sqlite|7z|rar|tar)$/i;
+// Picked files: each one a box. A picked folder: each log in it a box, and each subfolder one box.
 function boxesFromFiles(files) {
-  const byBox = new Map();
+  const byBox = new Map(), skipped = [];
   for (const f of files) {
-    const p = (f.webkitRelativePath || f.name).split('/');
+    const path = f.webkitRelativePath || f.name, p = path.split('/');
+    if (NOT_LOG.test(path)) { skipped.push(p[p.length - 1]); continue; }
     const box = p.length > 2 ? p[1] : baseName(p[p.length - 1]);
     if (!byBox.has(box)) byBox.set(box, []);
     byBox.get(box).push(fileItem(f));
   }
-  return Array.from(byBox.entries()).map(([name, items]) => ({ name, items }));
+  return { boxes: Array.from(byBox.entries()).map(([name, items]) => ({ name, items })), skipped };
 }
 async function boxesFromDrop(entries) {
   // One folder dropped: its contents are the boxes. Several things dropped: each is a box.
-  const top = entries.length === 1 && entries[0].isDirectory ? await dirEntries(entries[0]) : entries, boxes = [];
+  const top = entries.length === 1 && entries[0].isDirectory ? await dirEntries(entries[0]) : entries, boxes = [], skipped = [];
   for (const en of top) {
-    const items = [];
+    if (!en.isDirectory && NOT_LOG.test(en.name)) { skipped.push(en.name); continue; }
+    let items = [];
     if (en.isDirectory) { for (const c of await dirEntries(en)) await entryItems(c, items, en.name + '/'); }
     else await entryItems(en, items, '');
+    items = items.filter(x => !NOT_LOG.test(x.path));
     if (items.length) boxes.push({ name: en.isDirectory ? en.name : baseName(en.name), items });
   }
-  return { boxes, name: entries.length === 1 && entries[0].isDirectory ? entries[0].name : '' };
+  return { boxes, skipped, name: entries.length === 1 && entries[0].isDirectory ? entries[0].name : '' };
 }
-async function openFleet(boxes, name) {
-  if (!boxes.length) { toast('No logs in that selection.', 'error'); return; }
+async function openFleet(boxes, name, skipped) {
+  skipped = skipped || [];
+  if (!boxes.length) { toast('No logs in that selection' + (skipped.length ? ': ' + plural(skipped.length, 'file') + ' skipped, as not logs.' : '.'), 'error', 7000); return; }
   if (boxes.length > 200) { toast('Reading the first 200 of ' + boxes.length + ' boxes.', 'warn', 7000); boxes = boxes.slice(0, 200); }
   boxes.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
   showLoading('Reading ' + plural(boxes.length, 'box', 'boxes') + '…'); await tick();
@@ -5118,7 +5133,8 @@ async function openFleet(boxes, name) {
       rows.push({ name: b.name, items: b.items, size: r.size, lines: d.n, errors: d.stats.lv[4] + d.stats.lv[5], span: d.stats.timed ? d.stats.tMax - d.stats.tMin : 0, M, known: d.known.map(m => ({ id: m.it.id, title: m.it.title, severity: m.it.severity })) });
     } catch (e) { rows.push({ name: b.name, items: b.items, error: e.message || String(e) }); }
   }
-  FLEET = { name: name || plural(rows.length, 'box', 'boxes'), rows, filter: 'all', when: new Date() };
+  FLEET = { name: name || plural(rows.length, 'box', 'boxes'), rows, filter: 'all', when: new Date(), skipped };
+  if (skipped.length) toast('Skipped ' + plural(skipped.length, 'file') + ' that ' + (skipped.length === 1 ? 'is' : 'are') + ' not a log: ' + skipped.slice(0, 3).join(', ') + (skipped.length > 3 ? '…' : '') + '.', null, 7000);
   D = null; S = freshState(); mainTl = null;
   showWorkspace(); renderFleet(); syncTabs(); switchView('fleet');
   hideLoading();
@@ -5162,7 +5178,7 @@ function renderFleetHeader() {
   const F = FLEET;
   els.fileTitle.textContent = F.name; els.fileTitle.title = F.name;
   document.title = F.name + ' · Skyworth Log Prism';
-  els.fileMeta.textContent = 'Many boxes  ·  ' + plural(F.rows.length, 'log') + '  ·  read ' + F.when.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+  els.fileMeta.textContent = 'Many boxes  ·  ' + plural(F.rows.length, 'log') + (F.skipped.length ? '  ·  ' + plural(F.skipped.length, 'file') + ' skipped (not logs)' : '') + '  ·  read ' + F.when.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
   els.reportChip.hidden = true;
 }
 function fleetCSV() {
@@ -6114,7 +6130,7 @@ function toast(msg, kind, ms) {
    Wiring
    ========================================================================== */
 function bind() {
-  ['landing', 'workspace', 'backToWs', 'fileInput', 'folderInput', 'pickFolder', 'dropZone', 'tabFile', 'tabPaste', 'tabFleet', 'paneFleet', 'fleetZone', 'fleetInput', 'fleetFolderInput', 'pickFleetFolder', 'askBox', 'fleetN', 'paneFile', 'panePaste', 'pasteName', 'pasteText', 'pasteGo', 'pasteStats',
+  ['landing', 'workspace', 'backToWs', 'fileInput', 'toFleet', 'dropZone', 'tabFile', 'tabPaste', 'tabFleet', 'paneFleet', 'fleetZone', 'fleetInput', 'fleetFolderInput', 'pickFleetFiles', 'askBox', 'fleetN', 'paneFile', 'panePaste', 'pasteName', 'pasteText', 'pasteGo', 'pasteStats',
     'fileTitle', 'fileMeta', 'renameInput', 'reportChip', 'btnRename', 'btnDownload', 'btnNew', 'btnKeys', 'tabN', 'wsMain',
     'q', 'searchBox', 'mcount', 'mPrev', 'mNext', 'tCase', 'tRegex', 'tOnly', 'tWrap', 'ctxSel', 'btnTags', 'btnPkgs', 'btnBms', 'tagsN', 'pkgsN', 'bmN', 'lvchips', 'fchips', 'exCount',
     'tlMini', 'ctxBanner', 'invBanner', 'ask', 'askGo', 'askPop', 'lgScroll', 'lgSpacer', 'mm', 'mmCanvas', 'mmView', 'lgEmpty', 'detail', 'dropOverlay', 'loading', 'loadText', 'loadBar', 'tip', 'pop', 'toasts', 'keysDlg'
@@ -6132,10 +6148,10 @@ function bind() {
   els.tabPaste.addEventListener('click', () => setLandingTab('paste'));
   els.tabFleet.addEventListener('click', () => setLandingTab('fleet'));
   // Many boxes: each file a box, each subfolder of a folder a box.
-  els.fleetInput.addEventListener('change', () => { const f = Array.from(els.fleetInput.files); els.fleetInput.value = ''; if (f.length) openFleet(boxesFromFiles(f), ''); });
-  els.fleetFolderInput.addEventListener('change', () => { const f = Array.from(els.fleetFolderInput.files); els.fleetFolderInput.value = ''; if (f.length) openFleet(boxesFromFiles(f), (f[0].webkitRelativePath || '').split('/')[0]); });
-  els.pickFleetFolder.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); els.fleetFolderInput.click(); });
-  els.fleetZone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); els.fleetInput.click(); } });
+  els.fleetInput.addEventListener('change', () => { const f = Array.from(els.fleetInput.files); els.fleetInput.value = ''; if (f.length) { const r = boxesFromFiles(f); openFleet(r.boxes, '', r.skipped); } });
+  els.fleetFolderInput.addEventListener('change', () => { const f = Array.from(els.fleetFolderInput.files); els.fleetFolderInput.value = ''; if (f.length) { const r = boxesFromFiles(f); openFleet(r.boxes, (f[0].webkitRelativePath || '').split('/')[0], r.skipped); } });
+  els.pickFleetFiles.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); els.fleetInput.click(); });
+  els.fleetZone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); els.fleetFolderInput.click(); } });
   $('#cmpInput').addEventListener('change', e => { const f = Array.from(e.target.files); e.target.value = ''; openCompare(f); });
   $('#knownInput').addEventListener('change', e => { const f = e.target.files[0]; e.target.value = ''; if (f) loadKnownFile(f); });
   els.vCompare.addEventListener('click', onCompareClick);
@@ -6144,8 +6160,7 @@ function bind() {
   // One file opens as it is; several files, or a folder, open as one capture set.
   const pickFiles = (files, name) => { if (!files.length) return; if (files.length === 1) openFile(files[0]); else openCapture(files.map(f => fileItem(f)), name); };
   els.fileInput.addEventListener('change', () => { const f = Array.from(els.fileInput.files); els.fileInput.value = ''; pickFiles(f, 'capture-set'); });
-  els.folderInput.addEventListener('change', () => { const f = Array.from(els.folderInput.files); els.folderInput.value = ''; if (f.length) openCapture(f.map(x => fileItem(x)), (f[0].webkitRelativePath || 'folder').split('/')[0]); });
-  els.pickFolder.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); els.folderInput.click(); });
+  els.toFleet.addEventListener('click', () => setLandingTab('fleet'));
   els.dropZone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); els.fileInput.click(); } });
   const analyzePaste = () => {
     const text = els.pasteText.value;
@@ -6171,15 +6186,15 @@ function bind() {
     if (!hasFiles(e)) return;
     e.preventDefault(); depth = 0; els.dropOverlay.hidden = true; els.dropZone.classList.remove('over');
     const files = Array.from(e.dataTransfer.files), entries = Array.from(e.dataTransfer.items || []).map(it => it.webkitGetAsEntry && it.webkitGetAsEntry()).filter(Boolean);
-    // On the Many boxes tab, what is dropped is one box per file or folder.
-    if (!els.landing.hidden && !els.paneFleet.hidden) {
-      if (entries.length) boxesFromDrop(entries).then(r => openFleet(r.boxes, r.name), err => toast('Could not read that folder: ' + (err.message || err), 'error', 7000));
-      else openFleet(boxesFromFiles(files), '');
+    // A folder is a set of boxes, wherever it is dropped; so is anything dropped on the Many boxes tab.
+    const fleetTab = !els.landing.hidden && !els.paneFleet.hidden;
+    if (fleetTab || entries.some(x => x.isDirectory)) {
+      if (!fleetTab) toast('A folder opens in Many boxes: each log in it is one box.', null, 6000);
+      if (entries.length) boxesFromDrop(entries).then(r => openFleet(r.boxes, r.name, r.skipped), err => toast('Could not read that folder: ' + (err.message || err), 'error', 7000));
+      else { const r = boxesFromFiles(files); openFleet(r.boxes, '', r.skipped); }
       return;
     }
-    if (!entries.some(x => x.isDirectory)) { pickFiles(files, 'capture-set'); return; }
-    const items = [];
-    Promise.all(entries.map(en => entryItems(en, items, ''))).then(() => openCapture(items, entries.length === 1 ? entries[0].name : 'capture-set'), err => toast('Could not read that folder: ' + (err.message || err), 'error', 7000));
+    pickFiles(files, 'capture-set');
   });
 
   // app bar. A report is built without the editor controls, so each may be absent.
