@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-HRNpLBgLrrwOpa213OUHnmy1kW5HNH/awWvEvN+jrSA='; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-WRGh8RFv666UlkAg02Udqkco2ESrEf2rvmsugP+FvaU='; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Skyworth Log Prism</title>
 <meta name="description" content="Skyworth Log Prism turns Android logcat and other text logs into a visual, searchable troubleshooting report, entirely in your browser.">
@@ -1084,13 +1084,13 @@ kbd{font:600 11.5px var(--mono);padding:2px 7px;border-radius:6px;border:1px sol
           <span class="drop-icon"><svg class="i"><use href="#i-upload"/></svg></span>
           <span class="drop-title">Drop a log or a .zip here</span>
           <span class="drop-sub">or <u>browse files</u></span>
-          <input type="file" id="fileInput" hidden multiple>
+          <input type="file" id="fileInput" hidden>
         </label>
         <div class="formats">
           <span>Reads</span><span class="fmt">.log</span><span class="fmt">.txt</span><span class="fmt">.gz</span><span class="fmt">.zip</span><span class="fmt">bug reports</span>
           <span>&middot; logcat parts, ANR traces, crash dumps, dmesg, syslog &middot; UTF-8 &amp; UTF-16</span>
         </div>
-        <p class="formats-alt">A folder of logs, one per box? Use <button type="button" class="linkbtn" id="toFleet">Many boxes</button>.</p>
+        <p class="formats-alt">Several logs, or a folder of them? Use <button type="button" class="linkbtn" id="toFleet">Many boxes</button>.</p>
       </div>
       <div id="panePaste" role="tabpanel" class="paste" hidden>
         <div class="paste-row">
@@ -1119,11 +1119,11 @@ kbd{font:600 11.5px var(--mono);padding:2px 7px;border-radius:6px;border:1px sol
     <section class="features" aria-label="Features">
       <div class="feat"><div class="feat-ic b"><svg class="i"><use href="#i-sparkles"/></svg></div><h3>A summary anyone can read</h3><p>The problem and what to do, in plain words, with a status for update, internet, storage and apps.</p></div>
       <div class="feat"><div class="feat-ic c"><svg class="i"><use href="#i-search"/></svg></div><h3>Ask in your own words</h3><p>"Netflix froze at 9:56" finds the moment, names the likely cause and suggests the fix.</p></div>
-      <div class="feat"><div class="feat-ic d"><svg class="i"><use href="#i-layers"/></svg></div><h3>Whole capture sets</h3><p>A log's parts, a zip or a bug report: joined in order, freezes and crash dumps explained.</p></div>
+      <div class="feat"><div class="feat-ic d"><svg class="i"><use href="#i-layers"/></svg></div><h3>Whole capture sets</h3><p>A zip of a box's logs, or a bug report: joined in order, freezes and crash dumps explained.</p></div>
       <div class="feat"><div class="feat-ic a"><svg class="i"><use href="#i-lock"/></svg></div><h3>Private, safe to share</h3><p>Nothing is uploaded. A safe copy of the report hides MAC addresses, Wi-Fi names and serials.</p></div>
     </section>
   </main>
-  <footer class="site-foot land-foot"><div class="sf-brand"><svg class="sky-logo" viewBox="0 0 1800 162" role="img" aria-label="SKYWORTH"><use href="#i-skyworth"/></svg><span class="brand-rule" aria-hidden="true"></span><svg class="prism" aria-hidden="true"><use href="#i-logo"/></svg><b>Log Prism</b></div><div class="sf-copy"><div>Copyright &copy; <span class="yr">2026</span> <b>Rahul Kumbhar</b>. All rights reserved.</div><div class="sf-tm">Skyworth Log Prism&trade; by Rahul Kumbhar. SKYWORTH, 创维 and the SKYWORTH logo are trademarks of Skyworth Group.</div><div class="sf-ver">Version <b>2.2.0</b> &middot; <button type="button" class="linkbtn" data-notes>What's new</button></div></div><div class="sf-note"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg>A single offline page: your log never leaves this browser.</div></footer>
+  <footer class="site-foot land-foot"><div class="sf-brand"><svg class="sky-logo" viewBox="0 0 1800 162" role="img" aria-label="SKYWORTH"><use href="#i-skyworth"/></svg><span class="brand-rule" aria-hidden="true"></span><svg class="prism" aria-hidden="true"><use href="#i-logo"/></svg><b>Log Prism</b></div><div class="sf-copy"><div>Copyright &copy; <span class="yr">2026</span> <b>Rahul Kumbhar</b>. All rights reserved.</div><div class="sf-tm">Skyworth Log Prism&trade; by Rahul Kumbhar. SKYWORTH, 创维 and the SKYWORTH logo are trademarks of Skyworth Group.</div><div class="sf-ver">Version <b>2.2.1</b> &middot; <button type="button" class="linkbtn" data-notes>What's new</button></div></div><div class="sf-note"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg>A single offline page: your log never leaves this browser.</div></footer>
 </div>
 
 <!-- ============================ Workspace ============================ -->
@@ -1156,7 +1156,7 @@ kbd{font:600 11.5px var(--mono);padding:2px 7px;border-radius:6px;border:1px sol
     <button role="tab" data-view="explorer" aria-selected="false"><svg class="i"><use href="#i-terminal"/></svg>Explorer <span class="tab-n" id="tabN"></span></button>
     <button role="tab" data-view="compare" aria-selected="false" hidden><svg class="i"><use href="#i-columns"/></svg>Compare</button>
   </nav>
-  <input type="file" id="cmpInput" hidden multiple>
+  <input type="file" id="cmpInput" hidden>
   <input type="file" id="knownInput" hidden accept=".json,application/json">
   <div class="ask" id="askBox" role="search">
     <svg class="i"><use href="#i-sparkles"/></svg>
@@ -1253,6 +1253,13 @@ kbd{font:600 11.5px var(--mono);padding:2px 7px;border-radius:6px;border:1px sol
 <dialog id="notesDlg" class="notes-dlg" aria-labelledby="notesTitle">
   <div class="dlg-h"><h2 id="notesTitle">What's new in Skyworth Log Prism</h2><button class="icon-btn sm" data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
   <div class="dlg-b">
+    <section class="rn">
+      <h3><span class="rn-v">2.2.1</span><time datetime="2026-09-30">30 September 2026</time></h3>
+      <ul>
+        <li>Fixed: Upload file takes one file, so separate logs are never merged into one.</li>
+        <li>Several files go to Many boxes, one box each.</li>
+      </ul>
+    </section>
     <section class="rn">
       <h3><span class="rn-v">2.2.0</span><time datetime="2026-09-30">30 September 2026</time></h3>
       <ul>
@@ -1401,13 +1408,13 @@ const Seal = (function () {
   };
 })();
 /* seal:end */
-const SEAL = '194909b9034857a9c6e62c00a6ef0ac9d1fdd6c8ac172fee1969e828ab484d1e';
+const SEAL = 'b0d61e3efb6d25bd792533305a47a26407d9492c327033c49ca705fd9729f200';
 // Where the full editor may be served from, besides disk: this machine and the official
 // GitHub Pages site. Reports are shared, so they open from anywhere.
 const HOSTS = ['localhost', '127.0.0.1', '[::1]', 'be-free-sky.github.io'];
 const ME = document.currentScript;
 const PRODUCT = 'Skyworth Log Prism';
-const VERSION = '2.2.0';   // also in the footer (.sf-ver) and the release notes (#notesDlg)
+const VERSION = '2.2.1';   // also in the footer (.sf-ver) and the release notes (#notesDlg)
 const LOCK_WHY = {
   frame: 'It was opened inside another page.',
   origin: 'It is being served from ' + location.host + ', which is not where Skyworth Log Prism is published.',
@@ -4919,7 +4926,7 @@ function captureAdvice(d, M) {
   if (removable && !d.files.some(f => f.kind === 'kernel') && !(d.fmt.dmesg > 0)) add('Add the kernel log', 'Android reported the storage problem; the kernel log says what the card or drive itself did.', 'adb bugreport bugreport.zip', 'A bug report includes the kernel log. On a box that allows it: adb shell dmesg > dmesg.txt');
   const net = M.areas.find(a => a.id === 'net'), N = d.net;
   if (net && (net.status === 'bad' || net.status === 'warn') && (N.conn === 'Wi-Fi' || N.wifi.ssid) && !N.wifi.rssi) add('Turn on detailed Wi-Fi logging', 'The internet dropped, but this log has too little Wi-Fi detail to say why.', 'adb shell cmd wifi set-verbose-logging enabled', 'Or Settings → Developer options → Wi-Fi verbose logging. Then reproduce the problem and capture again.');
-  if (!M.model) add('Add the box\'s details', 'The log does not say which box or which software this is.', 'adb shell getprop > getprop.txt', 'Drop it together with the log: select both files.');
+  if (!M.model) add('Add the box\'s details', 'The log does not say which box or which software this is.', 'adb shell getprop > getprop.txt', 'Zip it together with the log, and open the zip.');
   if (span > 0 && span < 60e3 && M.overall !== 'ok') add('Capture for longer', 'The log covers only ' + fmtDur(span) + ', and problems often start before they show.', 'adb logcat -b all -v threadtime > logcat.txt', 'Start it before you reproduce the problem, and stop it a minute after.');
   return out.slice(0, 4);
 }
@@ -6227,14 +6234,13 @@ function bind() {
   els.fleetZone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); els.fleetInput.click(); } });
   els.fleetPick.addEventListener('change', onFleetPickChange);
   els.fleetPick.addEventListener('click', onFleetPickClick);
-  $('#cmpInput').addEventListener('change', e => { const f = Array.from(e.target.files); e.target.value = ''; openCompare(f); });
+  $('#cmpInput').addEventListener('change', e => { const f = Array.from(e.target.files).slice(0, 1); e.target.value = ''; openCompare(f); });
   $('#knownInput').addEventListener('change', e => { const f = e.target.files[0]; e.target.value = ''; if (f) loadKnownFile(f); });
   els.vCompare.addEventListener('click', onCompareClick);
   els.vFleet.addEventListener('click', onFleetClick);
   els.vFleet.addEventListener('keydown', e => { const r = e.target.closest('tr[data-box]'); if (r && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openFleetBox(+r.dataset.box); } });
-  // One file opens as it is; several files, or a folder, open as one capture set.
-  const pickFiles = (files, name) => { if (!files.length) return; if (files.length === 1) openFile(files[0]); else openCapture(files.map(f => fileItem(f)), name); };
-  els.fileInput.addEventListener('change', () => { const f = Array.from(els.fileInput.files); els.fileInput.value = ''; pickFiles(f, 'capture-set'); });
+  // One file opens as it is. Several are several logs, never one: each is a box, in Many boxes.
+  els.fileInput.addEventListener('change', () => { const f = els.fileInput.files[0]; els.fileInput.value = ''; if (f) openFile(f); });
   els.toFleet.addEventListener('click', () => setLandingTab('fleet'));
   els.dropZone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); els.fileInput.click(); } });
   const analyzePaste = () => {
@@ -6261,15 +6267,16 @@ function bind() {
     if (!hasFiles(e)) return;
     e.preventDefault(); depth = 0; els.dropOverlay.hidden = true; els.dropZone.classList.remove('over');
     const files = Array.from(e.dataTransfer.files), entries = Array.from(e.dataTransfer.items || []).map(it => it.webkitGetAsEntry && it.webkitGetAsEntry()).filter(Boolean);
-    // A folder is a set of boxes, wherever it is dropped; so is anything dropped on the Many boxes tab.
+    // A folder, or several files, is a set of boxes wherever it is dropped; so is anything dropped
+    // on the Many boxes tab. Only one file opens as one log.
     const fleetTab = !els.landing.hidden && !els.paneFleet.hidden;
-    if (fleetTab || entries.some(x => x.isDirectory)) {
-      if (!fleetTab) toast('A folder opens in Many boxes: check the list, then Read.', null, 6000);
+    if (fleetTab || files.length > 1 || entries.some(x => x.isDirectory)) {
+      if (!fleetTab) toast((entries.some(x => x.isDirectory) ? 'A folder' : 'Several files') + ' open in Many boxes, one box each: check the list, then Read.', null, 7000);
       if (entries.length) boxesFromDrop(entries).then(r => showFleetPick(r, r.name), err => toast('Could not read that folder: ' + (err.message || err), 'error', 7000));
       else showFleetPick(boxesFromFiles(files), '');
       return;
     }
-    pickFiles(files, 'capture-set');
+    if (files.length) openFile(files[0]);
   });
 
   // app bar. A report is built without the editor controls, so each may be absent.
