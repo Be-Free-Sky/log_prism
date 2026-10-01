@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-kdDBDTvyVtB2dsHHp+Xdmo3aIDj0EZCgdC8WC44Xvro='; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-PSSMS+VoOOltRn4zC/9MGNy754tdpTZb+DSSVQ8h+wU='; style-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Skyworth Log Prism</title>
 <meta name="description" content="Skyworth Log Prism turns Android logcat and other text logs into a visual, searchable troubleshooting report, entirely in your browser.">
@@ -944,6 +944,11 @@ select.field{height:34px;padding:0 8px;font-size:12.5px;font-weight:650}
 .toast.warn .i{color:var(--warn-fg)}
 dialog{border:1px solid var(--line-3);border-radius:18px;background:var(--panel);color:var(--text);padding:0;width:min(520px,calc(100vw - 24px));box-shadow:var(--shadow-lg)}
 dialog::backdrop{background:var(--scrim)}
+/* Known issues: managed from the footer. */
+.known-dlg{width:min(560px,calc(100vw - 24px))}
+.kd-on,.kd-off{display:flex;gap:8px;align-items:flex-start;margin:0;padding:10px 12px;border-radius:11px;line-height:1.5;font-size:14px}
+.kd-on{background:var(--ok-bg);color:var(--ok-fg)} .kd-off{background:var(--info-bg);color:var(--info-fg)}
+.kd-on .i,.kd-off .i{width:17px;height:17px;flex:none;margin-top:2px}
 /* Download: safe copy or full log. */
 .share-dlg{width:min(600px,calc(100vw - 24px))}
 .pv-lede{margin:0;line-height:1.55;color:var(--text-2)}
@@ -1123,7 +1128,7 @@ kbd{font:600 11.5px var(--mono);padding:2px 7px;border-radius:6px;border:1px sol
       <div class="feat"><div class="feat-ic a"><svg class="i"><use href="#i-lock"/></svg></div><h3>Private, safe to share</h3><p>Nothing is uploaded. A safe copy of the report hides MAC addresses, Wi-Fi names and serials.</p></div>
     </section>
   </main>
-  <footer class="site-foot land-foot"><div class="sf-brand"><svg class="sky-logo" viewBox="0 0 1800 162" role="img" aria-label="SKYWORTH"><use href="#i-skyworth"/></svg><span class="brand-rule" aria-hidden="true"></span><svg class="prism" aria-hidden="true"><use href="#i-logo"/></svg><b>Log Prism</b></div><div class="sf-copy"><div>Copyright &copy; <span class="yr">2026</span> <b>Rahul Kumbhar</b>. All rights reserved.</div><div class="sf-tm">Skyworth Log Prism&trade; by Rahul Kumbhar. SKYWORTH, 创维 and the SKYWORTH logo are trademarks of Skyworth Group.</div><div class="sf-ver">Version <b>2.2.1</b> &middot; <button type="button" class="linkbtn" data-notes>What's new</button></div></div><div class="sf-note"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg>A single offline page: your log never leaves this browser.</div></footer>
+  <footer class="site-foot land-foot"><div class="sf-brand"><svg class="sky-logo" viewBox="0 0 1800 162" role="img" aria-label="SKYWORTH"><use href="#i-skyworth"/></svg><span class="brand-rule" aria-hidden="true"></span><svg class="prism" aria-hidden="true"><use href="#i-logo"/></svg><b>Log Prism</b></div><div class="sf-copy"><div>Copyright &copy; <span class="yr">2026</span> <b>Rahul Kumbhar</b>. All rights reserved.</div><div class="sf-tm">Skyworth Log Prism&trade; by Rahul Kumbhar. SKYWORTH, 创维 and the SKYWORTH logo are trademarks of Skyworth Group.</div><div class="sf-ver">Version <b>2.2.2</b> &middot; <button type="button" class="linkbtn" data-notes>What's new</button> &middot; <button type="button" class="linkbtn" data-known-open>Known issues</button></div></div><div class="sf-note"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg>A single offline page: your log never leaves this browser.</div></footer>
 </div>
 
 <!-- ============================ Workspace ============================ -->
@@ -1254,6 +1259,13 @@ kbd{font:600 11.5px var(--mono);padding:2px 7px;border-radius:6px;border:1px sol
   <div class="dlg-h"><h2 id="notesTitle">What's new in Skyworth Log Prism</h2><button class="icon-btn sm" data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
   <div class="dlg-b">
     <section class="rn">
+      <h3><span class="rn-v">2.2.2</span><time datetime="2026-10-01">1 October 2026</time></h3>
+      <ul>
+        <li>Known issues moved to a link in the footer, out of the way.</li>
+        <li>The Known issues card shows only when a log has one.</li>
+      </ul>
+    </section>
+    <section class="rn">
       <h3><span class="rn-v">2.2.1</span><time datetime="2026-09-30">30 September 2026</time></h3>
       <ul>
         <li>Fixed: Upload file takes one file, so separate logs are never merged into one.</li>
@@ -1291,6 +1303,11 @@ kbd{font:600 11.5px var(--mono);padding:2px 7px;border-radius:6px;border:1px sol
       </ul>
     </section>
   </div>
+</dialog>
+
+<dialog id="knownDlg" class="known-dlg" aria-labelledby="knownTitle">
+  <div class="dlg-h"><h2 id="knownTitle">Known issues</h2><button class="icon-btn sm" data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+  <div class="dlg-b" id="knownBody"></div>
 </dialog>
 
 <dialog id="shareDlg" class="share-dlg" aria-labelledby="shareTitle" data-editor>
@@ -1408,13 +1425,13 @@ const Seal = (function () {
   };
 })();
 /* seal:end */
-const SEAL = 'b0d61e3efb6d25bd792533305a47a26407d9492c327033c49ca705fd9729f200';
+const SEAL = '9bd6c80174dd558576fd787c0a8aed9b50343704b8abb7f1b667445db04e7e6b';
 // Where the full editor may be served from, besides disk: this machine and the official
 // GitHub Pages site. Reports are shared, so they open from anywhere.
 const HOSTS = ['localhost', '127.0.0.1', '[::1]', 'be-free-sky.github.io'];
 const ME = document.currentScript;
 const PRODUCT = 'Skyworth Log Prism';
-const VERSION = '2.2.1';   // also in the footer (.sf-ver) and the release notes (#notesDlg)
+const VERSION = '2.2.2';   // also in the footer (.sf-ver) and the release notes (#notesDlg)
 const LOCK_WHY = {
   frame: 'It was opened inside another page.',
   origin: 'It is being served from ' + location.host + ', which is not where Skyworth Log Prism is published.',
@@ -4172,12 +4189,11 @@ function renderOverview() {
     const tagName = k.go ? 'button' : 'div';
     return '<' + tagName + ' class="kpi" ' + (k.go || '') + ' style="--kc:' + k.kc + (k.kc2 ? ';--kc2:' + k.kc2 : '') + (k.kv ? ';--kv:' + k.kv + ';--kb:' + k.kb : '') + '"><div class="kpi-l">' + ic(k.i) + esc(k.l) + '</div><div class="kpi-v">' + esc(k.v) + '</div><div class="kpi-s" title="' + esc(k.s) + '">' + esc(k.s) + '</div></' + tagName + '>';
   }).join('') + '</div>';
-  // Known issues found in this log go first: the team has already worked them out. Otherwise the
-  // card waits after the Highlights, to load a file or say none of them is here.
+  // Known issues found in this log go first: the team has already worked them out. With none
+  // found there is no card; the file is managed from the footer's Known issues link.
   if (D.known.length) h += knownCard();
   if (D.update) h += updateCard(D.update);
   h += highlightsCard();
-  if (!D.known.length) h += knownCard();
   if (D.net.verdict) h += netCard();
   if (D.storage.verdict) h += storageCard();
   if (D.capture.anrs.length || D.capture.tombs.length) h += crashRepCard();
@@ -4858,10 +4874,12 @@ function knownForReport() {
   return { name: D.known[0].it.pack, issues: D.known.map(m => m.it.src) };
 }
 function knownRefresh() {
-  if (!D) return;
-  D.known = knownMatch(D);
-  renderOverview();
-  if (S.view === 'overview') requestAnimationFrame(() => { const c = $('#knownCard'); if (c) c.scrollIntoView({ block: 'start' }); });
+  if (D) {
+    D.known = knownMatch(D);
+    renderOverview();
+    if (S.view === 'overview') requestAnimationFrame(() => { const c = $('#knownCard'); if (c) c.scrollIntoView({ block: 'start' }); });
+  }
+  if (document.getElementById('knownDlg').open) renderKnownDlg();
 }
 async function loadKnownFile(f) {
   try {
@@ -4872,7 +4890,7 @@ async function loadKnownFile(f) {
     try { localStorage.setItem(KNOWN_KEY, text); } catch (e) { /* a private window: kept for this page only */ }
     KNOWN_LOCAL = pack;
     knownRefresh();
-    toast('Loaded "' + pack.name + '": ' + plural(pack.issues.length, 'known issue') + (D ? ', ' + (D.known.length ? D.known.length + ' of them in this log' : 'none of them in this log') : '') + '.' + (pack.skipped.length ? ' ' + plural(pack.skipped.length, 'entry', 'entries') + ' skipped: see the Known issues card.' : ''), null, 7000);
+    toast('Loaded "' + pack.name + '": ' + plural(pack.issues.length, 'known issue') + (D ? ', ' + (D.known.length ? D.known.length + ' of them in this log' : 'none of them in this log') : '') + '.' + (pack.skipped.length ? ' ' + plural(pack.skipped.length, 'entry', 'entries') + ' skipped: the footer\'s Known issues link lists them.' : ''), null, 7000);
   } catch (e) { toast('Could not load that file: ' + (e.message || e) + '.', 'error', 9000); }
 }
 const knownSv = s => s === 'fail' ? 'bad' : s === 'warn' ? 'warn' : 'info';
@@ -4886,16 +4904,26 @@ function knownSumHTML() {
   if (!D.known.length) return '';
   return '<section class="card sum-known"><div class="card-h"><div><h2 class="card-t"><span class="ic-chip">' + ic('book') + '</span>' + (D.known.length === 1 ? 'A known issue' : plural(D.known.length, 'known issue')) + '</h2><p class="card-sub">Your team has seen ' + (D.known.length === 1 ? 'this' : 'these') + ' before (' + esc(D.known[0].it.pack) + ').</p></div></div><ul class="kn-list">' + D.known.slice(0, 4).map(knownItemHTML).join('') + '</ul></section>';
 }
+// Shown only when this log has a known issue.
 function knownCard() {
-  const P = KNOWN_LOCAL || KNOWN_REPORT, list = knownList(), M = D.known;
-  const sub = P ? '<b>' + esc(P.name) + '</b>' + (P.version ? ' · version ' + esc(P.version) : '') + ' · ' + plural(list.length, 'issue') + (!KNOWN_LOCAL ? ' (the ones this report carries)' : '') : 'Check every log against the issues your team already knows, kept in a small file.';
-  const tools = '<div class="inv-tools"><button class="mini" data-kn="load">' + ic('upload') + (KNOWN_LOCAL ? 'Load another file' : 'Load a file') + '</button><button class="mini" data-kn="template">' + ic('download') + 'Get a template</button>' + (KNOWN_LOCAL ? '<button class="mini" data-kn="forget">' + ic('x') + 'Forget it</button>' : '') + '</div>';
-  let body = !list.length ? '<p class="kn-empty">Write each issue once: the line that shows it, and the fix. Every log opened here is then checked against the file, and a report carries the issues it matched. The file stays in this browser.</p>'
-    : !M.length ? '<p class="kn-empty">' + ic('check-circle') + 'None of the ' + plural(list.length, 'known issue') + ' is in this log.</p>'
-    : '<ul class="kn-list">' + M.map(knownItemHTML).join('') + '</ul>';
-  if (KNOWN_LOCAL && KNOWN_LOCAL.skipped.length) body += '<details class="kn-skip"><summary>' + plural(KNOWN_LOCAL.skipped.length, 'entry', 'entries') + ' in the file could not be used</summary><ul>' + KNOWN_LOCAL.skipped.slice(0, 20).map(s => '<li>' + esc(s) + '</li>').join('') + '</ul></details>';
-  return '<section class="card" id="knownCard"><div class="card-h"><div><h2 class="card-t"><span class="ic-chip">' + ic('book') + '</span>Known issues</h2><p class="card-sub">' + sub + '</p></div>' + tools + '</div>' + body + '</section>';
+  const P = KNOWN_LOCAL || KNOWN_REPORT;
+  const sub = '<b>' + esc(P.name) + '</b>' + (P.version ? ' · version ' + esc(P.version) : '') + ' · ' + plural(knownList().length, 'issue') + (!KNOWN_LOCAL ? ' (the ones this report carries)' : '');
+  return '<section class="card" id="knownCard"><div class="card-h"><div><h2 class="card-t"><span class="ic-chip">' + ic('book') + '</span>Known issues</h2><p class="card-sub">' + sub + '</p></div>' +
+    '<div class="inv-tools"><button class="mini" data-known-open>' + ic('book') + 'Manage the file</button></div></div><ul class="kn-list">' + D.known.map(knownItemHTML).join('') + '</ul></section>';
 }
+// The footer's Known issues link: what the file is, whether one is loaded, and the three actions.
+function renderKnownDlg() {
+  const L = KNOWN_LOCAL, R = KNOWN_REPORT;
+  const status = L ? '<p class="kd-on">' + ic('check-circle') + '<span>Loaded: <b>' + esc(L.name) + '</b>' + (L.version ? ', version ' + esc(L.version) : '') + ', ' + plural(L.issues.length, 'issue') + '. Every log opened here is checked against it' + (D ? (D.known.length ? '; this one has ' + plural(D.known.length, 'of them', 'of them') : '; this one has none of them') : '') + '.</span></p>'
+    : R ? '<p class="kd-on">' + ic('info') + '<span>No file of your own. This report carries ' + plural(R.issues.length, 'known issue') + ' it matched.</span></p>'
+    : '<p class="kd-off">' + ic('info') + '<span>No file loaded.</span></p>';
+  const skipped = L && L.skipped.length ? '<details class="kn-skip" open><summary>' + plural(L.skipped.length, 'entry', 'entries') + ' in the file could not be used</summary><ul>' + L.skipped.slice(0, 20).map(s => '<li>' + esc(s) + '</li>').join('') + '</ul></details>' : '';
+  document.getElementById('knownBody').innerHTML =
+    '<p class="pv-lede">Your team\'s known problems, kept in a small file: the log line that shows each one, and its fix. Load it once, and every log is checked against it; a problem found shows on the Summary with its fix.</p>' + status + skipped +
+    '<div class="pv-acts"><button class="btn btn-primary" data-kn="load">' + ic('upload') + (L ? 'Load another file' : 'Load a file') + '</button><button class="btn btn-ghost" data-kn="template">' + ic('download') + 'Get a template</button>' + (L ? '<button class="btn btn-ghost" data-kn="forget">' + ic('x') + 'Forget it</button>' : '') + '</div>' +
+    '<p class="pv-foot">The file stays in this browser. A report carries only the issues it matched.</p>';
+}
+function openKnownDlg() { renderKnownDlg(); document.getElementById('knownDlg').showModal(); }
 function onKnownClick(e) {
   const b = e.target.closest('[data-known],[data-kn]'); if (!b) return false;
   if (b.dataset.known != null) { const m = D.known[+b.dataset.known]; if (m) openInExplorer({ set: { label: 'Known issue ' + m.it.id, lines: m.lines }, line: m.first }); return true; }
@@ -6292,7 +6320,12 @@ function bind() {
   els.btnKeys.addEventListener('click', () => els.keysDlg.showModal());
   els.keysDlg.addEventListener('click', e => { if (e.target === els.keysDlg || e.target.closest('[data-close]')) els.keysDlg.close(); });
   const notes = document.getElementById('notesDlg');
-  document.addEventListener('click', e => { if (e.target.closest('[data-notes]')) { e.preventDefault(); notes.showModal(); } });
+  document.addEventListener('click', e => {
+    if (e.target.closest('[data-notes]')) { e.preventDefault(); notes.showModal(); }
+    else if (e.target.closest('[data-known-open]')) { e.preventDefault(); openKnownDlg(); }
+  });
+  const known = document.getElementById('knownDlg');
+  known.addEventListener('click', e => { if (e.target === known || e.target.closest('[data-close]')) known.close(); else onKnownClick(e); });
   notes.addEventListener('click', e => { if (e.target === notes || e.target.closest('[data-close]')) notes.close(); });
   $$('.tabs [role=tab]').forEach(b => b.addEventListener('click', () => switchView(b.dataset.view)));
 
