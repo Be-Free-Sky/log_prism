@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-a2Twzrydtj9lojfwu8HmirSfP7bGvE80yNw+CJx7zZA='; style-src 'unsafe-inline'; img-src data:; font-src data:; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-i2ZELkSpDVP/huBqVT+eEsTtE8odZ8oH8YKcnoy5Sf4='; style-src 'unsafe-inline'; img-src data:; font-src data:; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Skyworth Log Prism</title>
 <meta name="description" content="Skyworth Log Prism turns Android logcat and other text logs into a visual, searchable troubleshooting report, entirely in your browser.">
@@ -627,6 +627,7 @@ button.kpi:hover{border-color:var(--line-3);transform:translateY(-1px);box-shado
 .tl svg{display:block;overflow:visible}
 .tl-grid{stroke:var(--grid);stroke-width:1}
 .tl-grid.base{stroke:var(--axis)}
+.tl-brk{stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3;opacity:.6}
 .tl-yl,.tl-xl{fill:var(--muted);font:11px var(--font);font-variant-numeric:tabular-nums}
 .tl-b.err{fill:var(--s-err)} .tl-b.warn{fill:var(--s-warn)} .tl-b.other{fill:var(--s-other)}
 .tl-ev path{stroke:var(--panel);stroke-width:2;cursor:pointer}
@@ -1308,7 +1309,7 @@ dialog::backdrop{transition:opacity 200ms ease,overlay 200ms allow-discrete,disp
       <div class="feat"><div class="feat-ic a"><svg class="i"><use href="#i-lock"/></svg></div><h3>Private, safe to share</h3><p>Nothing is uploaded. A safe copy of the report hides MAC addresses, Wi-Fi names and serials.</p></div>
     </section>
   </main>
-  <footer class="site-foot land-foot"><div class="sf-brand"><svg class="sky-logo" viewBox="0 0 1800 162" role="img" aria-label="SKYWORTH"><use href="#i-skyworth"/></svg><span class="brand-rule" aria-hidden="true"></span><svg class="prism" aria-hidden="true"><use href="#i-logo"/></svg><b>Log Prism</b></div><div class="sf-copy"><div>Copyright &copy; <span class="yr">2026</span> <b>Rahul Kumbhar</b>. All rights reserved.</div><div class="sf-tm">Skyworth Log Prism&trade; by Rahul Kumbhar. SKYWORTH, 创维 and the SKYWORTH logo are trademarks of Skyworth Group.</div><div class="sf-ver"><span>Version <b>2.3.0</b></span> <button type="button" class="linkbtn" data-notes>What's new</button> <button type="button" class="linkbtn" data-known-open>Known issues</button></div></div><div class="sf-note"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg>A single offline page: your log never leaves this browser.</div></footer>
+  <footer class="site-foot land-foot"><div class="sf-brand"><svg class="sky-logo" viewBox="0 0 1800 162" role="img" aria-label="SKYWORTH"><use href="#i-skyworth"/></svg><span class="brand-rule" aria-hidden="true"></span><svg class="prism" aria-hidden="true"><use href="#i-logo"/></svg><b>Log Prism</b></div><div class="sf-copy"><div>Copyright &copy; <span class="yr">2026</span> <b>Rahul Kumbhar</b>. All rights reserved.</div><div class="sf-tm">Skyworth Log Prism&trade; by Rahul Kumbhar. SKYWORTH, 创维 and the SKYWORTH logo are trademarks of Skyworth Group.</div><div class="sf-ver"><span>Version <b>2.3.1</b></span> <button type="button" class="linkbtn" data-notes>What's new</button> <button type="button" class="linkbtn" data-known-open>Known issues</button></div></div><div class="sf-note"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg>A single offline page: your log never leaves this browser.</div></footer>
 </div>
 
 <!-- ============================ Workspace ============================ -->
@@ -1438,6 +1439,14 @@ dialog::backdrop{transition:opacity 200ms ease,overlay 200ms allow-discrete,disp
 <dialog id="notesDlg" class="notes-dlg" aria-labelledby="notesTitle">
   <div class="dlg-h"><h2 id="notesTitle">What's new in Skyworth Log Prism</h2><button class="icon-btn sm" data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
   <div class="dlg-b">
+    <section class="rn">
+      <h3><span class="rn-v">2.3.1</span><time datetime="2026-10-07">7 October 2026</time></h3>
+      <ul>
+        <li>Every issue keeps its log time; the Summary now gives it to the second.</li>
+        <li>Time span and timeline stay right when the box's clock is set mid-log or at New Year.</li>
+        <li>Epoch logs are marked UTC; dmesg next to a logcat keeps its own clock.</li>
+      </ul>
+    </section>
     <section class="rn">
       <h3><span class="rn-v">2.3.0</span><time datetime="2026-10-03">3 October 2026</time></h3>
       <ul>
@@ -1612,13 +1621,13 @@ const Seal = (function () {
   };
 })();
 /* seal:end */
-const SEAL = '177200b123e37c04ea1485483f2c4623a8dac1e511b591531bc87061ce57c84a';
+const SEAL = '129a821516294c5f43c3494e13653b6101c0334d6abfb316eed1586c3b9549c7';
 // Where the full editor may be served from, besides disk: this machine and the official
 // GitHub Pages site. Reports are shared, so they open from anywhere.
 const HOSTS = ['localhost', '127.0.0.1', '[::1]', 'be-free-sky.github.io'];
 const ME = document.currentScript;
 const PRODUCT = 'Skyworth Log Prism';
-const VERSION = '2.3.0';   // also in the footer (.sf-ver) and the release notes (#notesDlg)
+const VERSION = '2.3.1';   // also in the footer (.sf-ver) and the release notes (#notesDlg)
 const LOCK_WHY = {
   frame: 'It was opened inside another page.',
   origin: 'It is being served from ' + location.host + ', which is not where Skyworth Log Prism is published.',
@@ -2039,7 +2048,7 @@ function rotation(path) {
   return { stem: name, n: 0 };
 }
 const RE_STAMP = /^(?:(\d{4})-)?(\d\d)-(\d\d)\s+(\d\d):(\d\d):(\d\d)[.,](\d{3})/;
-const stampOf = l => { const m = RE_STAMP.exec(l); return m ? mdTime(m[1], m[2], m[3], m[4], m[5], m[6], m[7]) : NaN; };
+const stampOf = (l, yst) => { const m = RE_STAMP.exec(l); return m ? (yst ? ylTime(yst, m[1], m[2], m[3], m[4], m[5], m[6], m[7]) : mdTime(m[1], m[2], m[3], m[4], m[5], m[6], m[7])) : NaN; };
 function firstStamp(text) { const ls = text.split(/\r\n|\n|\r/, 400); for (const l of ls) { const t = stampOf(l); if (t === t) return t; } return NaN; }
 // Logs: one file's parts in rotation order; separate buffers (main, system, events) merged by time.
 function joinLogs(logs) {
@@ -2048,7 +2057,8 @@ function joinLogs(logs) {
   const seqs = Array.from(groups.values()).map(g => {
     g.sort((a, b) => b.n - a.n);
     const ts = g.map(x => x.first);
-    if (ts.every(t => t === t) && ts.some((t, k) => k && t < ts[k - 1])) g.sort((a, b) => a.first - b.first);
+    // Out of order unless the step back is a New Year (logcat has no year).
+    if (ts.every(t => t === t) && ts.some((t, k) => k && t < ts[k - 1] && ts[k - 1] - t < 300 * 864e5)) g.sort((a, b) => a.first - b.first);
     g.forEach((x, k) => { x.note = g.length > 1 ? 'part ' + (k + 1) + ' of ' + g.length : ''; });
     return g;
   });
@@ -2057,9 +2067,10 @@ function joinLogs(logs) {
   const entries = [];
   seqs.forEach((g, gi) => {
     let key = -Infinity;
+    const yst = { yr: 0, yt: NaN };
     for (const f of g) for (const l of f.text.split(/\r\n|\n|\r/)) {
       if (!l) continue;
-      const t = stampOf(l);
+      const t = stampOf(l, yst);
       if (t === t) { key = t; entries.push({ t: key, g: gi, s: l }); } else if (entries.length && entries[entries.length - 1].g === gi) entries[entries.length - 1].s += '\n' + l; else entries.push({ t: key, g: gi, s: l });
     }
   });
@@ -2204,6 +2215,17 @@ const ANDROID_FMTS = ['threadtime', 'time', 'brief', 'epoch', 'long'];
 
 function frac(fr) { return fr ? +(fr.length >= 3 ? fr.slice(0, 3) : (fr + '00').slice(0, 3)) : 0; }
 function mdTime(y, mo, d, h, mi, s, fr) { return Date.UTC(y ? +y : 2000, +mo - 1, +d, +h, +mi, +s, frac(fr)); }
+// Logcat writes no year: January straight after December is the next year, and a December
+// line just after that is a straggler from before midnight. yst is { yr, yt } per stream.
+function ylTime(yst, y, mo, d, h, mi, s, fr) {
+  if (y) return mdTime(y, mo, d, h, mi, s, fr);
+  let t = mdTime(2000 + yst.yr, mo, d, h, mi, s, fr);
+  const p = yst.yt;
+  if (p - t > 300 * 864e5) { const u = mdTime(2001 + yst.yr, mo, d, h, mi, s, fr); if (u - p < 864e5) { yst.yr++; t = u; } }
+  else if (t - p > 300 * 864e5) { const u = mdTime(1999 + yst.yr, mo, d, h, mi, s, fr); if (p - u < 864e5) return u; }
+  yst.yt = t;
+  return t;
+}
 function kwLevel(s) {
   const m = RE_KW.exec(s); if (!m) return L_OTHER;
   for (let k = 1; k <= 6; k++) if (m[k]) return [5, 4, 3, 2, 1, 0][k - 1];
@@ -2232,20 +2254,21 @@ async function parseLog(text, progress) {
     tags: [], tagMap: new Map(), fmt: Object.create(null), rel: false, clock: false, lower: null,
     files: [], fileIdx: new Int16Array(n).fill(-1), secN: 0,
   };
-  const st = { last: -1, file: -1, sec: null };
+  const st = { last: -1, file: -1, sec: null, yst: { yr: 0, yt: NaN }, rel: [], relLast: false };
   const CH = 25000;
   for (let s = 0; s < n; s += CH) {
     parseRange(d, s, Math.min(n, s + CH), st);
     if (progress && n > CH) { progress(Math.min(n, s + CH) / n); await tick(); }
   }
-  if (d.clock) d.rel = false;
+  // Seconds since start-up (dmesg) next to clock times: they keep their own clock, off the timeline.
+  if (d.clock) { d.rel = false; for (const i of st.rel) d.t[i] = NaN; }
   return d;
 }
 
 function put(d, i, st, fmt, t, ts, lv, tag, pid, tid, ms) {
   d.t[i] = t; d.ts[i] = ts; d.lvl[i] = lv; d.tag[i] = tagId(d, tag); d.pid[i] = pid; d.tid[i] = tid; d.ms[i] = ms;
   d.fmt[fmt] = (d.fmt[fmt] || 0) + 1;
-  st.last = i;
+  st.last = i; st.relLast = false;
 }
 
 // A line in a capture section (kernel log, ANR trace, crash dump...): kept as text, out of the timeline.
@@ -2280,23 +2303,24 @@ function parseRange(d, from, to, st) {
     if (c >= 48 && c <= 57) {
       if ((m = RE_TT.exec(line))) {
         const r = splitRest(line, m[12]);
-        put(d, i, st, 'threadtime', mdTime(m[2], m[3], m[4], m[5], m[6], m[7], m[8]), m[1], LVMAP[m[11]], r[0], +m[9], +m[10], r[1]);
+        put(d, i, st, 'threadtime', ylTime(st.yst, m[2], m[3], m[4], m[5], m[6], m[7], m[8]), m[1], LVMAP[m[11]], r[0], +m[9], +m[10], r[1]);
         d.clock = true; continue;
       }
       if ((m = RE_TIME.exec(line))) {
-        put(d, i, st, 'time', mdTime(m[2], m[3], m[4], m[5], m[6], m[7], m[8]), m[1], LVMAP[m[9]], m[10].trim(), +m[11], m[12] ? +m[12] : -1, line.length - m[13].length);
+        put(d, i, st, 'time', ylTime(st.yst, m[2], m[3], m[4], m[5], m[6], m[7], m[8]), m[1], LVMAP[m[9]], m[10].trim(), +m[11], m[12] ? +m[12] : -1, line.length - m[13].length);
         d.clock = true; continue;
       }
       if ((m = RE_EPOCH.exec(line))) {
         const r = splitRest(line, m[7]), sec = +m[2];
-        if (sec < 1e8) d.rel = true; else d.clock = true;
+        if (sec >= 1e8) d.clock = true;
         put(d, i, st, 'epoch', sec * 1000 + frac(m[3]), m[1], LVMAP[m[6]], r[0], +m[4], +m[5], r[1]);
+        if (sec < 1e8) { d.rel = true; st.rel.push(i); st.relLast = true; }
         continue;
       }
       if ((m = RE_ISO.exec(line))) { isoPut(d, i, st, m, line); continue; }
     } else if (c === 91 || c === 60) {
       if (c === 91 && (m = RE_LONG.exec(line))) {
-        put(d, i, st, 'long', mdTime(m[2], m[3], m[4], m[5], m[6], m[7], m[8]), m[1], LVMAP[m[11]], m[12], +m[9], +m[10], line.length);
+        put(d, i, st, 'long', ylTime(st.yst, m[2], m[3], m[4], m[5], m[6], m[7], m[8]), m[1], LVMAP[m[11]], m[12], +m[9], +m[10], line.length);
         d.clock = true; continue;
       }
       if ((m = RE_DMESG.exec(line))) {
@@ -2304,6 +2328,7 @@ function parseRange(d, from, to, st) {
         const lv = pr < 0 ? kwLevelOr(m[4], 2) : pr <= 2 ? 5 : pr === 3 ? 4 : pr === 4 ? 3 : pr === 7 ? 1 : 2;
         d.rel = true;
         put(d, i, st, 'dmesg', (+m[2]) * 1000 + frac(m[3]), m[2] + '.' + m[3], lv, 'kernel', -1, -1, line.length - m[4].length);
+        st.rel.push(i); st.relLast = true;
         continue;
       }
       if ((m = RE_ISO.exec(line))) { isoPut(d, i, st, m, line); continue; }
@@ -2316,7 +2341,7 @@ function parseRange(d, from, to, st) {
     } else if (c >= 65 && c <= 90) {
       if ((m = RE_BRIEF.exec(line))) { put(d, i, st, 'brief', NaN, '', LVMAP[m[1]], m[2].trim(), +m[3], m[4] ? +m[4] : -1, line.length - m[5].length); continue; }
       if ((m = RE_SYSLOG.exec(line))) {
-        put(d, i, st, 'syslog', Date.UTC(2000, MONTHS.indexOf(m[2]), +m[3], +m[4], +m[5], +m[6]), m[1], kwLevelOr(m[10], 2), m[8], m[9] ? +m[9] : -1, -1, line.length - m[10].length);
+        put(d, i, st, 'syslog', ylTime(st.yst, null, MONTHS.indexOf(m[2]) + 1, m[3], m[4], m[5], m[6], null), m[1], kwLevelOr(m[10], 2), m[8], m[9] ? +m[9] : -1, -1, line.length - m[10].length);
         d.clock = true; continue;
       }
     }
@@ -2325,6 +2350,7 @@ function parseRange(d, from, to, st) {
     if (p >= 0) {
       d.t[i] = d.t[p]; d.ts[i] = d.ts[p]; d.lvl[i] = d.lvl[p]; d.tag[i] = d.tag[p]; d.pid[i] = d.pid[p]; d.tid[i] = d.tid[p];
       d.ms[i] = 0; d.cont[i] = 1;
+      if (st.relLast) st.rel.push(i);
     } else {
       d.t[i] = NaN; d.ts[i] = ''; d.lvl[i] = kwLevel(line); d.tag[i] = tagId(d, ''); d.pid[i] = -1; d.tid[i] = -1; d.ms[i] = 0;
     }
@@ -2332,6 +2358,22 @@ function parseRange(d, from, to, st) {
   }
 }
 function kwLevelOr(s, dflt) { const l = kwLevel(s); return l === L_OTHER ? dflt : l; }
+// How long the log really ran. A clock set during it (network time after a start-up) splits the
+// log in pieces; the jump between them is not time the log ran. segs: the pieces, in time order.
+function timeSegs(d) {
+  const st = d.stats; if (!st.timed) return;
+  const cuts = new Set(d.net.jumps.map(j => j.to)), raw = [];
+  let a = Infinity, b = -Infinity;
+  for (let i = 0; i < d.n; i++) {
+    const t = d.t[i]; if (t !== t) continue;
+    if (cuts.has(i) && a <= b) { raw.push([a, b]); a = Infinity; b = -Infinity; }
+    if (t < a) a = t; if (t > b) b = t;
+  }
+  if (a <= b) raw.push([a, b]);
+  raw.sort((x, y) => x[0] - y[0]);
+  for (const s of raw) { const p = st.segs[st.segs.length - 1]; if (p && s[0] <= p[1]) p[1] = Math.max(p[1], s[1]); else st.segs.push(s); }
+  st.span = st.segs.reduce((x, s) => x + s[1] - s[0], 0);
+}
 function isoPut(d, i, st, m, line) {
   let rest = m[9] || '', lv;
   const lm = RE_LVWORD.exec(rest);
@@ -2375,7 +2417,9 @@ function analyze(d) {
   }
   const fmts = Object.entries(d.fmt).filter(e => e[0] !== 'marker').sort((a, b) => b[1] - a[1]);
   const fmt = fmts.length ? fmts[0][0] : 'text';
-  d.stats = { lv, tagN, tagE, tagW, tMin, tMax, timed, pids, fmt, fmtLabel: FMT_LABEL[fmt] || 'Text log' };
+  // logcat -v epoch gives Unix seconds, so its times are UTC rather than the box's own clock.
+  d.utc = fmt === 'epoch' && d.clock;
+  d.stats = { lv, tagN, tagE, tagW, tMin, tMax, timed, pids, fmt, fmtLabel: (FMT_LABEL[fmt] || 'Text log') + (d.utc ? ', in UTC' : ''), segs: [], span: 0 };
   d.isAndroid = ANDROID_FMTS.reduce((a, k) => a + (d.fmt[k] || 0), 0) > (n - d.secN) * 0.3;
   d.tagColor = new Uint8Array(nT);
   for (let g = 0; g < nT; g++) d.tagColor[g] = hash(d.tags[g]) % 12;
@@ -2388,6 +2432,7 @@ function analyze(d) {
   d.sigs = signatures(d);
   d.se = selinux(d);
   d.net = analyzeNetwork(d);
+  timeSegs(d);
   d.capture = analyzeCapture(d);
   d.storage = analyzeStorage(d);
   const more = [].concat(d.net.verdict ? d.net.keyEvents : [], d.capture.events, d.storage.verdict ? d.storage.keyEvents : []);
@@ -3851,7 +3896,7 @@ function rcaText(res) {
   const R = res.R, c = res.cause, out = [];
   out.push('Issue: ' + res.text);
   out.push('Log: ' + S.name + ' (' + fmtN(D.n) + ' lines), Skyworth Log Prism');
-  out.push('Looked at: ' + (res.win ? fmtT(res.win[0], false) + ' to ' + fmtT(res.win[1], false) + ' on ' + dayOf(res.win[0]) + ' (log time)' : 'the whole log') + (R.any ? ', ' + R.label : ''));
+  out.push('Looked at: ' + (res.win ? fmtT(res.win[0], false) + ' to ' + fmtT(res.win[1], false) + ' on ' + dayOf(res.win[0]) + (D.utc ? ' (UTC)' : ' (log time)') : 'the whole log') + (R.any ? ', ' + R.label : ''));
   if (c) out.push('', 'Most likely cause (' + c.conf + ' confidence): ' + (FIXES[c.item.kind] && ASK_WHY.has(c.item.kind) ? FIXES[c.item.kind].why + '. ' : '') + c.item.title + ' at ' + fmtT(D.t[c.item.line]) + ' (line ' + (c.item.line + 1) + ')' + (c.effect ? '; then ' + c.effect.title + ' at ' + fmtT(D.t[c.effect.line]) + ' (line ' + (c.effect.line + 1) + ')' : '') + '.');
   else out.push('', 'Nothing in the log explains it.');
   if (res.items.length) { out.push('', 'Evidence:'); for (const e of res.items.slice(0, 10)) out.push('- ' + fmtT(D.t[e.line]) + '  ' + e.title + (e.n > 1 ? ' (x' + e.n + ')' : '') + (e.detail ? ' - ' + e.detail : '') + '  [line ' + (e.line + 1) + ']'); }
@@ -4334,8 +4379,8 @@ function renderHeader() {
   els.fileTitle.textContent = S.name;
   els.fileTitle.title = S.name;
   document.title = S.name + ' · Skyworth Log Prism';
-  const st = D.stats, span = st.tMax - st.tMin;
-  els.fileMeta.innerHTML = metaHTML([S.sourceName, fmtBytes(S.size), plural(D.n, 'line'), st.fmtLabel, st.timed ? fmtDur(span) : null]);
+  const st = D.stats;
+  els.fileMeta.innerHTML = metaHTML([S.sourceName, fmtBytes(S.size), plural(D.n, 'line'), st.fmtLabel, st.timed ? fmtDur(st.span) : null]);
   if (S.report && S.report.created) {
     const dt = new Date(S.report.created);
     els.reportChip.hidden = false;
@@ -4367,11 +4412,12 @@ function renderOverview() {
   const st = D.stats, n = D.n;
   const e = st.lv[4] + st.lv[5], w = st.lv[3];
   const pct = x => n ? (x / n * 100).toFixed(x / n < 0.001 ? 2 : 1) + '%' : '0%';
-  const span = st.tMax - st.tMin;
   const errTags = st.tagE.reduce((a, c) => a + (c > 0 ? 1 : 0), 0);
+  const set = st.segs.length > 1, utc = D.utc ? ' UTC' : '';
   const kpis = [
     { l: 'Lines', i: 'list', v: fmtN(n), s: fmtBytes(S.size) + ' · ' + st.fmtLabel, go: 'data-go="x"', kc: 'var(--grad)' },
-    { l: 'Time span', i: 'clock', v: st.timed ? fmtDur(span) : '-', s: st.timed ? fmtT(st.tMin, false) + ' → ' + fmtT(st.tMax, false) : 'no timestamps found', kc: 'linear-gradient(90deg,#97cadb,#018abe)' },
+    { l: 'Time span', i: 'clock', v: st.timed ? fmtDur(st.span) : '-', s: !st.timed ? 'no timestamps found' : set ? 'clock set during the log' : fmtT(st.tMin, false) + ' → ' + fmtT(st.tMax, false) + utc,
+      t: set ? 'The box\'s clock was set during the log, so the time span leaves out the jump. It covers ' + st.segs.map(s => fmtT(s[0], false) + ' → ' + fmtT(s[1], false)).join(' and ') + '.' : '', kc: 'linear-gradient(90deg,#97cadb,#018abe)' },
     { l: 'Errors', i: 'x-circle', v: fmtN(e), s: pct(e) + ' of lines · ' + plural(errTags, 'tag'), go: 'data-go="x" data-levels="4,5"', kc: 'var(--s-err)', kc2: 'var(--lv4)', kv: e ? 'var(--lv4)' : 'var(--ok-fg)', kb: e ? 'rgba(204,26,63,.07)' : 'rgba(12,163,12,.07)' },
     { l: 'Warnings', i: 'alert', v: fmtN(w), s: pct(w) + ' of lines', go: 'data-go="x" data-levels="3"', kc: 'var(--s-warn)', kc2: 'var(--lv3)', kv: w ? 'var(--lv3)' : 'var(--ok-fg)', kb: w ? 'rgba(201,133,0,.09)' : 'rgba(12,163,12,.07)' },
     { l: 'Exceptions', i: 'bug', v: fmtN(D.exc.groups.length), s: D.exc.occ ? plural(D.exc.occ, 'occurrence') + ' · ' + plural(D.exc.groups.length, 'kind') : 'no stack traces', go: 'data-go="scroll" data-target="excCard"', kc: 'linear-gradient(90deg,#c21d6f,#e0368a)', kc2: 'var(--c-exc)', kv: D.exc.groups.length ? 'var(--c-exc)' : 'var(--ok-fg)', kb: D.exc.groups.length ? 'rgba(224,54,138,.07)' : 'rgba(12,163,12,.07)' },
@@ -4379,7 +4425,7 @@ function renderOverview() {
   ];
   let h = '<nav class="ov-nav" id="ovNav" aria-label="Overview sections"></nav><div class="kpis">' + kpis.map(k => {
     const tagName = k.go ? 'button' : 'div';
-    return '<' + tagName + ' class="kpi" ' + (k.go || '') + ' style="--kc:' + k.kc + (k.kc2 ? ';--kc2:' + k.kc2 : '') + (k.kv ? ';--kv:' + k.kv + ';--kb:' + k.kb : '') + '"><div class="kpi-l">' + ic(k.i) + esc(k.l) + '</div><div class="kpi-v">' + esc(k.v) + '</div><div class="kpi-s" title="' + esc(k.s) + '">' + esc(k.s) + '</div></' + tagName + '>';
+    return '<' + tagName + ' class="kpi" ' + (k.go || '') + ' style="--kc:' + k.kc + (k.kc2 ? ';--kc2:' + k.kc2 : '') + (k.kv ? ';--kv:' + k.kv + ';--kb:' + k.kb : '') + '"><div class="kpi-l">' + ic(k.i) + esc(k.l) + '</div><div class="kpi-v">' + esc(k.v) + '</div><div class="kpi-s" title="' + esc(k.t || k.s) + '">' + esc(k.s) + '</div></' + tagName + '>';
   }).join('') + '</div>';
   // Known issues found in this log go first: the team has already worked them out. With none
   // found there is no card; the file is managed from the footer's Known issues link.
@@ -4562,7 +4608,7 @@ function askExamples() {
   if (D.update) ex.push('update failed');
   const busy = D.pkgs.list.filter(p => p.n && p.pkg !== crashed && !/^(android$|com\.android\.|com\.google\.android\.gms)/.test(p.pkg)).sort((a, b) => b.e - a.e || b.n - a.n)[0];
   if (busy && isFinite(busy.t0)) ex.push(appWord(busy.pkg) + ' not working' + (timed ? ' at ' + hm((busy.t0 + busy.t1) / 2) : ''));
-  if (!ex.length && timed) ex.push('error at ' + hm((D.stats.tMin + D.stats.tMax) / 2));
+  if (!ex.length && timed) { const sg = D.stats.segs[D.stats.segs.length - 1]; ex.push('error at ' + hm((sg[0] + sg[1]) / 2)); }
   return Array.from(new Set(ex)).slice(0, 4);
 }
 // What the words will be taken to mean, shown while typing.
@@ -4573,7 +4619,7 @@ function askPreview() {
   if (!v) {
     const ex = askExamples();
     pop.innerHTML = '<div class="ap-h">Describe what went wrong, and when</div>' + ex.map(x => '<button class="ap-ex" data-ask="' + esc(x) + '">' + ic('sparkles') + esc(x) + '</button>').join('') +
-      '<div class="ap-f">Use the time the box showed; the log is in the box\'s clock. Name the app, and say what happened: crashed, froze, black screen, no sound, buffering, no internet.</div>';
+      '<div class="ap-f">' + (D.utc ? 'This log\'s times are UTC, so give the time in UTC.' : 'Use the time the box showed; the log is in the box\'s clock.') + ' Name the app, and say what happened: crashed, froze, black screen, no sound, buffering, no internet.</div>';
   } else {
     const q = parseAsk(v), R = askSubject(q), cs = q.time ? askCands(q) : [];
     const row = (icn, k, val, bad) => '<div class="ap-r' + (bad ? ' bad' : '') + '">' + ic(icn) + '<b>' + k + '</b><span>' + val + '</span></div>';
@@ -4658,7 +4704,7 @@ function invCard() {
   let note = '';
   if (r.note === 'notfound') {
     const cov = logCoverage().slice(-4).map(([a, b]) => dayOf(a) + ' ' + fmtT(a, false) + ' → ' + fmtT(b, false)).join('; ');
-    note = '<div class="banner inv-note">' + ic('info') + '<span><b>' + esc(timeText(q.time)) + ' is not in this log.</b> It covers ' + esc(cov) + '. The box\'s clock may not match yours' + (D.net.jumps.length ? '; it was set during this capture' : '') + '. ' + (R.any ? 'Showing ' + esc(R.label) + ' across the whole log instead.' : 'Showing the whole log instead.') + '</span></div>';
+    note = '<div class="banner inv-note">' + ic('info') + '<span><b>' + esc(timeText(q.time)) + ' is not in this log.</b> It covers ' + esc(cov) + '. ' + (D.utc ? 'This log\'s times are UTC' : 'The box\'s clock may not match yours') + (D.net.jumps.length ? '; it was set during this capture' : '') + '. ' + (R.any ? 'Showing ' + esc(R.label) + ' across the whole log instead.' : 'Showing the whole log instead.') + '</span></div>';
   }
   if (!R.any && R.missing.length) note += '<div class="banner inv-note">' + ic('info') + '<span><b>Nothing in this log mentions ' + esc(R.missing.join(' or ')) + '.</b> The app may not have been running, or it logs under another name. ' + (r.win ? 'Below is everything that failed in the window, whatever logged it.' : 'Below is everything that failed in the log.') + '</span></div>';
   let cause;
@@ -4861,7 +4907,7 @@ function appTrouble() {
 function plainApps() {
   const a = { id: 'apps', icon: 'app', title: 'Apps', target: D.capture.anrs.length || D.capture.tombs.length ? 'crashCard' : 'eventsCard' }, T = appTrouble();
   if (!T.length) return Object.assign(a, { status: 'ok', word: 'No crashes', say: 'No app crashed or froze.' });
-  const say = T.slice(0, 3).map(o => appName(o.app) + ' ' + o.kind + (isFinite(o.t) ? ' at ' + hm(o.t) : '') + (o.n > 1 ? ' (' + o.n + ' times)' : '') + (o.why ? ' because ' + o.why : '') + '.').join(' ') + (T.length > 3 ? ' And ' + plural(T.length - 3, 'more') + '.' : '');
+  const say = T.slice(0, 3).map(o => appName(o.app) + ' ' + o.kind + (isFinite(o.t) ? ' at ' + fmtT(o.t, false) + (D.utc ? ' UTC' : '') : '') + (o.n > 1 ? ' (' + o.n + ' times)' : '') + (o.why ? ' because ' + o.why : '') + '.').join(' ') + (T.length > 3 ? ' And ' + plural(T.length - 3, 'more') + '.' : '');
   const net = T.some(o => /network/.test(o.why));
   return Object.assign(a, { status: 'bad', word: T.length === 1 ? '1 problem' : T.length + ' problems', say, todo: 'Update the app, or clear its cache (Settings → Apps). If it keeps happening, send this report to the app\'s maker.' + (net ? ' The app waited for the network: check the internet too.' : '') });
 }
@@ -4929,7 +4975,7 @@ function summaryText(M) {
   out.push('', M.overall === 'ok' ? 'All good: nothing in this log needs fixing.' : 'Main problem: ' + M.top.say, ...(M.overall !== 'ok' && M.top.todo ? ['What to do: ' + M.top.todo] : []), '');
   if (D.known.length) { out.push('Known issues:'); for (const k of D.known) out.push('  ' + k.it.id + ': ' + k.it.title + (k.it.fix ? ' Fix: ' + k.it.fix : '') + (k.it.link ? ' ' + k.it.link : '')); out.push(''); }
   for (const a of M.areas) out.push(icon[a.status] + ' ' + a.title + ': ' + a.say + (a.todo && a.status !== 'ok' ? ' What to do: ' + a.todo : ''));
-  if (M.moments.length) { out.push('', 'What happened, in order:'); for (const m of M.moments) out.push('  ' + hm(m.t) + '  ' + m.s + (m.n > 1 ? ' (x' + m.n + ')' : '')); }
+  if (M.moments.length) { out.push('', 'What happened, in order' + (D.utc ? ' (UTC)' : '') + ':'); for (const m of M.moments) out.push('  ' + fmtT(m.t, false) + '  ' + m.s + (m.n > 1 ? ' (x' + m.n + ')' : '')); }
   if (M.advice.length) { out.push('', 'To be sure, capture this next:'); for (const x of M.advice) out.push('  - ' + x.title + ': ' + x.why + (x.cmd ? '\n      ' + x.cmd : '')); }
   return out.join('\n') + '\n';
 }
@@ -4938,14 +4984,14 @@ function renderSummary() {
   M.advice = captureAdvice(D, M);
   const kick = M.overall === 'bad' ? 'The main problem' : M.overall === 'warn' ? 'Worth a look' : M.overall === 'ok' ? 'All good' : 'Not enough to judge';
   const head = M.overall === 'ok' ? 'Nothing in this log needs fixing.' : M.top ? M.top.say : 'This log has no box activity Log Prism can explain.';
-  const span = st.timed && st.tMax > st.tMin && !D.net.jumps.length ? fmtDur(st.tMax - st.tMin) : '';
-  const meta = [M.model && ('Box <b>' + esc(M.model) + '</b>' + (M.soft ? ', software ' + esc(M.soft) : '') + (M.android ? ', Android ' + esc(M.android) : '')), span && ('log of <b>' + esc(span) + '</b>'), fmtN(D.n) + ' lines', D.capture.set && D.capture.manifest.length ? plural(D.capture.manifest.length, 'file') : ''].filter(Boolean).map(x => '<span>' + x + '</span>').join(' ');
+  const span = st.span > 0 ? fmtDur(st.span) : '';
+  const meta = [M.model && ('Box <b>' + esc(M.model) + '</b>' + (M.soft ? ', software ' + esc(M.soft) : '') + (M.android ? ', Android ' + esc(M.android) : '')), span && ('log of <b>' + esc(span) + '</b>'), D.utc && 'times in <b>UTC</b>', fmtN(D.n) + ' lines', D.capture.set && D.capture.manifest.length ? plural(D.capture.manifest.length, 'file') : ''].filter(Boolean).map(x => '<span>' + x + '</span>').join(' ');
   const tiles = M.areas.map(a => '<article class="sum-tile sv-' + a.status + '"><div class="sum-tile-h"><span class="ic-chip">' + ic(a.icon) + '</span><h3>' + esc(a.title) + '</h3><span class="sum-word">' + ic(tm[a.status]) + esc(a.word) + '</span></div>' +
     (a.bars ? '<div class="sum-bars">' + barsHTML(a.bars) + '<span>Wi-Fi signal</span></div>' : '') +
     '<p class="sum-say">' + esc(a.say) + '</p>' + (a.todo && a.status !== 'ok' ? '<p class="sum-todo"><b>What to do:</b> ' + esc(a.todo) + '</p>' : '') +
     (a.target && document.getElementById(a.target) ? '<button class="linkbtn sum-more" data-card="' + a.target + '">See the details ' + ic('arrow') + '</button>' : '') + '</article>').join('');
-  const moments = M.moments.length ? '<section class="card sum-when"><div class="card-h"><div><h2 class="card-t"><span class="ic-chip g6">' + ic('clock') + '</span>What happened, in order</h2><p class="card-sub">The moments that matter, in the box\'s own clock. Click one to see the log there.</p></div></div><ol class="sum-steps">' +
-    M.moments.map(m => '<li><button class="sum-step" data-go="x" data-line="' + m.line + '"><span class="sum-t">' + esc(hm(m.t)) + '</span><span class="step-d st-' + (m.status === 'fail' ? 'fail' : m.status === 'warn' ? 'warn' : m.status === 'ok' ? 'ok' : 'info') + '">' + ic(m.status === 'fail' ? 'x' : m.status === 'ok' ? 'check' : m.status === 'warn' ? 'alert' : 'info') + '</span><span>' + esc(m.s) + (m.n > 1 ? ' <small>×' + m.n + '</small>' : '') + '</span></button></li>').join('') + '</ol></section>' : '';
+  const moments = M.moments.length ? '<section class="card sum-when"><div class="card-h"><div><h2 class="card-t"><span class="ic-chip g6">' + ic('clock') + '</span>What happened, in order</h2><p class="card-sub">The moments that matter, ' + (D.utc ? 'in UTC' : 'in the box\'s own clock') + '. Click one to see the log there.</p></div></div><ol class="sum-steps">' +
+    M.moments.map(m => '<li><button class="sum-step" data-go="x" data-line="' + m.line + '"><span class="sum-t">' + esc(fmtT(m.t, false)) + '</span><span class="step-d st-' + (m.status === 'fail' ? 'fail' : m.status === 'warn' ? 'warn' : m.status === 'ok' ? 'ok' : 'info') + '">' + ic(m.status === 'fail' ? 'x' : m.status === 'ok' ? 'check' : m.status === 'warn' ? 'alert' : 'info') + '</span><span>' + esc(m.s) + (m.n > 1 ? ' <small>×' + m.n + '</small>' : '') + '</span></button></li>').join('') + '</ol></section>' : '';
   els.vSummary.innerHTML = '<div class="sum">' +
     '<section class="sum-hero sv-' + M.overall + '"><div class="sum-kick">' + ic(tm[M.overall]) + esc(kick) + '</div><h2 class="sum-h">' + esc(head) + '</h2>' +
     (M.overall !== 'ok' && M.top && M.top.todo ? '<div class="sum-do"><b>' + ic('check') + 'What to do</b><span>' + esc(M.top.todo) + '</span></div>' : '') +
@@ -5133,7 +5179,7 @@ function captureAdvice(d, M) {
   const out = [], add = (title, why, cmd, note) => out.push({ title, why, cmd, note });
   const ALL = 'adb logcat -b all -v threadtime -d > logcat.txt';
   if (!d.isAndroid && !d.capture.set) { add('Capture an Android log', 'This is not an Android logcat, so little can be said about the box itself.', ALL, 'Run it on a computer connected to the box; over the network, first: adb connect <the box\'s address>'); return out; }
-  const st = d.stats, span = st.timed ? st.tMax - st.tMin : 0;
+  const st = d.stats, span = st.span;
   const bufs = new Set();
   for (let i = 0; i < d.n; i++) { const l = d.raw[i]; if (l.charCodeAt(0) === 45) { const m = RE_MARK.exec(l); if (m && m[1] === 'beginning of' && m[2] !== 'file') bufs.add(m[2]); } }
   if (bufs.size && !bufs.has('system') && !bufs.has('crash')) add('Capture every log buffer', 'This log has only the ' + Array.from(bufs).join(' and ') + ' buffer; crashes and system messages are written to the others.', ALL);
@@ -5209,7 +5255,7 @@ function logDigest(d, name, open) {
   const s = withLog(d, () => ({ M: summaryModel(), T: appTrouble() }));
   const st = d.stats, N = d.net;
   return { d, name, open, M: s.M, T: s.T, kinds: errKinds(d), known: d.known,
-    span: st.timed ? st.tMax - st.tMin : 0, errors: st.lv[4] + st.lv[5], warns: st.lv[3], lines: d.n, exc: d.exc.groups.length,
+    span: st.span, errors: st.lv[4] + st.lv[5], warns: st.lv[3], lines: d.n, exc: d.exc.groups.length,
     rssi: N.wifi.rssi ? N.wifi.rssi.avg : null, drops: N.outages.filter(o => o.ms == null || o.ms >= 1000).length, reqFail: N.api.fail, reqCalls: N.api.calls };
 }
 const RANK = { bad: 0, warn: 1, info: 2, ok: 3 };
@@ -5429,7 +5475,7 @@ async function openFleet(boxes, name, skipped) {
       const r = await readItemsText(b.items);
       const d = await parseLog(r.text); analyze(d);
       const M = withLog(d, summaryModel);
-      rows.push({ name: b.name, items: b.items, size: r.size, lines: d.n, errors: d.stats.lv[4] + d.stats.lv[5], span: d.stats.timed ? d.stats.tMax - d.stats.tMin : 0, M, known: d.known.map(m => ({ id: m.it.id, title: m.it.title, severity: m.it.severity })) });
+      rows.push({ name: b.name, items: b.items, size: r.size, lines: d.n, errors: d.stats.lv[4] + d.stats.lv[5], span: d.stats.span, M, known: d.known.map(m => ({ id: m.it.id, title: m.it.title, severity: m.it.severity })) });
     } catch (e) { rows.push({ name: b.name, items: b.items, error: e.message || String(e) }); }
   }
   FLEET = { name: name || plural(rows.length, 'box', 'boxes'), rows, filter: 'all', when: new Date(), skipped };
@@ -5585,7 +5631,8 @@ function renderTlTable() {
   let rows = '';
   for (let b = 0; b < B.nb; b++) {
     const tot = B.err[b] + B.warn[b] + B.other[b]; if (!tot) continue;
-    rows += '<tr data-go="x" data-range="' + (B.start + b * B.bs) + ',' + (B.start + (b + 1) * B.bs - 1) + '"><td class="t">' + esc(fmtT(B.start + b * B.bs)) + '</td><td class="n">' + fmtN(B.err[b]) + '</td><td class="n">' + fmtN(B.warn[b]) + '</td><td class="n">' + fmtN(B.other[b]) + '</td><td class="n">' + fmtN(tot) + '</td></tr>';
+    const bt = B.b2t(b);
+    rows += '<tr data-go="x" data-range="' + bt + ',' + (bt + B.bs - 1) + '"><td class="t">' + esc(fmtT(bt)) + '</td><td class="n">' + fmtN(B.err[b]) + '</td><td class="n">' + fmtN(B.warn[b]) + '</td><td class="n">' + fmtN(B.other[b]) + '</td><td class="n">' + fmtN(tot) + '</td></tr>';
   }
   wrap.innerHTML = '<table class="tbl"><thead><tr><th>From (' + esc(fmtDur(B.bs)) + ' bins)</th><th class="n">Errors</th><th class="n">Warnings</th><th class="n">Other</th><th class="n">Total</th></tr></thead><tbody>' + rows + '</tbody></table>';
 }
@@ -5768,18 +5815,31 @@ function fmtTick(t, step) {
 function createTimeline(host, o) {
   let bins = null, geom = null, drag = null;
   const ov = {};
+  // A clock set during the log splits the axis in parts with one empty bin between them, so the
+  // jump takes no room. Each part starts on a bin boundary. b2t: a bin's start time (NaN between parts).
   function computeBins(pw) {
     const st = D.stats, target = Math.max(8, Math.floor(pw / (o.compact ? 5 : 9)));
     if (bins && bins.target === target && bins.d === D) return bins;
-    const span = Math.max(1, st.tMax - st.tMin), bs = niceT(span / target);
-    const start = Math.floor(st.tMin / bs) * bs, nb = Math.max(1, Math.floor((st.tMax - start) / bs) + 1);
+    const bs = niceT(Math.max(1, st.span) / Math.max(4, target - 2 * (st.segs.length - 1)));
+    const parts = [];
+    let nb = 0;
+    for (const [a, b] of st.segs) {
+      const p = parts[parts.length - 1], t0 = Math.floor(a / bs) * bs;
+      if (p && t0 < p.t0 + p.n * bs) { p.n = Math.max(p.n, Math.floor((b - p.t0) / bs) + 1); p.b = Math.max(p.b, b); }
+      else parts.push({ t0, a, b, b0: p ? nb + 1 : 0, n: Math.floor((b - t0) / bs) + 1 });
+      const q = parts[parts.length - 1]; nb = q.b0 + q.n;
+    }
+    const partOf = t => { for (let k = parts.length - 1; k > 0; k--) if (t >= parts[k].t0) return parts[k]; return parts[0]; };
+    const binOf = t => { const p = partOf(t); return p.b0 + clamp(Math.floor((t - p.t0) / bs), 0, p.n - 1); };
+    const t2v = t => { const p = partOf(t); return p.b0 * bs + clamp(t - p.t0, 0, p.n * bs); };
+    const b2t = b => { const p = parts.find(q => b >= q.b0 && b < q.b0 + q.n); return p ? p.t0 + (b - p.b0) * bs : NaN; };
     const err = new Int32Array(nb), warn = new Int32Array(nb), other = new Int32Array(nb);
     for (let i = 0; i < D.n; i++) {
       const t = D.t[i]; if (t !== t) continue;
-      const b = Math.min(nb - 1, Math.floor((t - start) / bs)), l = D.lvl[i];
+      const b = binOf(t), l = D.lvl[i];
       if (l === 4 || l === 5) err[b]++; else if (l === 3) warn[b]++; else other[b]++;
     }
-    bins = { target, d: D, start, bs, nb, err, warn, other, end: start + nb * bs };
+    bins = { target, d: D, bs, nb, parts, err, warn, other, t2v, b2t };
     return bins;
   }
   function render() {
@@ -5798,7 +5858,7 @@ function createTimeline(host, o) {
     const step = niceNum(Math.max(1, ymax) / (o.compact ? 1 : 4)), top = Math.max(step, Math.ceil(ymax / step) * step);
     const sw = pw / B.nb, gap = sw >= 4 ? 2 : sw >= 2.5 ? 1 : 0, bw = Math.min(24, Math.max(1, sw - gap));
     const y = v => m.t + ph - (v / top) * ph;
-    const xOf = t => m.l + (t - B.start) / (B.nb * B.bs) * pw;
+    const xOf = t => m.l + B.t2v(t) / (B.nb * B.bs) * pw;
     let s = '<svg width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Log lines over time, stacked by errors, warnings and everything else">';
     if (!o.compact) {
       for (let v = 0; v <= top + 1e-9; v += step) {
@@ -5827,13 +5887,14 @@ function createTimeline(host, o) {
         else s += '<rect class="tl-b ' + key + '" x="' + x + '" y="' + tp + '" width="' + bw + '" height="' + h + '"/>';
       }
     }
-    const span = B.end - B.start, tstep = niceT(span / Math.max(2, Math.floor(pw / (o.compact ? 120 : 100))));
+    const tstep = niceT(B.nb * B.bs / Math.max(2, Math.floor(pw / (o.compact ? 120 : 100))));
     let lastX = -1e9;
-    for (let t = Math.ceil(B.start / tstep) * tstep; t <= B.end; t += tstep) {
+    for (const p of B.parts) for (let t = Math.ceil(p.t0 / tstep) * tstep; t <= p.t0 + p.n * B.bs; t += tstep) {
       const xx = xOf(t); if (xx < m.l + 14 || xx > W - m.r - 14 || xx - lastX < 56) continue;
       lastX = xx;
       s += '<text class="tl-xl" x="' + xx + '" y="' + (H - (o.compact ? 3 : 8)) + '" text-anchor="middle">' + fmtTick(t, tstep) + '</text>';
     }
+    for (const p of B.parts.slice(1)) { const bx = Math.round(m.l + (p.b0 - 0.5) * sw) + 0.5; s += '<line class="tl-brk" x1="' + bx + '" x2="' + bx + '" y1="' + m.t + '" y2="' + (m.t + ph) + '"/>'; }
     const marks = [];
     if (!o.compact) {
       D.events.forEach((ev, k) => {
@@ -5851,7 +5912,6 @@ function createTimeline(host, o) {
     geom = { m, pw, ph, W, H, sw, B, xOf, marks };
     drawRange(); drawCursor();
   }
-  function tAt(x) { const g = geom; return g.B.start + (clamp(x, g.m.l, g.m.l + g.pw) - g.m.l) / g.pw * (g.B.nb * g.B.bs); }
   function binAt(x) { const g = geom; return clamp(Math.floor((x - g.m.l) / g.sw), 0, g.B.nb - 1); }
   function localX(e) { return e.clientX - host.getBoundingClientRect().left; }
   function drawRange() {
@@ -5894,12 +5954,17 @@ function createTimeline(host, o) {
       ov.hov.hidden = true; return;
     }
     if (x < g.m.l || x > g.m.l + g.pw) { ov.hov.hidden = true; hideTip(); return; }
-    const b = binAt(x), B = g.B;
+    const b = binAt(x), B = g.B, bt = B.b2t(b);
     Object.assign(ov.hov.style, { left: (g.m.l + b * g.sw) + 'px', width: Math.max(2, g.sw) + 'px', top: g.m.t + 'px', height: g.ph + 'px' });
     ov.hov.hidden = false;
+    if (bt !== bt) {
+      const k = B.parts.findIndex(p => p.b0 > b), p = B.parts[k], q = B.parts[k - 1];
+      showTip('<div class="tt-h">Clock set</div><div>The box\'s clock was set during the log. The chart leaves out the time between ' + esc(fmtT(q.b, false)) + ' and ' + esc(fmtT(p.a, false)) + '.</div>', e.clientX, e.clientY);
+      return;
+    }
     const tot = B.err[b] + B.warn[b] + B.other[b];
     const evs = g.marks.filter(mk => Math.abs(mk.x - (g.m.l + (b + 0.5) * g.sw)) <= g.sw / 2 + 1).slice(0, 3).map(mk => D.events[mk.k].label);
-    showTip('<div class="tt-h">' + esc(fmtT(B.start + b * B.bs)) + ' – ' + esc(fmtT(B.start + (b + 1) * B.bs)) + '</div>' +
+    showTip('<div class="tt-h">' + esc(fmtT(bt)) + ' – ' + esc(fmtT(bt + B.bs)) + '</div>' +
       '<div class="tt-r"><span><i class="sw err"></i>Errors</span><b>' + fmtN(B.err[b]) + '</b></div>' +
       '<div class="tt-r"><span><i class="sw warn"></i>Warnings</span><b>' + fmtN(B.warn[b]) + '</b></div>' +
       '<div class="tt-r"><span><i class="sw other"></i>Everything else</span><b>' + fmtN(B.other[b]) + '</b></div>' +
@@ -5911,12 +5976,14 @@ function createTimeline(host, o) {
     if (!drag || !geom) return;
     const g = geom, B = g.B, d0 = drag; drag = null; ov.brush.hidden = true;
     if (d0.moved) {
-      const a = tAt(Math.min(d0.x0, d0.x1)), b = tAt(Math.max(d0.x0, d0.x1));
-      const sa = B.start + Math.floor((a - B.start) / B.bs) * B.bs, sb = B.start + Math.ceil((b - B.start) / B.bs) * B.bs - 1;
-      o.onRange && o.onRange([sa, Math.max(sa, sb)]);
+      // From the first bin to the last one the drag covers, stepping off a clock-set gap at either end.
+      let ba = binAt(Math.min(d0.x0, d0.x1)), bb = binAt(Math.max(d0.x0, d0.x1));
+      if (B.b2t(ba) !== B.b2t(ba)) ba++;
+      if (B.b2t(bb) !== B.b2t(bb)) bb--;
+      if (ba <= bb) o.onRange && o.onRange([B.b2t(ba), B.b2t(bb) + B.bs - 1]);
     } else {
-      const b = binAt(localX(e));
-      o.onPick && o.onPick([B.start + b * B.bs, B.start + (b + 1) * B.bs - 1]);
+      const bt = B.b2t(binAt(localX(e)));
+      if (bt === bt) o.onPick && o.onPick([bt, bt + B.bs - 1]);
     }
   });
   host.addEventListener('pointercancel', () => { drag = null; if (ov.brush) ov.brush.hidden = true; });
