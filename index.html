@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-i2ZELkSpDVP/huBqVT+eEsTtE8odZ8oH8YKcnoy5Sf4='; style-src 'unsafe-inline'; img-src data:; font-src data:; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-ofRqm67hADO9cF2R8OJfa++au7CIateaDpHgmwg8Hkc='; style-src 'unsafe-inline'; img-src data:; font-src data:; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Skyworth Log Prism</title>
 <meta name="description" content="Skyworth Log Prism turns Android logcat and other text logs into a visual, searchable troubleshooting report, entirely in your browser.">
@@ -1191,6 +1191,30 @@ dialog::backdrop{transition:opacity 200ms ease,overlay 200ms allow-discrete,disp
 }
 /* Phones: the wordmark sits above the file name, so the name keeps the row. */
 @media (max-width:560px){.ab-l{flex-direction:column;align-items:flex-start;gap:3px;min-width:0;flex:1}.brand-sm .sky-logo{height:10px;width:111px}.file-title{max-width:100%;font-size:15.5px}.file-id{max-width:100%}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi-v{font-size:22px}.file-meta{display:none}.ab-r{gap:5px}.icon-btn{width:34px;height:34px}.btn{height:34px}}
+/* ---------- set-top box: stage bars, badges and the free-memory line ----------
+   The four stages of a channel change take four hues of the palette, told apart by gaps as well
+   as colour, and named in the legend and on hover. */
+:root{--c-power:#51607a;--c-tv:#0069c8;--c-ca:#6d3fc4;--zs-tune:#02457a;--zs-stream:#0069c8;--zs-decode:#018abe;--zs-sync:#7b4fd0}
+.cat-power{color:var(--c-power)} .cat-tv{color:var(--c-tv)} .cat-ca{color:var(--c-ca)}
+.zpill{display:inline-flex;align-items:center;padding:1px 8px;border-radius:999px;font-size:11.5px;font-weight:650;line-height:18px;white-space:nowrap}
+.zpill.bad{background:var(--bad-bg);color:var(--bad-fg)} .zpill.warn{background:var(--warn-bg);color:var(--warn-fg)} .zpill.ok{background:var(--ok-bg);color:var(--ok-fg)} .zpill.info{background:var(--info-bg);color:var(--info-fg)}
+.zwhere{margin:4px 0 6px}
+.zst{display:flex;gap:2px;height:10px;width:100%;min-width:90px;border-radius:5px;overflow:hidden;background:var(--bg-2)}
+.zst.big{height:18px;border-radius:7px;gap:3px}
+.zst i{display:block;height:100%;min-width:2px}
+.zs-tune{background:var(--zs-tune)} .zs-stream{background:var(--zs-stream)} .zs-decode{background:var(--zs-decode)} .zs-sync{background:var(--zs-sync)}
+.zst-lg{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:8px;font-size:12.5px;color:var(--text-2)}
+.zst-lg span{display:inline-flex;align-items:center;gap:6px}
+.zst-lg i{width:12px;height:8px;border-radius:3px;display:inline-block}
+.zst-lg b{font:650 12px var(--mono);color:var(--text)}
+.zst-note{color:var(--muted);font-size:12.5px;margin:8px 0 0;max-width:80ch}
+.tbl td.zst-cell{width:30%;min-width:120px;vertical-align:middle}
+.zmem{margin:16px 0 4px}
+.zmem svg{display:block;width:100%;height:90px;background:var(--panel-2);border:1px solid var(--line);border-radius:10px}
+.zmem-l{fill:none;stroke:var(--accent);stroke-width:2;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.zmem-lo{stroke:var(--st-warn);stroke-width:3;vector-effect:non-scaling-stroke}
+.zmem-cut{stroke:var(--line-3);stroke-dasharray:3 3;vector-effect:non-scaling-stroke}
+.zmem-ax{display:flex;justify-content:space-between;gap:8px 14px;flex-wrap:wrap;margin-top:6px;font:11.5px var(--mono);color:var(--muted)}
 @media (max-width:560px){.tabs{gap:0;padding:0 8px;overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}.tabs button{flex:none;padding:12px 10px 11px;gap:6px}.tabs button[aria-selected="true"]::after{bottom:0}}
 </style>
 </head>
@@ -1238,6 +1262,13 @@ dialog::backdrop{transition:opacity 200ms ease,overlay 200ms allow-discrete,disp
     <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 4l-8 4l8 4l8 -4l-8 -4"/><path d="M4 12l8 4l8 -4"/><path d="M4 16l8 4l8 -4"/></symbol>
     <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6l11 0"/><path d="M9 12l11 0"/><path d="M9 18l11 0"/><path d="M5 6l0 .01"/><path d="M5 12l0 .01"/><path d="M5 18l0 .01"/></symbol>
     <symbol id="i-clock" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 7v5l3 3"/></symbol>
+    <symbol id="i-power" viewBox="0 0 24 24"><path d="M7 6a7.75 7.75 0 1 0 10 0"/><path d="M12 4l0 8"/></symbol>
+    <symbol id="i-tv" viewBox="0 0 24 24"><path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9"/><path d="M16 3l-4 4l-4 -4"/></symbol>
+    <symbol id="i-signal" viewBox="0 0 24 24"><path d="M6 18l0 -3"/><path d="M10 18l0 -6"/><path d="M14 18l0 -9"/><path d="M18 18l0 -12"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><path d="M16.555 3.843l3.602 3.602a2.877 2.877 0 0 1 0 4.069l-2.643 2.643a2.877 2.877 0 0 1 -4.069 0l-.301 -.301l-6.558 6.558a2 2 0 0 1 -1.239 .578l-.175 .008h-1.172a1 1 0 0 1 -.993 -.883l-.007 -.117v-1.172a2 2 0 0 1 .467 -1.284l.119 -.13l.414 -.414h2v-2h2v-2l2.144 -2.144l-.301 -.301a2.877 2.877 0 0 1 0 -4.069l2.643 -2.643a2.877 2.877 0 0 1 4.069 0z"/><path d="M15 9h.01"/></symbol>
+    <symbol id="i-switch" viewBox="0 0 24 24"><path d="M16 3l4 4l-4 4"/><path d="M10 7l10 0"/><path d="M8 13l-4 4l4 4"/><path d="M4 17l9 0"/></symbol>
+    <symbol id="i-ad" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10"/><path d="M7 15v-4a2 2 0 0 1 4 0v4"/><path d="M7 13l4 0"/><path d="M17 9v6h-1.5a1.5 1.5 0 1 1 1.5 -1.5"/></symbol>
+    <symbol id="i-record" viewBox="0 0 24 24"><path d="M7 12a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"/></symbol>
     <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 13a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -6"/><path d="M15 9a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -10"/><path d="M9 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -14"/><path d="M4 20h14"/></symbol>
     <symbol id="i-terminal" viewBox="0 0 24 24"><path d="M8 9l3 3l-3 3"/><path d="M13 15l3 0"/><path d="M3 6a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -12"/></symbol>
     <symbol id="i-box" viewBox="0 0 24 24"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5"/><path d="M12 12l8 -4.5"/><path d="M12 12l0 9"/><path d="M12 12l-8 -4.5"/></symbol>
@@ -1256,7 +1287,7 @@ dialog::backdrop{transition:opacity 200ms ease,overlay 200ms allow-discrete,disp
       <button id="backToWs" class="btn btn-ghost back-ws" hidden><svg class="i"><use href="#i-back"/></svg><span></span></button>
       <h1><span class="h1-sky">Skyworth</span> <span class="grad-text">Log Prism</span></h1>
       <p class="lede">Turn raw logs into answers.</p>
-      <p>Drop a logcat, capture or bug report. See what went wrong and how to fix it, in plain words.</p>
+      <p>Drop a logcat, a capture, a bug report or a set-top box's serial log. See what went wrong and how to fix it, in plain words.</p>
     </section>
 
     <section class="upload-card" aria-label="Open a log">
@@ -1273,8 +1304,8 @@ dialog::backdrop{transition:opacity 200ms ease,overlay 200ms allow-discrete,disp
           <input type="file" id="fileInput" hidden>
         </label>
         <div class="formats">
-          <span>Reads</span><span class="fmt">.log</span><span class="fmt">.txt</span><span class="fmt">.gz</span><span class="fmt">.zip</span><span class="fmt">bug reports</span>
-          <span class="formats-more">Also logcat parts, ANR traces, crash dumps, dmesg and syslog, in UTF-8 or UTF-16.</span>
+          <span>Reads</span><span class="fmt">.log</span><span class="fmt">.txt</span><span class="fmt">.rtf</span><span class="fmt">.gz</span><span class="fmt">.zip</span><span class="fmt">bug reports</span>
+          <span class="formats-more">Also logcat parts, ANR traces, crash dumps, dmesg and syslog, in UTF-8 or UTF-16, and set-top box serial logs saved by MobaXterm or Tera Term.</span>
         </div>
         <p class="formats-alt">Several logs, or a folder of them? Use <button type="button" class="linkbtn" id="toFleet">Many boxes</button>.</p>
       </div>
@@ -1309,7 +1340,7 @@ dialog::backdrop{transition:opacity 200ms ease,overlay 200ms allow-discrete,disp
       <div class="feat"><div class="feat-ic a"><svg class="i"><use href="#i-lock"/></svg></div><h3>Private, safe to share</h3><p>Nothing is uploaded. A safe copy of the report hides MAC addresses, Wi-Fi names and serials.</p></div>
     </section>
   </main>
-  <footer class="site-foot land-foot"><div class="sf-brand"><svg class="sky-logo" viewBox="0 0 1800 162" role="img" aria-label="SKYWORTH"><use href="#i-skyworth"/></svg><span class="brand-rule" aria-hidden="true"></span><svg class="prism" aria-hidden="true"><use href="#i-logo"/></svg><b>Log Prism</b></div><div class="sf-copy"><div>Copyright &copy; <span class="yr">2026</span> <b>Rahul Kumbhar</b>. All rights reserved.</div><div class="sf-tm">Skyworth Log Prism&trade; by Rahul Kumbhar. SKYWORTH, 创维 and the SKYWORTH logo are trademarks of Skyworth Group.</div><div class="sf-ver"><span>Version <b>2.3.1</b></span> <button type="button" class="linkbtn" data-notes>What's new</button> <button type="button" class="linkbtn" data-known-open>Known issues</button></div></div><div class="sf-note"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg>A single offline page: your log never leaves this browser.</div></footer>
+  <footer class="site-foot land-foot"><div class="sf-brand"><svg class="sky-logo" viewBox="0 0 1800 162" role="img" aria-label="SKYWORTH"><use href="#i-skyworth"/></svg><span class="brand-rule" aria-hidden="true"></span><svg class="prism" aria-hidden="true"><use href="#i-logo"/></svg><b>Log Prism</b></div><div class="sf-copy"><div>Copyright &copy; <span class="yr">2026</span> <b>Rahul Kumbhar</b>. All rights reserved.</div><div class="sf-tm">Skyworth Log Prism&trade; by Rahul Kumbhar. SKYWORTH, 创维 and the SKYWORTH logo are trademarks of Skyworth Group.</div><div class="sf-ver"><span>Version <b>2.4.0</b></span> <button type="button" class="linkbtn" data-notes>What's new</button> <button type="button" class="linkbtn" data-known-open>Known issues</button></div></div><div class="sf-note"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg>A single offline page: your log never leaves this browser.</div></footer>
 </div>
 
 <!-- ============================ Workspace ============================ -->
@@ -1439,6 +1470,14 @@ dialog::backdrop{transition:opacity 200ms ease,overlay 200ms allow-discrete,disp
 <dialog id="notesDlg" class="notes-dlg" aria-labelledby="notesTitle">
   <div class="dlg-h"><h2 id="notesTitle">What's new in Skyworth Log Prism</h2><button class="icon-btn sm" data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
   <div class="dlg-b">
+    <section class="rn">
+      <h3><span class="rn-v">2.4.0</span><time datetime="2026-11-20">20 November 2026</time></h3>
+      <ul>
+        <li>Reads set-top box serial logs (MobaXterm or Tera Term RTF): U-Boot, eCos, Nagra CA.</li>
+        <li>Explains crashes, the cable signal, channel-change times, the subscription and more.</li>
+        <li>The safe copy hides the box's NUID and CA serials, even in the file name.</li>
+      </ul>
+    </section>
     <section class="rn">
       <h3><span class="rn-v">2.3.1</span><time datetime="2026-10-07">7 October 2026</time></h3>
       <ul>
@@ -1621,13 +1660,13 @@ const Seal = (function () {
   };
 })();
 /* seal:end */
-const SEAL = '129a821516294c5f43c3494e13653b6101c0334d6abfb316eed1586c3b9549c7';
+const SEAL = '0b7811c5d6e1f76392a640864f97c2abcbc14351d4aeaf233aa870478cc29473';
 // Where the full editor may be served from, besides disk: this machine and the official
 // GitHub Pages site. Reports are shared, so they open from anywhere.
 const HOSTS = ['localhost', '127.0.0.1', '[::1]', 'be-free-sky.github.io'];
 const ME = document.currentScript;
 const PRODUCT = 'Skyworth Log Prism';
-const VERSION = '2.3.1';   // also in the footer (.sf-ver) and the release notes (#notesDlg)
+const VERSION = '2.4.0';   // also in the footer (.sf-ver) and the release notes (#notesDlg)
 const LOCK_WHY = {
   frame: 'It was opened inside another page.',
   origin: 'It is being served from ' + location.host + ', which is not where Skyworth Log Prism is published.',
@@ -1963,7 +2002,66 @@ async function gzip(bytes) {
   const stream = new Blob([bytes]).stream().pipeThrough(new CompressionStream('gzip'));
   return new Uint8Array(await new Response(stream).arrayBuffer());
 }
+// A serial console saved by MobaXterm or Tera Term is RTF: the text, with a colour code around
+// every line. It is read as the text it holds. Groups that are not text (the font and colour
+// tables, pictures, \* destinations) are skipped; \par ends a line; \'hh is a Windows-1252 byte
+// and \uN a character, followed by \ucN characters to drop.
+// A capture is tens of megabytes with a few control words on every line, so the text is written
+// as UTF-8 bytes into one buffer and decoded once, and control words are told by a hash, not a string.
+const isRtf = b => b.length > 5 && b[0] === 0x7b && b[1] === 0x5c && b[2] === 0x72 && b[3] === 0x74 && b[4] === 0x66;
+const rtfHash = w => { let h = 0; for (let k = 0; k < w.length; k++) h = (h * 31 + w.charCodeAt(k)) | 0; return h; };
+const RTF_SKIP = new Set(['fonttbl', 'colortbl', 'stylesheet', 'info', 'pict', 'object', 'header', 'footer', 'headerl', 'headerr', 'footerl', 'footerr', 'listtable', 'listoverridetable', 'rsidtbl', 'generator', 'xmlnstbl', 'themedata', 'colorschememapping', 'latentstyles', 'datastore', 'filetbl', 'revtbl'].map(rtfHash));
+const RTF_CHAR = new Map([['par', 10], ['line', 10], ['sect', 10], ['page', 10], ['tab', 9], ['emdash', 0x2014], ['endash', 0x2013], ['bullet', 0x2022], ['lquote', 0x2018], ['rquote', 0x2019], ['ldblquote', 0x201C], ['rdblquote', 0x201D]].map(([w, c]) => [rtfHash(w), c]));
+const RTF_U = rtfHash('u'), RTF_UC = rtfHash('uc');
+const CP1252 = [0x20AC, 0x81, 0x201A, 0x192, 0x201E, 0x2026, 0x2020, 0x2021, 0x2C6, 0x2030, 0x160, 0x2039, 0x152, 0x8D, 0x17D, 0x8F, 0x90, 0x2018, 0x2019, 0x201C, 0x201D, 0x2022, 0x2013, 0x2014, 0x2DC, 0x2122, 0x161, 0x203A, 0x153, 0x9D, 0x17E, 0x178];
+function rtfText(b) {
+  const n = b.length, stack = [];
+  let out = new Uint8Array(n + 64), o = 0, skip = false, uc = 1, drop = 0, hi = 0;
+  const put = cp => {
+    if (skip) return;
+    if (drop) { drop--; return; }
+    if (out.length - o < 4) { const x = new Uint8Array(out.length * 2); x.set(out); out = x; }
+    if (cp >= 0xD800 && cp < 0xDC00) { hi = cp; return; }   // the first half of a character beyond U+FFFF
+    if (cp >= 0xDC00 && cp < 0xE000 && hi) cp = 0x10000 + ((hi - 0xD800) << 10) + (cp - 0xDC00);
+    hi = 0;
+    if (cp < 0x80) out[o++] = cp;
+    else if (cp < 0x800) { out[o++] = 0xc0 | cp >> 6; out[o++] = 0x80 | cp & 63; }
+    else if (cp < 0x10000) { out[o++] = 0xe0 | cp >> 12; out[o++] = 0x80 | cp >> 6 & 63; out[o++] = 0x80 | cp & 63; }
+    else { out[o++] = 0xf0 | cp >> 18; out[o++] = 0x80 | cp >> 12 & 63; out[o++] = 0x80 | cp >> 6 & 63; out[o++] = 0x80 | cp & 63; }
+  };
+  const byte = c => put(c >= 0x80 && c < 0xa0 ? CP1252[c - 0x80] : c);
+  for (let i = 0; i < n;) {
+    const c = b[i];
+    if (c === 0x7b) { stack.push(skip, uc); i++; continue; }
+    if (c === 0x7d) { if (stack.length) { uc = stack.pop(); skip = stack.pop(); } i++; continue; }
+    if (c === 0x0d || c === 0x0a) { i++; continue; }
+    if (c !== 0x5c) {
+      if (c < 0x80 && !skip && !drop && o < out.length) out[o++] = c; else byte(c);
+      i++; continue;
+    }
+    const d = b[i + 1];
+    if (d === 0x5c || d === 0x7b || d === 0x7d) { put(d); i += 2; continue; }
+    if (d === 0x2a) { skip = true; i += 2; continue; }
+    if (d === 0x27) { const h = parseInt(String.fromCharCode(b[i + 2], b[i + 3]), 16); if (h === h) byte(h); i += 4; continue; }
+    if (d === 0x7e) { put(32); i += 2; continue; }
+    if (d === 0x0d || d === 0x0a) { put(10); i += 2; continue; }
+    let j = i + 1, h = 0;
+    for (let x = b[j]; j < n && ((x >= 0x61 && x <= 0x7a) || (x >= 0x41 && x <= 0x5a)); x = b[++j]) h = (h * 31 + x) | 0;
+    if (j === i + 1) { i += 2; continue; }   // \- \_ \| and the like
+    let k = j, neg = false, arg = -1;
+    if (b[k] === 0x2d) { neg = true; k++; }
+    if (b[k] >= 0x30 && b[k] <= 0x39) { arg = 0; while (k < n && b[k] >= 0x30 && b[k] <= 0x39) arg = arg * 10 + b[k++] - 0x30; if (neg) arg = -arg; }
+    i = b[k] === 0x20 ? k + 1 : k;
+    if (RTF_SKIP.has(h)) { skip = true; continue; }
+    if (skip) continue;
+    if (h === RTF_U) { put(arg < 0 ? arg + 65536 : arg); drop = uc; }
+    else if (h === RTF_UC) uc = arg < 0 ? 1 : arg;
+    else { const ch = RTF_CHAR.get(h); if (ch) put(ch); }
+  }
+  return new TextDecoder('utf-8').decode(out.subarray(0, o));
+}
 function decodeBytes(b) {
+  if (isRtf(b)) return rtfText(b);
   if (b[0] === 0xEF && b[1] === 0xBB && b[2] === 0xBF) return new TextDecoder('utf-8').decode(b.subarray(3));
   if (b[0] === 0xFF && b[1] === 0xFE) return new TextDecoder('utf-16le').decode(b.subarray(2));
   if (b[0] === 0xFE && b[1] === 0xFF) return new TextDecoder('utf-16be').decode(b.subarray(2));
@@ -2026,6 +2124,8 @@ const timedLine = l => RE_TT.test(l) || RE_TIME.test(l) || RE_EPOCH.test(l) || R
 // What a file is, from its contents first and its name second.
 function classify(path, text) {
   const p = path.toLowerCase(), head = text.slice(0, 30000);
+  // A set-top box serial log opens with U-Boot and the drivers, the app's own lines after them.
+  if (isZapperText(head) || (/^U-Boot 20\d\d\./m.test(head) && isZapperText(text.slice(0, 2e6)))) return 'log';
   if (/^\*\*\* \*\*\* \*\*\* \*\*\* \*\*\*/m.test(head) && /pid: \d+, tid: \d+/.test(head)) return 'tombstone';
   if (/^----- pid \d+ at \d{4}-\d\d-\d\d/m.test(head)) return 'anr';
   if (/^== dumpstate: |^------ SYSTEM LOG \(|^Bugreport format version/m.test(head)) return 'bugreport';
@@ -2185,7 +2285,7 @@ async function entryItems(entry, out, base) {
 }
 function toB64(u8) { let s = ''; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(s); }
 function fromB64(b64) { const s = atob(b64.replace(/\s+/g, '')); const u8 = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u8[i] = s.charCodeAt(i); return u8; }
-function baseName(fn) { return (fn || 'log').replace(/\.(gz|zip)$/i, '').replace(/\.(log|txt|logcat|out|csv|json|xml|md|html?)$/i, '') || 'log'; }
+function baseName(fn) { return (fn || 'log').replace(/\.(gz|zip)$/i, '').replace(/\.rtf\.docx?$/i, '').replace(/\.(log|txt|logcat|out|csv|json|xml|md|html?|rtf)$/i, '') || 'log'; }
 function sanitizeName(s) {
   return String(s).replace(/[\u0000-\u001f<>:"/\\|?*]+/g, ' ').replace(/\.html?$/i, '').replace(/\s+/g, ' ').trim().replace(/[. ]+$/, '').slice(0, 120);
 }
@@ -2210,7 +2310,23 @@ const RE_SYSLOG = /^((Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{1,2
 const RE_MARK = /^-{5,}\s*(beginning of|switch to)\s+(\S+)/;
 const RE_LVWORD = /^[[(<]?(TRACE|VERBOSE|DEBUG|DBG|INFO|INF|NOTICE|WARNING|WARN|WRN|ERROR|ERR|SEVERE|CRITICAL|CRIT|FATAL|FTL|PANIC)[\])>]?(?::|\s|$)\s*/i;
 const RE_KW = /\b(?:(FATAL|PANIC|CRITICAL)|(ERROR|SEVERE|FAILED)|(WARNING|WARN)|(INFO|NOTICE)|(DEBUG)|(TRACE|VERBOSE))\b/;
-const FMT_LABEL = { threadtime: 'Android logcat · threadtime', time: 'Android logcat · time', brief: 'Android logcat · brief', epoch: 'Android logcat · epoch', long: 'Android logcat · long', dmesg: 'Kernel log · dmesg', iso: 'Timestamped log', syslog: 'Syslog', text: 'Plain text' };
+// A Skyworth set-top box on eCos (MStar), read from its serial console. Its app writes
+//   [{D} 00:01:44.577]: message[file.c function 123]
+// with the time since start-up, the [file function line] sometimes on the next line; its CA layer
+//   [00:01:44.577]: [CA_INFO function line:12]:message
+// and Nagra's CAK [0104.577-12-INT] [Error  -API] message, in seconds since start-up. U-Boot,
+// the drivers and the app's own prints between them have no time, and keep the time before them.
+const RE_ZAP_HINT = /\[\{[DIEWVF]\} \d\d:\d\d:\d\d\.\d{3}\]/;
+// A box whose app never starts logs U-Boot alone: MStar's U-Boot (MBOT, the k1c# prompt) is enough.
+const isZapperText = s => RE_ZAP_HINT.test(s) || (/^U-Boot 20\d\d\.\d\d/m.test(s) && /MBOT-|Skyworth flash code|mscompress7|^k1c# /m.test(s));
+const RE_ZAP = /\[\{([A-Z])\} (\d\d):(\d\d):(\d\d)\.(\d{3})\]:? ?/;
+const RE_ZCA = /^\[(\d\d):(\d\d):(\d\d)\.(\d{3})\]: ?\[CA_([A-Z]+) (\w+) line:\d+\]:?/;
+const RE_NAGRA = /^\[(\d{3,6})\.(\d{3})-\d+-([A-Z]{3})\] \[(\w+?)\s*-(\w+)[^\]]*\]\s?/;
+// [file.c function 123], [file.c 123] or [function 123]: groups 1 and 3 name the file, 2 and 4 the function.
+const RE_ZTRAIL = /\[(?:([A-Za-z_]\w*)\.c ([A-Za-z_]\w*)|([A-Za-z_]\w*)\.c|([A-Za-z_]\w*)) \d+\]\s*$/;
+const ZAP_LV = { D: 1, I: 2, W: 3, E: 4, F: 5, V: 0 }, ZCA_LV = { INFO: 2, ERR: 4, ERROR: 4, WARN: 3, WARNING: 3, DEBUG: 1, DBG: 1 }, NAGRA_LV = { Error: 4, Warning: 3, Fatal: 5 };
+const ZAP_DAY = 864e5;   // start-up k is placed on day k, so every time shown is the time since that start-up
+const FMT_LABEL = { threadtime: 'Android logcat · threadtime', time: 'Android logcat · time', brief: 'Android logcat · brief', epoch: 'Android logcat · epoch', long: 'Android logcat · long', dmesg: 'Kernel log · dmesg', iso: 'Timestamped log', syslog: 'Syslog', zapper: 'Set-top box serial log (eCos)', text: 'Plain text' };
 const ANDROID_FMTS = ['threadtime', 'time', 'brief', 'epoch', 'long'];
 
 function frac(fr) { return fr ? +(fr.length >= 3 ? fr.slice(0, 3) : (fr + '00').slice(0, 3)) : 0; }
@@ -2255,6 +2371,11 @@ async function parseLog(text, progress) {
     files: [], fileIdx: new Int16Array(n).fill(-1), secN: 0,
   };
   const st = { last: -1, file: -1, sec: null, yst: { yr: 0, yt: NaN }, rel: [], relLast: false };
+  // A set-top box serial log: its lines are read as such from the first line, U-Boot's included.
+  if (isZapperText(text)) {
+    Object.assign(st, { zap: true, zbase: 0, zt: NaN, zts: '', zup: -1, zfresh: true, zpre: 0, zopen: -1, zwant: false, znag: -1 });
+    d.zboots = []; d.uptime = true;
+  }
   const CH = 25000;
   for (let s = 0; s < n; s += CH) {
     parseRange(d, s, Math.min(n, s + CH), st);
@@ -2300,6 +2421,7 @@ function parseRange(d, from, to, st) {
     }
     d.fileIdx[i] = st.file;
     if (st.sec) { sectionPut(d, i, st.sec, line); continue; }
+    if (st.zap) { zapLine(d, i, st, line, c); continue; }
     if (c >= 48 && c <= 57) {
       if ((m = RE_TT.exec(line))) {
         const r = splitRest(line, m[12]);
@@ -2357,12 +2479,107 @@ function parseRange(d, from, to, st) {
     d.fmt.text = (d.fmt.text || 0) + 1;
   }
 }
+/* ---------- set-top box serial logs ---------- */
+// A line's tag: the source file, or the driver an HDI function belongs to (sk_hdi_dmx_… → hdi_dmx).
+function zapTag(file, fn) {
+  if (file) return file;
+  const m = /^(?:sk_)?(hdi_[a-z0-9]+)_/.exec(fn);
+  return m ? m[1] : /^(?:sky_)?[Ll]dr_/.test(fn) ? 'loader' : fn;
+}
+// U-Boot's banner, or the time since start-up stepping back: the box started again. Each start-up
+// goes on a day of its own, after every time the one before reached.
+function zapBoot(d, i, st, banner) {
+  const k = d.zboots.length;
+  st.zbase = k ? Math.max(st.zbase + ZAP_DAY, Math.ceil((st.zt + 1) / ZAP_DAY) * ZAP_DAY) : 0;
+  d.zboots.push({ line: i, banner, base: st.zbase });
+  st.zt = banner ? st.zbase : NaN; st.zts = ''; st.zup = -1; st.zfresh = true; st.zopen = -1; st.znag = -1;
+}
+function zapTime(d, i, st, up) {
+  if (!d.zboots.length || (!st.zfresh && st.zup >= 0 && up < st.zup - 60000)) zapBoot(d, i, st, false);
+  st.zfresh = false;
+  if (up > st.zup) st.zup = up;
+  return (st.zt = st.zbase + up);
+}
+function zapPut(d, i, st, t, ts, lv, tag, ms) {
+  d.t[i] = t; d.ts[i] = ts; d.lvl[i] = lv; d.tag[i] = tagId(d, tag); d.pid[i] = -1; d.tid[i] = -1; d.ms[i] = ms;
+  st.zts = ts; st.last = i;
+}
+const RE_ZAP_Y = new RegExp(RE_ZAP.source, 'y');
+function zapLine(d, i, st, line, c) {
+  let m;
+  d.fmt.zapper = (d.fmt.zapper || 0) + 1;
+  if (c === 85 && line.startsWith('U-Boot 20')) { zapBoot(d, i, st, true); st.zpre = 1; zapFree(d, i, st, line, c); return; }
+  // The app. Two tasks printing at once can put its header after a few stray characters.
+  const k = line.indexOf('[{');
+  if (k >= 0 && k < 120) {
+    RE_ZAP_Y.lastIndex = k;
+    if ((m = RE_ZAP_Y.exec(line))) {
+      const t = zapTime(d, i, st, ((+m[2] * 60 + +m[3]) * 60 + +m[4]) * 1000 + +m[5]);
+      const ms = k + m[0].length, tr = RE_ZTRAIL.exec(line.slice(ms)), lv = ZAP_LV[m[1]];
+      zapPut(d, i, st, t, m[2] + ':' + m[3] + ':' + m[4] + '.' + m[5], lv == null ? L_OTHER : lv, tr ? zapTag(tr[1] || tr[3], tr[2] || tr[4]) : 'app', ms);
+      // No [file function line] yet: it is on the next lines, after any more of the message.
+      st.zpre = 0; st.znag = -1; st.zopen = tr ? -1 : i; st.zwant = true; st.zmax = /\S/.test(line.slice(ms)) ? 3 : 6;
+      return;
+    }
+  }
+  if (c === 91) {
+    // The CA layer: a message left empty goes on to the next line.
+    if ((m = RE_ZCA.exec(line))) {
+      const t = zapTime(d, i, st, ((+m[1] * 60 + +m[2]) * 60 + +m[3]) * 1000 + +m[4]), lv = ZCA_LV[m[5]];
+      zapPut(d, i, st, t, m[1] + ':' + m[2] + ':' + m[3] + '.' + m[4], lv == null ? 2 : lv, 'CA', m[0].length);
+      st.zpre = 0; st.znag = -1; st.zopen = /^\s*$/.test(line.slice(m[0].length)) ? i : -1; st.zwant = false;
+      return;
+    }
+    // Nagra's CAK. Its object dumps follow, indented.
+    if ((m = RE_NAGRA.exec(line))) {
+      const t = zapTime(d, i, st, +m[1] * 1000 + +m[2]), lv = NAGRA_LV[m[4]];
+      zapPut(d, i, st, t, m[1] + '.' + m[2], lv != null ? lv : m[3] === 'DEV' || m[3] === 'TIM' ? 1 : 2, 'Nagra ' + m[5], m[0].length);
+      st.zpre = 0; st.znag = i; st.zopen = -1;
+      return;
+    }
+  }
+  // An entry whose message runs on: to the [file function line] that ends it, or one line for the CA layer.
+  const p = st.zopen;
+  if (p >= 0 && i - p <= (st.zwant ? st.zmax : 1)) {
+    d.t[i] = d.t[p]; d.ts[i] = d.ts[p]; d.lvl[i] = d.lvl[p]; d.tag[i] = d.tag[p]; d.pid[i] = -1; d.tid[i] = -1; d.ms[i] = 0; d.cont[i] = 1;
+    const tr = st.zwant && RE_ZTRAIL.exec(line);
+    if (tr) { const g = tagId(d, zapTag(tr[1] || tr[3], tr[2] || tr[4])); for (let j = p; j <= i; j++) d.tag[j] = g; st.zopen = -1; }
+    else if (!st.zwant) st.zopen = -1;
+    return;
+  }
+  st.zopen = -1;
+  const q = st.znag;
+  if (q >= 0 && (c === 32 || c === 9) && i - q < 400) {
+    d.t[i] = d.t[q]; d.ts[i] = d.ts[q]; d.lvl[i] = d.lvl[q]; d.tag[i] = d.tag[q]; d.pid[i] = -1; d.tid[i] = -1; d.ms[i] = 0; d.cont[i] = 1;
+    return;
+  }
+  st.znag = -1;
+  zapFree(d, i, st, line, c);
+}
+// A line with no header: U-Boot, eCos starting, the drivers, the app's own prints. It keeps the
+// time of the line before it (shown dimmed), so it stays in place on the timeline.
+function zapFree(d, i, st, line, c) {
+  let lv = L_OTHER, tag = st.zpre === 1 ? 'U-Boot' : st.zpre === 2 ? 'eCos' : 'driver';
+  if (c === 35 && line.startsWith('## Starting application')) st.zpre = 2;
+  if (c === 65 && line.startsWith('ASSERT FAIL')) { lv = 5; tag = 'eCos'; }
+  else if (!st.zpre) {
+    const b = c === 91 && /^\[([A-Za-z][\w ]{0,22}?)\]/.exec(line);
+    if (b) { if (/^error$/i.test(b[1])) lv = 4; else if (/^warn(?:ing)?$/i.test(b[1])) lv = 3; else tag = b[1]; }
+    else if ((c === 84 && line.startsWith('Total free space')) || (c === 76 && line.startsWith('Largest free block'))) tag = 'heap';
+    else if (c === 64) tag = 'app';
+    if (line.indexOf('[SK_ASSERT]') >= 0) { lv = 3; tag = 'SK_ASSERT'; }
+  }
+  if (lv === L_OTHER) lv = kwLevel(line);
+  d.t[i] = st.zt; d.ts[i] = st.zts; d.lvl[i] = lv; d.tag[i] = tagId(d, tag); d.pid[i] = -1; d.tid[i] = -1; d.ms[i] = 0;
+  d.cont[i] = st.zts ? 2 : 0;
+}
 function kwLevelOr(s, dflt) { const l = kwLevel(s); return l === L_OTHER ? dflt : l; }
 // How long the log really ran. A clock set during it (network time after a start-up) splits the
 // log in pieces; the jump between them is not time the log ran. segs: the pieces, in time order.
 function timeSegs(d) {
   const st = d.stats; if (!st.timed) return;
-  const cuts = new Set(d.net.jumps.map(j => j.to)), raw = [];
+  // A set-top box counts from each start-up: every start-up is a piece of its own.
+  const cuts = new Set(d.net.jumps.map(j => j.to).concat(d.zboots ? d.zboots.map(b => b.line) : [])), raw = [];
   let a = Infinity, b = -Infinity;
   for (let i = 0; i < d.n; i++) {
     const t = d.t[i]; if (t !== t) continue;
@@ -2435,7 +2652,8 @@ function analyze(d) {
   timeSegs(d);
   d.capture = analyzeCapture(d);
   d.storage = analyzeStorage(d);
-  const more = [].concat(d.net.verdict ? d.net.keyEvents : [], d.capture.events, d.storage.verdict ? d.storage.keyEvents : []);
+  d.zap = d.zboots ? analyzeZapper(d) : null;
+  const more = [].concat(d.net.verdict ? d.net.keyEvents : [], d.capture.events, d.storage.verdict ? d.storage.keyEvents : [], d.zap ? d.zap.keyEvents || [] : []);
   if (more.length) d.events = d.events.concat(more).sort((a, b) => a.line - b.line);
   d.known = knownMatch(d);
 }
@@ -3289,20 +3507,24 @@ const ASK_TOPIC = [
   ['storage', ['storage', 'disk', 'space', 'sdcard', 'sd', 'card', 'memorycard', 'microsd', 'drive', 'hdd'], 'Storage (SD card, USB)', ['storagemanager', 'storagesession', 'vold', 'mediaprovider', 'externalstorage']],
   ['usb', ['usb', 'pendrive', 'pen-drive', 'flash', 'thumbdrive'], 'USB', ['usb', 'vold', 'storagemanager']],
   ['boot', ['boot', 'reboot', 'restart', 'restarted', 'rebooted', 'power'], 'Boot and restarts', ['bootreceiver', 'shutdownthread', 'watchdog']],
+  // A set-top box: its tuner and channel changes, and its subscription.
+  ['tv', ['channel', 'channels', 'zap', 'zapping', 'tuner', 'tuning', 'lock', 'frequency', 'mer', 'lcn'], 'Channels and signal', ['skyapi_connect', 'smps', 'hdi_dmd', 'hdi_av', 'channel_window', 'eit_maturity']],
+  ['ca', ['subscription', 'entitlement', 'entitlements', 'nagra', 'smartcard', 'nuid', 'package', 'product', 'products'], 'Subscription', ['nagra', 'ca_']],
 ];
 const TOPIC_OF = {}; ASK_TOPIC.forEach(([k, ws]) => ws.forEach(w => { TOPIC_OF[w] = k; }));
 // How much each symptom or topic makes a kind of evidence count.
 const ASK_BOOST = {
-  crash: { crash: 1.6, died: 1.6, memory: 1.4, native: 1.6, anr: 1.2 },
-  freeze: { anr: 1.8, input: 1.6, jank: 1.5, memory: 1.3, gc: 1.3 },
-  black: { hdmi: 1.8, codec: 1.5, drm: 1.5, player: 1.4 },
+  crash: { crash: 1.6, died: 1.6, memory: 1.4, native: 1.6, anr: 1.2, stbcrash: 1.8 },
+  freeze: { anr: 1.8, input: 1.6, jank: 1.5, memory: 1.3, gc: 1.3, stbcrash: 1.5, stbvideo: 1.3, signal: 1.2 },
+  black: { hdmi: 1.8, codec: 1.5, drm: 1.5, player: 1.4, signal: 1.6, ca: 1.6, stbvideo: 1.5 },
+  tv: { signal: 1.8, stbvideo: 1.5, ca: 1.3 }, ca: { ca: 2 },
   audio: { audio: 2, hdmi: 1.3, codec: 1.2 },
   buffer: { offline: 1.4, 'wifi-drop': 1.4, 'eth-down': 1.4, request: 1.4, dns: 1.3, timeout: 1.5, 'wifi-weak': 1.6, codec: 1.2, player: 1.4, netflix: 1.3 },
   net: { offline: 1.6, 'wifi-drop': 1.6, 'eth-down': 1.6, dns: 1.5, request: 1.3, 'wifi-weak': 1.5, portal: 1.5, 'wifi-password': 1.6, dhcp: 1.5, 'no-internet': 1.5 },
   login: { http4xx: 1.8, tls: 1.4, clock: 1.4, request: 1.3 },
   update: { update: 2 }, input: { input: 1.6, anr: 1.3 }, hdmi: { hdmi: 1.8 }, media: { codec: 1.5, player: 1.5, drm: 1.3 },
   memory: { memory: 2 }, storage: { storage: 2, 'unsafe-removal': 2, 'io-error': 2, 'fs-error': 2, 'fs-dirty': 1.6, 'unsupported-fs': 2, 'mount-fail': 2, 'read-only': 2, 'power-cut': 1.5 },
-  boot: { watchdog: 1.6, crash: 1.2, 'power-cut': 1.6 }, bt: {}, usb: { 'unsafe-removal': 2, 'io-error': 1.8, 'fs-error': 1.8, 'unsupported-fs': 1.8, 'mount-fail': 1.8, 'read-only': 1.8, update: 1.3 },
+  boot: { watchdog: 1.6, crash: 1.2, 'power-cut': 1.6, stbcrash: 1.8 }, bt: {}, usb: { 'unsafe-removal': 2, 'io-error': 1.8, 'fs-error': 1.8, 'unsupported-fs': 1.8, 'mount-fail': 1.8, 'read-only': 1.8, update: 1.3 },
 };
 // Kinds that cause other failures rather than result from them.
 const LEADS_NET = ['request', 'dns', 'timeout', 'refused', 'http4xx', 'http5xx', 'netflix', 'player', 'tls', 'no-internet'];
@@ -3336,10 +3558,22 @@ const SIGNS = [
   { id: 'gms', hint: 'Google Play', re: /requires the Google Play Store, but it is missing|Google Play services.*(?:missing|out of date|not available)/, title: () => 'Google Play services missing or outdated', fix: 'gms', score: 20 },
   { id: 'gc', hint: ['blocking GC', 'paused '], re: /Waiting for a blocking GC|GC.*paused (?:\d{3,}|[1-9]\d\.\d+)ms/, title: () => 'Long garbage-collection pauses', fix: 'memory', score: 18 },
   { id: 'jank', hint: ['Skipped ', 'Davey', 'Slow operation'], re: /Skipped \d{2,} frames|Davey! duration=\d{3,}|Slow operation/, title: () => 'The screen skipped frames', fix: 'jank', score: 28 },
+  // A set-top box: its tuner, its CA's messages on screen, its software crashing.
+  { id: 'stb-assert', hint: 'ASSERT FAIL AT', re: /ASSERT FAIL AT: <\d+>(\S+)/, title: m => 'The box crashed (an eCos assertion in ' + m[1] + ')', fix: 'stbcrash', score: 90 },
+  { id: 'stb-wdt', hint: 'Reboot by WDT', re: /Boot Check: Reboot by WDT/, title: () => 'The watchdog restarted the box', fix: 'stbcrash', score: 70 },
+  { id: 'stb-nolock', hint: ['TIMEOUT NO LOCK', 'fail to sky_CNCT_LockFreq'], re: /TIMEOUT NO LOCK|fail to sky_CNCT_LockFreq/, title: () => 'No signal: the tuner could not lock', fix: 'signal', score: 70 },
+  { id: 'stb-ca', hint: 'dwErrCode===', re: /dwErrCode===(1|2|18|19|256) ,dwSubErrCode= ?(\d+)/, title: m => { const k = m[1] + '-' + m[2], x = ZCAMSG[k]; return 'On screen: CA message ' + k + (x ? ' (' + x.s + ')' : ''); }, fix: m => m[1] === '256' ? 'signal' : 'ca', score: 70, key: m => m[1] + '-' + m[2] },
+  { id: 'stb-data', hint: 'VideoEventNotify] data error', re: /VideoEventNotify\] data error/, title: () => 'Damaged video data: a weak or noisy signal', fix: 'signal', score: 50 },
+  { id: 'stb-vstop', hint: 'get new video package timeout', re: /get new video package timeout/, title: () => 'No video data arrived: the picture stops', fix: 'stbvideo', score: 35 },
+  { id: 'stb-sem', hint: 'SEMAPHORE creat failed', re: /SEMAPHORE creat failed/, title: () => 'The software ran out of semaphores', fix: 'stbcrash', score: 60 },
 ];
 const SIGN_PRE = new RegExp(Array.from(new Set(SIGNS.flatMap(s => [].concat(s.hint)))).map(escRe).join('|'));
 // What to try, by kind. why is the cause said plainly; steps are what to do about it.
 const FIXES = {
+  signal: { t: 'Fix the cable signal', why: 'The tuner could not lock onto the channel\'s frequency, or its data arrived damaged', steps: ['Measure the signal level and MER at the box with a meter, on the frequency named in the evidence.', 'Check the cable, its connectors and any splitter. If other boxes on the same cable work, try another wall socket or cable.', 'If every box on that frequency fails, the operator\'s feed on it is weak.'] },
+  ca: { t: 'Sort out the subscription', why: 'The CA did not allow the channel', steps: ['Read the CA message in the evidence: 1-20 is a channel outside the subscription, 18-206 a box the operator has not activated.', 'Check this box\'s products with the operator, with its NUID from the Overview.'] },
+  stbcrash: { t: 'Report the set-top box crash', why: 'The box\'s software crashed, or stopped and was restarted by its watchdog', steps: ['Send this log to the software team: the eCos assertion names the file and function.', 'Note what was being done just before (the Set-top box card shows it), and capture again from before it happens.'] },
+  stbvideo: { t: 'Check the channel\'s video', why: 'No video data arrived for the channel', steps: ['Check the same channel on another box. If it plays there, send this log to the software team.', 'If it fails on every box, the channel\'s video is missing at the headend.'] },
   crash: { t: 'Recover from the app crash', why: 'The app crashed', steps: ['Open the app again. If it crashes at the same step, note that step.', 'Update the app, or clear its cache (Settings → Apps → the app → Clear cache), then its data if it keeps crashing.', 'Send the exception to the app\'s developer: its first app frame names the code that failed.'] },
   anr: { t: 'Unfreeze the app', why: 'The app stopped responding', steps: ['Force-stop the app (Settings → Apps → the app → Force stop) and open it again.', 'Check the same minutes for low memory, full storage or heavy load; they often cause freezes.', 'For the developer: /data/anr/traces.txt on the box shows what the app was doing.'] },
   native: { t: 'Native crash', why: 'A native crash killed the process', steps: ['Update the app and the firmware. Native crashes usually come from a codec, a driver or the app\'s own library.', 'Collect /data/tombstones from the box for the developer or the firmware team.'] },
@@ -3454,15 +3688,19 @@ function sortedTimes() {
 // Every place in the log the time could mean: each day it covers, morning and evening.
 function askCands(q) {
   const T = q.time, ts = sortedTimes(); if (!T || !ts.length) return [];
-  const hours = T.ap ? [T.ap === 'p' ? T.h % 12 + 12 : T.h % 12] : T.h === 12 ? [12, 0] : T.h < 12 ? [T.h, T.h + 12] : [T.h];
+  // Time since start-up has no afternoon; and "1:08" after a start-up is as often 1 min 8 s as 1 h 8 min.
+  const up = D && D.uptime && !T.ap;
+  const hours = up ? [T.h] : T.ap ? [T.ap === 'p' ? T.h % 12 + 12 : T.h % 12] : T.h === 12 ? [12, 0] : T.h < 12 ? [T.h, T.h + 12] : [T.h];
   const span = T.m == null ? 3600e3 : T.s == null ? 60e3 : 1e3;
   const out = [];
   for (let k = 0; k < ts.length;) {
     const day = Math.floor(ts[k] / 864e5);
-    for (const h of hours) {
-      const t0 = day * 864e5 + h * 3600e3 + (T.m || 0) * 60e3 + (T.s || 0) * 1e3, t1 = t0 + span - 1, dt = new Date(t0);
+    const tries = hours.map(h => [day * 864e5 + h * 3600e3 + (T.m || 0) * 60e3 + (T.s || 0) * 1e3, span]);
+    if (up && T.m != null && T.s == null && T.h < 60) tries.push([day * 864e5 + T.h * 60e3 + T.m * 1e3, 1e3]);
+    for (const [t0, sp] of tries) {
+      const t1 = t0 + sp - 1, dt = new Date(t0);
       if (q.date && !((dt.getUTCMonth() + 1 === q.date.a && dt.getUTCDate() === q.date.b) || (!q.date.named && dt.getUTCMonth() + 1 === q.date.b && dt.getUTCDate() === q.date.a))) continue;
-      if (upperBound(ts, t1 + 600e3) - lowerBound(ts, t0 - 600e3) > 0) out.push({ t0, t1, span });
+      if (upperBound(ts, t1 + 600e3) - lowerBound(ts, t0 - 600e3) > 0) out.push({ t0, t1, span: sp });
     }
     k = lowerBound(ts, (day + 1) * 864e5);
   }
@@ -3473,7 +3711,11 @@ function logCoverage() {
   for (let k = 0; k < ts.length;) { const day = Math.floor(ts[k] / 864e5), e = lowerBound(ts, (day + 1) * 864e5); out.push([ts[k], ts[e - 1]]); k = e; }
   return out;
 }
-const dayOf = t => { const d = new Date(t); return p2(d.getUTCMonth() + 1) + '-' + p2(d.getUTCDate()); };
+// A set-top box's times count from each start-up, and each start-up is a day: it is named as such.
+const dayOf = t => {
+  if (D && D.zboots && D.zboots.length) { let k = 0; for (let j = 0; j < D.zboots.length; j++) if (D.zboots[j].base <= t) k = j; return 'start-up ' + (k + 1); }
+  const d = new Date(t); return p2(d.getUTCMonth() + 1) + '-' + p2(d.getUTCDate());
+};
 function fixKind(label) {
   const L = [[/^ANR|^Freeze report/, 'anr'], [/^Native crash|^Crash dump/, 'native'], [/^Process died/, 'died'], [/Watchdog killed/, 'watchdog'], [/^App crash|^Force finishing/, 'crash'],
     [/Ethernet (?:link down|disconnected)/, 'eth-down'], [/Wi-Fi disconnected|beacon loss|watchdog restarted Wi-Fi|Wi-Fi disconnected/, 'wifi-drop'], [/DNS could not resolve/, 'dns'],
@@ -3891,6 +4133,535 @@ function analyzeStorage(d) {
   return Object.assign(Z, { verdict, headline, findings: F, keyEvents: Z.steps.filter(s => s.key) });
 }
 
+/* ==========================================================================
+   Set-top box diagnosis. A Skyworth DVB-C box on eCos (MStar chip, Nagra CA),
+   read from its serial console: what the box is, each start-up and why, crashes,
+   the cable signal, every channel change and where its time went, what the CA
+   allowed, the channel list, software updates, ads and recordings. ZAP_RULES
+   again: one row per pattern, run over the lines once.
+   ========================================================================== */
+const ZBOOT_WHY = { power: 'switched on', watchdog: 'restarted by its watchdog after it stopped responding', console: 'held at the U-Boot prompt by hand', restart: 'restarted by its software', update: 'restarted to install an update', standby: 'woke from standby', running: 'already on when the log began', unknown: 'started again' };
+// Nagra's answer for a channel (pxAccess), and the message the box then shows (dwErrCode-dwSubErrCode).
+const ZACCESS = { 0: 'clear (not scrambled)', 1: 'granted', 2: 'free', 100: 'denied: no subscription for it', 101: 'denied: no valid secure device', 115: 'denied: the box must be activated first', 116: 'denied (Nagra access code 116)' };
+const ZACCESS_SHORT = { 0: 'not scrambled', 1: 'granted', 2: 'free', 100: 'not subscribed', 101: 'no secure device', 115: 'not activated', 116: 'refused (116)' };
+const ZCAMSG = {
+  '1-20': { k: 'denied', s: 'the channel is not in the subscription' },
+  '2-200': { k: 'device', s: 'the CA had no valid secure device to decrypt with' },
+  '18-206': { k: 'activate', s: 'the box has to be activated by the operator' },
+  '19-51': { k: 'denied116', s: 'the CA refused the channel (Nagra access code 116)' },
+  '256-61': { k: 'nosignal', s: 'no signal' },
+};
+const MHZ = f => (f / 1e6).toFixed(f % 1e6 ? 1 : 0) + ' MHz';
+const sizeBytes = b => (b / 1048576).toFixed(1) + ' MB';
+const zDate = m => { const y = +m[1], yr = y < 1900 ? y + 1900 : y; return Date.UTC(yr, +m[2] - 1, +m[3], +m[4] || 0, +m[5] || 0, +m[6] || 0); };
+const zDay = t => { const d = new Date(t); return d.getUTCDate() + ' ' + MONTHS[d.getUTCMonth()] + ' ' + d.getUTCFullYear(); };
+const zClock = t => { const d = new Date(t); return zDay(t) + ', ' + p2(d.getUTCHours()) + ':' + p2(d.getUTCMinutes()) + ':' + p2(d.getUTCSeconds()); };
+// Which start-up a line belongs to. They are numbered from 1 in the order the log has them; the
+// first may be one that happened before the log began (the box was already on).
+function zbootOf(d, i) { const b = d.zboots; let lo = 0, hi = b.length - 1; while (lo < hi) { const m = (lo + hi + 1) >> 1; if (b[m].line <= i) lo = m; else hi = m - 1; } return lo; }
+const zbootNo = (d, k) => k + 1;
+function zwhen(d, i) {
+  const t = d.t[i]; if (!isFinite(t)) return 'line ' + fmtN(i + 1);
+  return fmtT(t, false) + (d.zboots.length > 1 ? ' after start-up ' + zbootNo(d, zbootOf(d, i)) : '');
+}
+function zStep(Z, d, i, label, status, o) {
+  o = o || {};
+  const t = d.t[i], key = o.cat + '|' + label, pv = Z.last.get(key);
+  if (pv && (isFinite(t) && isFinite(pv.t) ? t - pv.t <= (o.dedupe || 3000) : i - pv.i < 30)) { pv.s.n++; pv.t = t; pv.i = i; return pv.s; }
+  const s = { cat: o.cat || 'tv', line: i, t, label, status: status || 'info', n: 1, plain: o.plain || '', key: !!o.key, area: o.area || '' };
+  Z.steps.push(s); Z.last.set(key, { t, i, s });
+  return s;
+}
+function zTuneEnd(Z, ok, i) { const u = Z.tune; if (!u || u.done) return; u.done = true; u.ok = ok; u.end = i; }
+// The keys that change channel. A change is timed from the key, as the viewer sees it.
+const ZAP_KEYS = /^(?:ch[+-]|up|down|num\d|ok|pr|recall|back)$/;
+function zZapNew(Z, d, i, chid, how) {
+  const k = Z.keys[Z.keys.length - 1], t = d.t[i], key = k && ZAP_KEYS.test(k.k) && t - k.t >= 0 && t - k.t <= 2000 ? k : null;
+  return { line: i, t, t0: key ? key.t : t, key: key ? key.k : '', chid, boot: zbootOf(d, i), how };
+}
+// A channel change ends when the picture comes, when another starts, or with the start-up.
+function zZapEnd(Z, d, i, why) {
+  const z = Z.cur; if (!z) return;
+  Z.cur = null; z.end = i; z.endWhy = why;
+  Z.zaps.push(z);
+}
+const ZAP_RULES = [
+  // What the box is.
+  { hint: 'U-Boot 20', re: /^U-Boot (\S+) \(([^)]+)\)\s*(\S*)/, on(m, Z, d, i) { Z.box.uboot = m[1].replace(/^20\d\d\.\d\d-/, '') + (m[3] ? ' · ' + m[3] : ''); Z.box.ubootLine = i; } },
+  { hint: 'HWCAPS_CHIPID_', re: /HWCAPS_CHIPID_(\w+)/, on(m, Z) { Z.box.chip = m[1]; } },
+  { hint: 'ram size:', re: /ram size:(\d+)MB/, on(m, Z) { Z.box.ram = m[1] + ' MB'; } },
+  { hint: 'svn version is', re: /svn version is (\d+)/, on(m, Z) { Z.box.svn = m[1]; } },
+  { hint: 'sk hdi usb init ok.version:', re: /version:\S+?-(\w{3} +\d{1,2} \d{4})/, on(m, Z, d, i) { Z.box.build = m[1].replace(/ +/g, ' '); Z.box.buildLine = i; } },
+  { hint: 'ver_hw:', re: /ver_hw:\s*(\d+)/, on(m, Z) { Z.box.hw = m[1]; } },
+  { hint: 'manufacture_code:', re: /manufacture_code:\s*(\d+)/, on(m, Z) { Z.box.mfr = m[1]; } },
+  { hint: 'the old ver is', re: /the old ver is (-?\d+) new ver is (-?\d+)/, on(m, Z, d, i, line) {
+    if (/OTA_Check\b/.test(line) || +m[1] > 1000) { Z.box.sw = m[1]; Z.box.swLine = i; }
+    if (+m[2] > +m[1] && +m[1] > 1000 && +m[2] !== -559038737) { Z.upd.offer = { from: m[1], to: m[2], line: i }; }
+  } },
+  { hint: 'm_bCAVer:', re: /m_bCAVer:\s*(\S+)/, on(m, Z, d, i) { Z.box.caVer = m[1]; Z.box.caLine = i; } },
+  { hint: 'm_bNuid:', re: /m_bNuid:\s*([0-9A-Fa-f ]+?)\s*$/, on(m, Z) { Z.box.nuid = m[1]; } },
+  { hint: 'm_bCASn:', re: /m_bCASn:\s*([0-9A-Fa-f ]+?)\s*$/, on(m, Z) { Z.box.casn = m[1]; } },
+  { hint: 'cur_time ', re: /cur_time (\d{4})-(\d{1,2})-(\d{1,2}) (\d{1,2}):(\d{1,2}):(\d{1,2})/, on(m, Z, d, i) { const b = Z.boots[zbootOf(d, i)]; if (b && !b.clock) b.clock = { line: i, wall: zDate(m) }; Z.box.clock = zDate(m); } },
+  // Start-ups, crashes and memory.
+  { hint: 'Reboot by WDT', re: /Boot Check: Reboot by WDT/, on(m, Z, d, i) { const b = Z.boots[zbootOf(d, i)]; if (b) b.why = 'watchdog'; } },
+  { hint: 'AC on', re: /^AC on\b/, on(m, Z, d, i) { const b = Z.boots[zbootOf(d, i)]; if (b && !b.why) b.why = 'power'; } },
+  { hint: 'k1c# ', re: /^k1c# (.*?);?\s*$/, on(m, Z, d, i) { const b = Z.boots[zbootOf(d, i)]; if (b && !b.why) b.why = 'console'; Z.upd.console.push({ line: i, cmd: m[1] }); } },
+  { hint: 'Unable to read', re: /\*\* Unable to read "([^"]+)"/, on(m, Z, d, i) { Z.upd.loadFail.push({ line: i, file: m[1] }); } },
+  { hint: 'MsDecompress7() failed', re: /MsDecompress7\(\) failed/, on(m, Z, d, i) { Z.decomp.push(i); const b = Z.boots[zbootOf(d, i)]; if (b) b.decomp = i; zStep(Z, d, i, 'The main program in flash is damaged: U-Boot could not unpack it', 'fail', { cat: 'power', key: true, plain: 'The main program could not start (damaged)', area: 'zbox' }); } },
+  { hint: 'update flags:[', re: /update flags:\[Skyworth flash code ok\.([A-Za-z ]*)/, on(m, Z, d, i) { const f = m[1].trim(); if (f) Z.upd.flags.push({ line: i, f }); } },
+  { hint: 'ASSERT FAIL AT', re: /^ASSERT FAIL AT: <\d+>(\S+)\s*\[\s*(\d+)\]\s*(.+?)\s{2,}(\S.*?)\s*$/, on(m, Z, d, i) {
+    const c = { line: i, file: m[1], at: m[2], fn: m[3], msg: m[4], kind: /malloc|free|mem/i.test(m[1] + m[3]) ? 'memory' : 'assert' };
+    Z.crashes.push(c);
+    zStep(Z, d, i, 'Crash: eCos assertion in ' + m[1] + ' (' + m[3].replace(/^\w+\s+/, '') + '): ' + m[4], 'fail', { cat: 'power', key: true, plain: c.kind === 'memory' ? 'The box crashed: its memory was corrupted' : 'The box crashed', area: 'zbox', dedupe: 60000 });
+  } },
+  { hint: 'SEMAPHORE creat failed', re: /SEMAPHORE creat failed/, on(m, Z, d, i) { Z.sem.push(i); zStep(Z, d, i, 'Out of semaphores: the software could not create one more', 'fail', { cat: 'power', key: Z.sem.length === 1, area: 'zbox', dedupe: 600000 }); } },
+  { hint: 'Total free space:', re: /^Total free space: (\d+) bytes/, on(m, Z, d, i) { if (isFinite(d.t[i])) Z.mem.push([d.t[i], +m[1], i]); } },
+  { hint: 'system restart!', re: /system restart!/, on(m, Z, d, i) { Z.restarts.push({ line: i, why: 'restart' }); } },
+  { hint: 'restart to update', re: /restart to update/, on(m, Z, d, i) { Z.restarts.push({ line: i, why: 'update' }); Z.upd.start.push(i); zStep(Z, d, i, 'Restarting to install a software update', 'info', { cat: 'update', key: true, plain: 'The box restarted to install an update', area: 'zupd' }); } },
+  // Standby.
+  { hint: 'Standby:Power OFF', re: /Standby:Power OFF/, on(m, Z, d, i) { Z.standby.push({ line: i, kind: 'off' }); zStep(Z, d, i, 'Went into standby', 'info', { cat: 'power', key: true, plain: 'The box went into standby', dedupe: 10000 }); } },
+  { hint: 'standby and wake up', re: /STB standby and wake up/, on(m, Z, d, i) { Z.standby.push({ line: i, kind: 'wake' }); zStep(Z, d, i, 'Woke from standby', 'info', { cat: 'power', key: true, plain: 'The box woke from standby', dedupe: 10000 }); } },
+  // The remote control.
+  { hint: 'RemoteKey_AUTOTEST_Start:', re: /RemoteKey_AUTOTEST_Start:(\S+?)_key/, on(m, Z, d, i) { Z.keys.push({ line: i, t: d.t[i], k: m[1] }); } },
+  // Tuning and channel changes.
+  { hint: 'sky_channel_change true', re: /sky_channel_change true chid=(\d+)/, on(m, Z, d, i) {
+    if (Z.cur) zZapEnd(Z, d, i, 'next');
+    Z.cur = zZapNew(Z, d, i, +m[1], 'key');
+  } },
+  // Older software logs no channel change: a channel key, then the service is closed.
+  { hint: 'START CLOSE the service', re: /START CLOSE the service/, on(m, Z, d, i) { if (!Z.cur) { const k = Z.keys[Z.keys.length - 1]; Z.cur = zZapNew(Z, d, i, null, k && ZAP_KEYS.test(k.k) && d.t[i] - k.t <= 2000 ? 'key' : 'auto'); } } },
+  // The channel's streams found (from its PMT), or its PMT missing from the PAT.
+  { hint: 'the vid is [', re: /the vid is \[0x([0-9a-f]+)\]/i, on(m, Z, d, i) { if (Z.cur && m[1].toLowerCase() !== '1fff' && !Z.cur.vid) Z.cur.vid = i; } },
+  { hint: 'the aid is [', re: /the aid is \[0x([0-9a-f]+)\]/i, on(m, Z) { if (Z.cur && m[1].toLowerCase() !== '1fff') Z.cur.aid = true; } },
+  { hint: 'pmt pid is [0x1fff]', re: /get the pmt pid is \[0x1fff\]/, on(m, Z) { if (Z.cur) Z.cur.noPmt = (Z.cur.noPmt || 0) + 1; } },
+  // The first picture decoded: every software version logs this one.
+  { hint: 'E_VDEC_EX_EVENT_DISP_INFO_CHG', re: /Got E_VDEC_EX_EVENT_DISP_INFO_CHG/, on(m, Z, d, i) { if (Z.cur && !Z.cur.info) Z.cur.info = i; } },
+  { hint: 'PLAY_FORCE_STOP', re: /PLAY_FORCE_STOP/, on(m, Z, d, i) { if (Z.cur) Z.cur.forced = i; } },
+  { hint: 'sky_CNCT_LockFreq hDemodID', re: /tp_id=(\d+),sat_id=\d+,freq=(\d+),symbol_rate=(\d+),qam=(\d+)/, on(m, Z, d, i) {
+    zTuneEnd(Z, false, i);
+    const u = Z.tune = { line: i, t: d.t[i], tp: +m[1], freq: +m[2], sr: +m[3], qam: +m[4], retries: 0, done: false, ok: false, lock: -1, fail: -1 };
+    Z.tunes.push(u);
+    if (Z.cur && !Z.cur.vidOn) Z.cur.tune = u;
+  } },
+  { hint: 'scan pararm is same', re: /cable scan pararm is same as last param/, on(m, Z, d, i) { const u = Z.tune; if (u && !u.done) { u.same = true; u.done = true; u.ok = true; u.lock = i; } } },
+  { hint: 'MI_TUNER_Tune!!!!!', re: /MI_TUNER_Tune!!!!! stCarrierParam\.u32Frequency: (\d+)/, on(m, Z, d, i) { const u = Z.tune; if (u && !u.done) u.retries++; } },
+  { hint: 'LOCKED!!!!!', re: /LOCKED!!!!!/, on(m, Z, d, i) { const u = Z.tune; if (u && !u.done) { u.lock = i; zTuneEnd(Z, true, i); } Z.locks++; } },
+  { hint: 'TIMEOUT NO LOCK', re: /TIMEOUT NO LOCK\.\s*(\d+)\s*ms/, on(m, Z, d, i) { const u = Z.tune; if (u) { u.fail = i; u.waited = +m[1]; zTuneEnd(Z, false, i); } Z.noLock.push(i); if (Z.cur) Z.cur.noLock = i; } },
+  { hint: 'fail to sky_CNCT_LockFreq', re: /fail to sky_CNCT_LockFreq/, on(m, Z, d, i) { const u = Z.tune; if (u && u.fail < 0) { u.fail = i; zTuneEnd(Z, false, i); } if (Z.cur) Z.cur.noLock = i; } },
+  { hint: 'PVR signal lost', re: /PVR signal lost/, on(m, Z, d, i) { Z.sigLost.push(i); } },
+  { hint: '_MI_VMON_Stop', re: /_MI_VMON_Stop\]/, on(m, Z, d, i) { if (Z.cur && !Z.cur.vidStop) Z.cur.vidStop = i; } },
+  { hint: '_MI_VMON_Start', re: /_MI_VMON_Start\]/, on(m, Z, d, i) { if (Z.cur && !Z.cur.vdec) Z.cur.vdec = i; } },
+  { hint: 'VDEC get info change', re: /VDEC get info change/, on(m, Z, d, i) { if (Z.cur && !Z.cur.info) Z.cur.info = i; } },
+  { hint: 'Curr, u32FrameRate', re: /Curr, u32FrameRate:(\d+), u16HorSize:(\d+), u16VerSize:(\d+), u8Interlace:(\d)/, on(m, Z, d, i) { if (+m[2] && +m[3]) { Z.res = m[2] + '×' + m[3] + (m[4] === '1' ? 'i' : 'p') + ' ' + Math.round(+m[1] / 1000); if (Z.cur) Z.cur.res = Z.res; } } },
+  { hint: 'WaitSync start', re: /WaitSync start/, on(m, Z, d, i) { if (Z.cur && !Z.cur.sync) Z.cur.sync = i; } },
+  { hint: 'Zapping Time = ', re: /Zapping Time = (\d+)ms/, on(m, Z, d, i) { if (Z.cur) Z.cur.drv = +m[1]; } },
+  { hint: 'EVENT_VIDEO_ON', re: /E_MI_VMON_CALLBACK_EVENT_VIDEO_ON/, on(m, Z, d, i) {
+    Z.vidOn++;
+    const b = Z.boots[zbootOf(d, i)]; if (b && b.pic < 0) b.pic = i;
+    if (Z.cur && Z.cur.line < i) { Z.cur.vidOn = i; zZapEnd(Z, d, i, 'picture'); }
+    else if (Z.off) { Z.blackouts.push({ line: Z.off, end: i, ms: d.t[i] - d.t[Z.off] }); }
+    Z.off = 0; Z.playing = true;
+  } },
+  { hint: 'EVENT_VIDEO_OFF', re: /E_MI_VMON_CALLBACK_EVENT_VIDEO_OFF/, on(m, Z, d, i) { Z.playing = false; if (!Z.cur) Z.off = i; } },
+  { hint: 'DECODE_STOPPED', re: /get new (video|audio) package timeout/, on(m, Z, d, i) {
+    if (Z.cur) { if (m[1] === 'video') Z.cur.vto = (Z.cur.vto || 0) + 1; return; }
+    if (m[1] === 'video') { if (Z.playing) Z.stall.push(i); } else if (Z.playing) Z.astall.push(i);
+  } },
+  { hint: 'AudioEventNotify]decode status NG', re: /decode status NG/, on(m, Z, d, i) { Z.audioNg.push(i); } },
+  // Damaged video data: what a noisy signal (a low MER) does, when the box logs no signal figures.
+  { hint: 'VideoEventNotify] data error', re: /VideoEventNotify\] data error/, on(m, Z, d, i) { Z.vErr.push(i); } },
+  // Conditional access (Nagra).
+  { hint: 'Start to Initialize CA', re: /Start to Initialize CA/, on(m, Z, d, i) { Z.ca.init.push(i); } },
+  { hint: 'pxAccess: ', re: /pxAccess: (\d+)/, on(m, Z, d, i) { const v = +m[1]; Z.ca.access.push({ line: i, v, chid: Z.cur ? Z.cur.chid : Z.lastChid }); if (Z.cur) Z.cur.access = v; } },
+  { hint: 'dwErrCode===', re: /dwErrCode===(\d+) ,dwSubErrCode= ?(\d+)/, on(m, Z, d, i) {
+    if (m[1] === '0') return;
+    const k = m[1] + '-' + m[2], x = ZCAMSG[k] || { k: 'other', s: 'CA message ' + k };
+    Z.ca.msgs.push({ line: i, code: k, k: x.k, chid: Z.cur ? Z.cur.chid : Z.lastChid });
+    if (Z.cur) Z.cur.caMsg = k;
+    zStep(Z, d, i, 'On screen: CA message ' + k + ' (' + x.s + ')', x.k === 'nosignal' ? 'warn' : 'fail', { cat: x.k === 'nosignal' ? 'tv' : 'ca', key: true, plain: x.k === 'nosignal' ? 'No signal on screen' : 'CA message ' + k + ': ' + x.s, area: x.k === 'nosignal' ? 'zsig' : 'zca', dedupe: 20000 });
+  } },
+  { hint: 'get product id is', re: /CA_UpdateProductInfo line:\d+\]:get product id is (\d+)/, on(m, Z, d, i) { const t = d.t[i], R = Z.ca.ref; if (!R || !(t - R.t < 2500)) Z.ca.refresh.push(Z.ca.ref = { line: i, t, ids: new Set() }); Z.ca.ref.t = t; Z.ca.ref.ids.add(+m[1]); Z.ca.pid = +m[1]; } },
+  { hint: 'Date time is[', re: /CA_UpdateProductInfo line:\d+\]:(Begin|Expired)Date time is\[(\d+)-+(\d+)-+(\d+)-+(\d+)-+(\d+)-+(\d+)\]/, on(m, Z, d, i) {
+    const id = Z.ca.pid; if (id == null) return;
+    let p = Z.ca.products.get(id); if (!p) Z.ca.products.set(id, p = { id, first: i, last: i });
+    p.last = i; p[m[1] === 'Begin' ? 'begin' : 'end'] = zDate([0, m[2], m[3], m[4], m[5], m[6], m[7]]);
+  } },
+  { hint: 'NumberOfObjects:0', re: /CA_UpdateProductInfo line:\d+\]:caRequestGetObjects fail reqStatus:\d+ NumberOfObjects:0/, on(m, Z, d, i) { Z.ca.refresh.push(Z.ca.ref = { line: i, t: d.t[i], ids: new Set(), none: true }); } },
+  { hint: 'CA_PURCHASE_SUSPENDED', re: /CA_PURCHASE_SUSPENDED/, on(m, Z, d, i) { Z.ca.suspended.push({ line: i, id: Z.ca.pid }); } },
+  { hint: 'Change chanel BZ PRO NO Authorization', re: /Change chanel BZ PRO NO Authorization/, on(m, Z, d, i) { Z.ca.noAuth.push(i); } },
+  { hint: 'DisposeCACommandMsg() wParm1', re: /DisposeCACommandMsg\(\) wParm1 = (\d+)/, on(m, Z, d, i) { Z.ca.cmds.push({ line: i, type: +m[1] }); } },
+  { hint: 'ca finger print window', re: /ca finger print window/, on(m, Z, d, i) { Z.ca.finger.push(i); } },
+  { hint: 'ca invalid entitlement window', re: /ca invalid entitlement window/, on(m, Z, d, i) { Z.ca.invalidWin.push(i); } },
+  // The channel list.
+  { hint: 'rec_max_num[', re: /name\[(\w+)\],list count\[(\d+)\]>= tab->rec_max_num\[(\d+)\]/, on(m, Z, d, i) { const o = Z.si.full.get(m[1]) || { name: m[1], line: i, n: 0, max: +m[3] }; o.n++; Z.si.full.set(m[1], o); } },
+  { hint: 'error to get service srvid', re: /error to get service srvid (\d+) lcn (\d+)/, on(m, Z, d, i) { if (!Z.si.missing.has(m[1])) Z.si.missing.set(m[1], { line: i, lcn: +m[2] }); } },
+  { hint: 'Add bouquet ', re: /Add bouquet (.+?)(?: id \d+.*?)? success/, on(m, Z, d, i) { Z.si.bouquets.add(m[1].trim()); } },
+  { hint: 'Modify bouquet[', re: /Modify bouquet\[id=\d+\] (.+?) new version=(\d+) oldversion=(\d+)/, on(m, Z, d, i) { Z.si.batChange.push({ line: i, name: m[1].trim(), from: +m[3], to: +m[2] }); zStep(Z, d, i, 'The operator\'s channel list (BAT) changed: ' + m[1].trim() + ', version ' + m[3] + ' → ' + m[2], 'info', { cat: 'tv', key: true, plain: 'The operator sent a new channel list', area: 'zlist', dedupe: 60000 }); } },
+  { hint: 'add fre ', re: /add fre (\d+) tpid/, on(m, Z, d, i) { Z.si.nitAdd.add(+m[1]); } },
+  { hint: 'netID = ', re: /netID = (\d+)/, on(m, Z) { Z.si.net = +m[1]; } },
+  { hint: 'lcn = 999', re: /^\s*lcn = 999 ,/, on(m, Z, d, i) { Z.si.lcn999.push(i); } },
+  // Software updates.
+  { hint: 'Usb root dir [/] has', re: /Usb root dir \[\/\] has (no|\d+) mount point/, on(m, Z, d, i) { Z.upd.usbIn = m[1] !== 'no'; if (Z.upd.usbIn && !Z.upd.usbSeen) Z.upd.usbSeen = i; } },
+  { hint: 'open usb upgrade file failed', re: /open usb upgrade file failed/, on(m, Z, d, i) { if (Z.upd.usbIn) Z.upd.noFile.push(i); } },
+  { hint: 'Skyapi_ota_status', re: /Skyapi_ota_status\s+(\d+)/, on(m, Z, d, i) { if (m[1] !== '0' && !Z.upd.otaFound) { Z.upd.otaFound = i; zStep(Z, d, i, 'A software update was found on the broadcast (OTA)', 'info', { cat: 'update', key: true, plain: 'A software update was found', area: 'zupd' }); } } },
+  // Ads (OVT).
+  { hint: 'ovt advert recv finish', re: /ovt advert recv finish/, on(m, Z, d, i) { Z.ads.ok.push(i); } },
+  { hint: 'ovt_advert_get_data fail', re: /ovt_advert_get_data fail/, on(m, Z, d, i) { Z.ads.fail.push(i); } },
+  { hint: 'recv pic data timeout', re: /recv pic data timeout/, on(m, Z, d, i) { Z.ads.timeout.push(i); } },
+  { hint: 'ovt_advert_get_pic_information data', re: /size (\d+), width (\d+), height (\d+)/, on(m, Z, d, i) { Z.ads.pics.add(m[2] + '×' + m[3]); } },
+  { hint: 'load boot advert from flash ok', re: /load boot advert from flash ok pic_num=(\d+)/, on(m, Z, d, i) { Z.ads.bootAd = +m[1]; } },
+  // Recording and timeshift.
+  { hint: 'mount point: disk_', re: /Add No\.\d+ mount point: (disk_\d+)/, on(m, Z, d, i) { if (!Z.pvr.disk) Z.pvr.disk = i; } },
+  { hint: 'timeshift error is real', re: /timeshift error is real/, on(m, Z, d, i) { Z.pvr.err.push({ line: i, what: 'Timeshift stopped with an error' }); } },
+  { hint: 'timeshift_start failed', re: /P_pvr_timeshift_start failed/, on(m, Z, d, i) { Z.pvr.err.push({ line: i, what: 'Timeshift could not start' }); } },
+  { hint: 'MI_PVR_PlaybackStart fail', re: /MI_PVR_PlaybackStart fail/, on(m, Z, d, i) { Z.pvr.err.push({ line: i, what: 'A recording could not be played' }); } },
+  { hint: 'Failed to get pvr path', re: /Failed to get pvr path/, on(m, Z, d, i) { Z.pvr.err.push({ line: i, what: 'No USB disk to record to' }); } },
+  // HDMI.
+  { hint: 'EDID NOT READY', re: /EDID NOT READY/, on(m, Z, d, i) { const b = Z.boots[zbootOf(d, i)]; if (b) b.noEdid = true; } },
+  { hint: 'Rx Support HDMI mode', re: /Rx Support HDMI mode/, on(m, Z, d, i) { const b = Z.boots[zbootOf(d, i)]; if (b) b.edid = true; } },
+  { hint: 'HDCP failed', re: /\[trace_hdcp\] HDCP failed/, on(m, Z, d, i) { Z.hdcp.push(i); } },
+];
+const ZAP_PRE = new RegExp(Array.from(new Set(ZAP_RULES.map(r => r.hint))).map(escRe).join('|'));
+function analyzeZapper(d) {
+  const Z = {
+    box: {}, steps: [], last: new Map(), boots: d.zboots.map(b => Object.assign({}, b, { why: '', app: -1, pic: -1, end: -1 })), crashes: [], decomp: [], sem: [], mem: [], restarts: [], standby: [], keys: [],
+    tunes: [], tune: null, locks: 0, noLock: [], sigLost: [], zaps: [], cur: null, lastChid: null, vidOn: 0, playing: false, off: 0, blackouts: [], stall: [], astall: [], audioNg: [], vErr: [], res: '', hdcp: [],
+    ca: { init: [], access: [], msgs: [], products: new Map(), refresh: [], ref: null, pid: null, suspended: [], noAuth: [], cmds: [], finger: [], invalidWin: [] },
+    si: { full: new Map(), missing: new Map(), bouquets: new Set(), batChange: [], nitAdd: new Set(), net: null, lcn999: [] },
+    upd: { console: [], loadFail: [], flags: [], start: [], noFile: [], usbIn: false, usbSeen: 0, otaFound: 0, offer: null },
+    ads: { ok: [], fail: [], timeout: [], pics: new Set(), bootAd: null }, pvr: { disk: 0, err: [] },
+  };
+  let bk = 0;
+  for (let i = 0; i < d.n; i++) {
+    const line = d.raw[i];
+    // A start-up ends whatever was going on.
+    while (bk < Z.boots.length && Z.boots[bk].line <= i) {
+      if (bk) { const e = Z.boots[bk - 1].end; if (Z.cur) zZapEnd(Z, d, e >= 0 ? e : i - 1, 'restart'); zTuneEnd(Z, false, i); Z.tune = null; Z.playing = false; Z.off = 0; }
+      bk++;
+    }
+    if (bk && d.ms[i]) { const b = Z.boots[bk - 1]; if (b.app < 0) b.app = i; b.end = i; }
+    if (!ZAP_PRE.test(line)) continue;
+    for (const r of ZAP_RULES) {
+      if (line.indexOf(r.hint) < 0) continue;
+      const m = r.re.exec(line); if (!m) continue;
+      r.on(m, Z, d, i, line);
+      break;
+    }
+    if (Z.cur && Z.cur.chid != null) Z.lastChid = Z.cur.chid;
+  }
+  zTuneEnd(Z, false, d.n - 1);
+  if (Z.cur) zZapEnd(Z, d, d.n - 1, 'end');
+  zapFinish(Z, d);
+  return Z;
+}
+// The stages of a channel change, as the viewer waits through them.
+const ZSTAGE = { tune: 'tuning to the frequency', stream: 'finding the channel\'s streams', decode: 'decoding the first picture', sync: 'putting sound and picture in step' };
+const ZAP_SLOW = 3500, ZAP_BLANK = 6000, BOOT_SLOW = 35000;
+const median = a => { if (!a.length) return NaN; const s = a.slice().sort((x, y) => x - y), h = s.length >> 1; return s.length & 1 ? s[h] : (s[h - 1] + s[h]) / 2; };
+const ZCA_DENY = new Set(['1-20', '2-200', '18-206', '19-51']), ZACC_DENY = new Set([100, 101, 115, 116]);
+function zapFinish(Z, d) {
+  const T = i => i ? d.t[i] : NaN, at = i => zwhen(d, i), F = Z.find = { zbox: [], zsig: [], zzap: [], zav: [], zca: [], zlist: [], zupd: [], zads: [], zpvr: [] };
+  const add = (a, sev, line, html, kind) => F[a].push({ sev, line, html, kind: kind || '' });
+  // ---------- start-ups ----------
+  Z.boots.forEach((b, k) => {
+    const lo = k ? Z.boots[k - 1].line : 0, hi = b.line;
+    if (!k && !b.banner) b.why = 'running';
+    else if (b.why !== 'watchdog' && b.why !== 'console') {
+      const r = Z.restarts.filter(x => x.line >= lo && x.line < hi).pop(), s = Z.standby.filter(x => x.line >= lo && x.line < hi).pop();
+      b.why = r ? r.why : s && s.kind === 'off' ? 'standby' : b.why || 'unknown';
+    }
+    b.no = zbootNo(d, k);
+    b.crash = k ? Z.crashes.filter(c => c.line >= lo && c.line < hi).pop() || null : null;
+    b.picMs = b.pic >= 0 && b.banner ? d.t[b.pic] - b.base : NaN;
+  });
+  for (const c of Z.crashes) {
+    const k = Z.keys.filter(x => x.line < c.line && d.t[c.line] - x.t < 20000).pop(), z = Z.zaps.concat(Z.cur ? [Z.cur] : []).filter(x => x.line < c.line && d.t[c.line] - x.t0 < 20000).pop();
+    c.ctx = z ? 'during a channel change' + (z.key ? ' (the ' + z.key + ' key)' : '') : k ? 'just after the ' + k.k + ' key was pressed' : '';
+    const nx = Z.boots.find(b => b.line > c.line);
+    c.then = nx ? nx.why : '';
+  }
+  const why = {}; for (const b of Z.boots) if (b.banner) why[b.why] = (why[b.why] || 0) + 1;
+  Z.bootWhy = why;
+  const started = Z.boots.filter(b => b.banner).length;
+  const startedText = started ? plural(started, 'start-up') + ': ' + Object.entries(why).map(([w, n]) => n + ' ' + ({ power: 'switched on', watchdog: 'by the watchdog', console: 'at the U-Boot prompt', restart: 'by the software', update: 'for an update', standby: 'from standby', unknown: 'for a reason the log does not give' }[w] || w)).join(', ') : '';
+  for (const c of Z.crashes) add('zbox', 'fail', c.line, '<b>The box crashed</b> at ' + esc(at(c.line)) + (c.ctx ? ', ' + esc(c.ctx) : '') + ': ' + (c.kind === 'memory' ? 'its memory was corrupted' : 'the software stopped on an error') + ' (eCos: <code>' + esc(c.msg) + '</code> in <code>' + esc(c.file) + '</code>).' + (c.then === 'watchdog' ? ' Its watchdog then restarted it.' : c.then ? '' : ' The log ends there.'), 'crash');
+  const wdtOnly = Z.boots.filter(b => b.why === 'watchdog' && !b.crash);
+  for (const b of wdtOnly.slice(0, 3)) { const p = Z.boots[Z.boots.indexOf(b) - 1]; add('zbox', 'fail', b.line, '<b>The box stopped responding</b>' + (p && p.end >= 0 ? ' (its last line at ' + esc(at(p.end)) + ')' : '') + ', and its watchdog restarted it as start-up ' + b.no + '.', 'hang'); }
+  if (Z.decomp.length) add('zbox', 'fail', Z.decomp[0], '<b>The main program in flash is damaged</b>: U-Boot could not unpack it (<code>MsDecompress7() failed</code>)' + (Z.decomp.length > 1 ? ', at ' + plural(Z.decomp.length, 'start-up') : '') + ', so the box cannot start.', 'decomp');
+  if (Z.sem.length) add('zbox', 'fail', Z.sem[0], '<b>The software ran out of semaphores</b> at ' + esc(at(Z.sem[0])) + ' (' + plural(Z.sem.length, 'refusal') + '): something keeps creating them without releasing them. Features that need one then fail.', 'sem');
+  // Free memory: the lowest, and whether it kept falling through a long start-up.
+  if (Z.mem.length) {
+    let lo = Z.mem[0]; for (const x of Z.mem) if (x[1] < lo[1]) lo = x;
+    Z.memLow = lo;
+    const runs = new Map(); for (const x of Z.mem) { const k = zbootOf(d, x[2]); if (!runs.has(k)) runs.set(k, []); runs.get(k).push(x); }
+    for (const r of runs.values()) {
+      if (r.length < 40 || r[r.length - 1][0] - r[0][0] < 30 * 60e3) continue;
+      const a = median(r.slice(Math.floor(r.length * 0.1), Math.floor(r.length * 0.3)).map(x => x[1])), b = median(r.slice(Math.floor(r.length * 0.8)).map(x => x[1]));
+      if (a - b > 3e6) { Z.memLeak = { from: a, to: b, line: r[r.length - 1][2], span: r[r.length - 1][0] - r[0][0] }; break; }
+    }
+    if (lo[1] < 1e6) add('zbox', 'fail', lo[2], '<b>Free memory ran out</b>: ' + esc(sizeBytes(lo[1])) + ' left at ' + esc(at(lo[2])) + '. The box may slow down, freeze or restart.', 'memory');
+    else if (lo[1] < 3e6) add('zbox', 'warn', lo[2], 'Free memory fell to <b>' + esc(sizeBytes(lo[1])) + '</b> at ' + esc(at(lo[2])) + ' (usually 9 to 17 MB).', 'memory');
+    if (Z.memLeak) add('zbox', 'warn', Z.memLeak.line, 'Free memory <b>kept falling</b>, from ' + esc(sizeBytes(Z.memLeak.from)) + ' to ' + esc(sizeBytes(Z.memLeak.to)) + ' over ' + esc(fmtDur(Z.memLeak.span)) + ': something may not be giving memory back.', 'leak');
+  }
+  const slowBoot = Z.boots.filter(b => b.picMs > BOOT_SLOW), picBoots = Z.boots.filter(b => isFinite(b.picMs));
+  Z.bootMed = median(picBoots.map(b => b.picMs));
+  if (slowBoot.length) add('zbox', slowBoot.length * 2 > picBoots.length ? 'warn' : 'info', slowBoot[0].pic, 'The first picture took <b>' + esc(fmtDur(Math.max(...slowBoot.map(b => b.picMs)))) + '</b> to appear after start-up' + (picBoots.length > 1 ? ' (' + slowBoot.length + ' of ' + picBoots.length + ' start-ups over ' + fmtDur(BOOT_SLOW) + ')' : '') + '. A box usually shows it in about 20 s.', 'slow-boot');
+  else if (picBoots.length) add('zbox', 'ok', picBoots[0].pic, 'After start-up the first picture came in <b>' + esc(fmtDur(Z.bootMed)) + '</b>' + (picBoots.length > 1 ? ' (the middle of ' + picBoots.length + ' start-ups)' : '') + '.');
+  if (started) add('zbox', wdtOnly.length || Z.crashes.length ? 'info' : 'ok', Z.boots.find(b => b.banner).line, esc(startedText) + '.');
+  const sb = Z.standby.filter(x => x.kind === 'off').length;
+  if (sb) add('zbox', 'info', Z.standby[0].line, 'It went into standby ' + plural(sb, 'time') + '.');
+  if (Z.box.caVer && /^D-/.test(Z.box.caVer)) add('zbox', 'info', Z.box.caLine, 'The CA software is a <b>development build</b> (<code>' + esc(Z.box.caVer) + '</code>); boxes for customers carry an <code>R-</code> (release) build.');
+  // ---------- the cable signal ----------
+  const byF = new Map();
+  for (const u of Z.tunes) u.ms = u.lock >= 0 && !u.same ? d.t[u.lock] - u.t : NaN;
+  for (const u of Z.tunes) {
+    if (u.same || !u.freq) continue;
+    let o = byF.get(u.freq); if (!o) byF.set(u.freq, o = { freq: u.freq, sr: u.sr, qam: u.qam, n: 0, ok: 0, fail: 0, ms: [], first: u.line, failLine: -1 });
+    // Failed: the software said so, or the tuner tried three times without a lock. A tune cut short
+    // by the next key, or by software that never logs the lock, is neither.
+    u.failed = u.fail >= 0 || (!u.ok && u.retries >= 3);
+    o.n++; if (u.ok) { o.ok++; if (isFinite(u.ms)) o.ms.push(u.ms); } else if (u.failed) { o.fail++; if (o.failLine < 0) o.failLine = u.fail >= 0 ? u.fail : u.line; }
+  }
+  Z.freqs = Array.from(byF.values()).sort((a, b) => a.freq - b.freq);
+  for (const o of Z.freqs) o.med = median(o.ms);
+  const badF = Z.freqs.filter(o => o.fail), slowF = Z.freqs.filter(o => o.med > 1500);
+  const noSig = Z.ca.msgs.filter(x => x.k === 'nosignal');
+  const lastTune = Z.tunes.filter(u => !u.same).pop();
+  Z.sigEnd = lastTune && !lastTune.ok && (lastTune.failed || noSig.length && noSig[noSig.length - 1].line > lastTune.line) ? lastTune : null;
+  const fl = o => MHZ(o.freq);
+  if (badF.length) add('zsig', badF.length * 2 >= Z.freqs.length ? 'fail' : 'warn', badF[0].failLine, 'The tuner <b>could not lock</b> onto ' + badF.slice(0, 4).map(o => '<b>' + esc(fl(o)) + '</b>' + (o.fail > 1 ? ' (' + o.fail + ' times)' : '')).join(', ') + (badF.length > 4 ? ' and ' + plural(badF.length - 4, 'more frequency', 'more frequencies') : '') + (Z.freqs.length > badF.length ? '; ' + plural(Z.freqs.length - badF.length, 'other frequency', 'other frequencies') + ' locked normally' : '') + '.', 'nolock');
+  if (noSig.length) add('zsig', 'warn', noSig[0].line, 'The box showed <b>no signal</b> (CA message 256-61) ' + plural(noSig.length, 'time') + ', first at ' + esc(at(noSig[0].line)) + '.', 'nosignal');
+  if (Z.sigLost.length) add('zsig', 'warn', Z.sigLost[0], 'The signal was lost during a recording ' + plural(Z.sigLost.length, 'time') + '.', 'nosignal');
+  if (slowF.length) add('zsig', 'warn', slowF[0].first, 'Locking was slow on ' + slowF.slice(0, 3).map(o => esc(fl(o)) + ' (' + esc(fmtDur(o.med)) + ')').join(', ') + '; a strong signal locks in about 0.3 s.', 'slow-lock');
+  const okF = Z.freqs.filter(o => o.ok), allMs = [].concat(...Z.freqs.map(o => o.ms));
+  if (okF.length) add('zsig', 'ok', okF[0].first, plural(okF.length, 'frequency', 'frequencies') + ' locked' + (allMs.length ? ', in ' + esc(fmtDur(median(allMs))) + ' as a rule' : '') + ' (' + okF.slice(0, 6).map(fl).join(', ') + (okF.length > 6 ? ', …' : '') + ').');
+  // ---------- channel changes ----------
+  for (const z of Z.zaps) {
+    const on = T(z.vidOn), u = z.tune, lock = u && u.lock >= 0 ? d.t[u.lock] : NaN;
+    z.ms = z.vidOn ? on - z.t0 : NaN;
+    z.dur = (z.vidOn ? on : d.t[z.end]) - z.t0;
+    // Where the wait went: tuning (to the lock), finding the streams (PAT and PMT, to the video PID),
+    // decoding the first picture (descrambling and the first key frame), then showing it in step.
+    const vid = T(z.vid), inf = T(z.info), a0 = isFinite(lock) ? lock : z.t0;
+    z.st = z.vidOn ? { tune: isFinite(lock) ? Math.max(0, lock - z.t0) : NaN, stream: isFinite(vid) ? Math.max(0, vid - a0) : NaN, decode: isFinite(vid) && isFinite(inf) ? Math.max(0, inf - vid) : NaN, sync: isFinite(inf) ? Math.max(0, on - inf) : NaN } : null;
+    // Why no picture came: the CA refused, there was no signal, or the channel carries sound only.
+    const why = (z.caMsg && ZCA_DENY.has(z.caMsg)) || ZACC_DENY.has(z.access) ? 'ca' : z.noLock != null || z.caMsg === '256-61' || (u && u.failed) ? 'signal' : '';
+    z.why = z.vidOn ? why : z.aid && !z.vid ? 'radio' : why || (!z.vid ? (z.noPmt ? 'nopmt' : 'nostream') : !z.info ? 'nodata' : 'noshow');
+    // A picture that came after a long wait was a blank screen that ended, not a slow change.
+    z.late = !!z.vidOn && z.how === 'key' && z.ms > 15000;
+    z.kind = z.vidOn ? (z.how !== 'key' ? 'first' : z.late ? 'late' : z.ms > ZAP_SLOW ? 'slow' : 'ok') : z.why === 'radio' ? 'radio' : z.dur < (z.why === 'ca' || z.why === 'signal' ? 3000 : ZAP_BLANK) ? 'skip' : 'blank';
+    if (z.st) { let w = ''; for (const k in z.st) if (isFinite(z.st[k]) && (!w || z.st[k] > z.st[w])) w = k; z.slowest = w; }
+  }
+  const zk = Z.zaps.filter(z => z.kind === 'ok' || z.kind === 'slow'), zms = zk.map(z => z.ms);
+  Z.zapMed = median(zms); Z.zapMax = zms.length ? Math.max(...zms) : NaN;
+  Z.slow = zk.filter(z => z.kind === 'slow').sort((a, b) => b.ms - a.ms);
+  Z.blank = Z.zaps.filter(z => z.kind === 'blank');
+  const blankX = Z.blank.filter(z => z.why !== 'ca' && z.why !== 'signal');
+  const WHY_BLANK = { nopmt: 'the channel was missing from the stream\'s table of channels (PAT), so its streams could not be found', nostream: 'the box tuned, but never found the channel\'s streams', nodata: 'the video started, but no picture data arrived', noshow: 'a picture was decoded but never shown', ca: 'the CA did not allow the channel', signal: 'there was no signal' };
+  if (zk.length) {
+    const stg = {}; for (const z of Z.slow) if (z.slowest) stg[z.slowest] = (stg[z.slowest] || 0) + 1;
+    const top = Object.keys(stg).sort((a, b) => stg[b] - stg[a])[0];
+    Z.slowStage = top || '';
+    add('zzap', Z.zapMed > 3000 ? 'warn' : 'ok', zk[0].line, 'A channel change took <b>' + esc(fmtDur(Z.zapMed)) + '</b> as a rule, from the key to the picture (' + plural(zk.length, 'change') + ' timed; the slowest ' + esc(fmtDur(Z.zapMax)) + ').');
+    if (Z.slow.length) add('zzap', Z.slow.length >= Math.max(2, zk.length * 0.15) ? 'warn' : 'info', Z.slow[0].line, plural(Z.slow.length, 'change') + ' took over ' + fmtDur(ZAP_SLOW) + (top ? ', most of it ' + ZSTAGE[top] : '') + '. The slowest: <b>' + esc(fmtDur(Z.slow[0].ms)) + '</b> at ' + esc(at(Z.slow[0].line)) + (Z.slow[0].tune ? ' (' + esc(MHZ(Z.slow[0].tune.freq)) + ')' : '') + '.', 'slow-zap');
+  }
+  for (const z of blankX.slice(0, 4)) add('zzap', 'fail', z.line, '<b>The screen stayed blank</b> for ' + esc(fmtDur(z.dur)) + ' after the channel change at ' + esc(at(z.line)) + (z.tune ? ' (' + esc(MHZ(z.tune.freq)) + ')' : '') + ': ' + WHY_BLANK[z.why] + '. ' + (z.endWhy === 'next' ? 'Then the channel was changed again.' : z.endWhy === 'restart' ? 'Then the box restarted.' : 'The log ends there.'), 'blank');
+  if (blankX.length > 4) add('zzap', 'fail', blankX[4].line, 'And ' + plural(blankX.length - 4, 'more blank screen') + '.', 'blank');
+  const late = Z.zaps.filter(z => z.late), lateX = late.filter(z => !z.why);
+  Z.late = late;
+  if (late.length) add('zzap', lateX.length ? 'warn' : 'info', late[0].line, plural(late.length, 'channel') + ' showed a picture only after <b>' + esc(fmtDur(Math.min(...late.map(z => z.ms)))) + '</b> or more (the longest ' + esc(fmtDur(Math.max(...late.map(z => z.ms)))) + ')' + (lateX.length < late.length ? ', ' + (lateX.length ? 'some' : 'all') + ' while ' + (late.some(z => z.why === 'signal') ? 'there was no signal' : 'the CA refused the channel') : '') + '.', 'late');
+  const radio = Z.zaps.filter(z => z.kind === 'radio');
+  if (radio.length) add('zzap', 'info', radio[0].line, plural(radio.length, 'radio channel') + ' (sound only) ' + (radio.length === 1 ? 'was' : 'were') + ' played: no picture is expected there.');
+  const skipped = Z.zaps.filter(z => z.kind === 'skip').length;
+  if (skipped) add('zzap', 'info', -1, plural(skipped, 'change') + ' went on to the next channel before a picture came (the key was pressed again); they are not timed.');
+  // ---------- picture and sound ----------
+  const episodes = a => a.filter((i, k) => !k || !(d.t[i] - d.t[a[k - 1]] < 15000));
+  const stallE = episodes(Z.stall), astallE = episodes(Z.astall);
+  Z.stallE = stallE;
+  // No picture at all: said here, but blamed on the CA or the signal when they explain it.
+  if (Z.vidOn === 0 && (Z.tunes.length || Z.zaps.length)) {
+    const ca = Z.zaps.some(z => z.why === 'ca') || Z.ca.msgs.some(x => x.k !== 'nosignal'), sig = Z.zaps.some(z => z.why === 'signal') || Z.sigEnd;
+    add('zav', ca || sig ? 'warn' : 'fail', Z.zaps.length ? Z.zaps[0].line : -1, '<b>No picture was shown at all</b> in this log: ' + (ca ? 'the CA did not allow the channels that were tried (see Subscription)' : sig ? 'there was no signal (see Cable signal)' : 'the video never started on any channel') + '.', ca || sig ? 'no-video-why' : 'no-video');
+  }
+  if (stallE.length) add('zav', stallE.length >= 3 ? 'fail' : 'warn', stallE[0], 'While a channel was playing, <b>the video data stopped</b> ' + plural(stallE.length, 'time') + ' (the picture freezes or goes black), first at ' + esc(at(stallE[0])) + '.', 'stall');
+  const longOff = Z.blackouts.filter(b => b.ms >= 1000);
+  if (longOff.length) add('zav', longOff.some(b => b.ms >= 5000) ? 'fail' : 'warn', longOff[0].line, 'The picture <b>went black</b> without a channel change ' + plural(longOff.length, 'time') + ', for up to ' + esc(fmtDur(Math.max(...longOff.map(b => b.ms)))) + '.', 'black');
+  if (astallE.length) add('zav', 'warn', astallE[0], 'The sound data stopped ' + plural(astallE.length, 'time') + ' while a channel was playing.', 'audio');
+  const vErrE = episodes(Z.vErr);
+  if (vErrE.length) add('zav', vErrE.length >= 3 ? 'warn' : 'info', Z.vErr[0], 'The video data arrived <b>damaged</b> ' + plural(Z.vErr.length, 'time') + ' (decoder data errors), first at ' + esc(at(Z.vErr[0])) + '. A noisy or weak signal (a low MER) does this: the picture breaks up into blocks or freezes.', 'data-error');
+  // One failed HDCP handshake at start-up is common: the TV answers on the next try.
+  if (Z.hdcp.length) add('zav', Z.hdcp.length >= 3 ? 'warn' : 'info', Z.hdcp[0], 'The HDMI copy protection (HDCP) handshake with the TV <b>failed</b> ' + plural(Z.hdcp.length, 'time') + '.' + (Z.hdcp.length >= 3 ? ' Some TVs then show no picture over HDMI.' : ' Once at start-up is usual; the next try works.'), 'hdcp');
+  const noEdid = Z.boots.filter(b => b.noEdid && !b.edid);
+  if (noEdid.length) add('zav', 'info', noEdid[0].line, 'At ' + (noEdid.length === 1 ? 'one start-up' : noEdid.length + ' start-ups') + ' the TV did not answer over HDMI (no EDID): it was off, on another input, or the cable is loose.', 'edid');
+  if (Z.vidOn && !stallE.length && !longOff.length) add('zav', 'ok', -1, 'Pictures played without the video stopping' + (Z.res ? ' (last: ' + esc(Z.res) + ' fps)' : '') + '.');
+  // ---------- conditional access ----------
+  const C = Z.ca, acc = {}; for (const a of C.access) acc[a.v] = (acc[a.v] || 0) + 1;
+  C.acc = acc;
+  const denied = C.access.filter(a => ZACC_DENY.has(a.v)), msgBy = new Map();
+  for (const x of C.msgs) { if (x.k === 'nosignal') continue; const o = msgBy.get(x.code) || { code: x.code, n: 0, line: x.line, chids: new Set() }; o.n++; if (x.chid != null) o.chids.add(x.chid); msgBy.set(x.code, o); }
+  C.msgBy = Array.from(msgBy.values()).sort((a, b) => b.n - a.n);
+  for (const o of C.msgBy) { const x = ZCAMSG[o.code]; add('zca', o.code === '1-20' ? 'warn' : 'fail', o.line, 'The box showed <b>CA message ' + esc(o.code) + '</b>' + (x ? ': ' + esc(x.s) : '') + ' (' + plural(o.n, 'time') + (o.chids.size ? ', on ' + plural(o.chids.size, 'channel') : '') + ').', 'ca-' + (x ? x.k : 'other')); }
+  if (denied.length && !C.msgBy.length) add('zca', 'warn', denied[0].line, 'Nagra refused ' + plural(denied.length, 'channel') + ': ' + esc(ZACCESS[denied[0].v] || 'code ' + denied[0].v) + '.', 'ca-denied');
+  const okAcc = (acc[0] || 0) + (acc[1] || 0) + (acc[2] || 0);
+  if (okAcc) add('zca', 'ok', C.access.find(a => !ZACC_DENY.has(a.v)).line, 'Nagra allowed ' + plural(okAcc, 'channel') + ' (' + [[1, 'granted'], [2, 'free'], [0, 'not scrambled']].filter(([k]) => acc[k]).map(([k, w]) => acc[k] + ' ' + w).join(', ') + ').');
+  // Products: what the CA says the subscription holds, how it changed, and what has ended.
+  C.list = Array.from(C.products.values()).sort((a, b) => a.id - b.id);
+  const now = Z.box.clock;
+  for (const p of C.list) p.state = !isFinite(p.end) ? '' : isFinite(now) && p.end < now - 864e5 ? 'expired' : isFinite(now) && p.end < now + 3 * 864e5 ? 'ending' : 'valid';
+  const R = C.refresh.filter(r => r.ids.size || r.none);
+  if (R.length > 1) {
+    const a = R[0].ids, b = R[R.length - 1].ids, gone = Array.from(a).filter(x => !b.has(x)), came = Array.from(b).filter(x => !a.has(x));
+    C.gone = gone; C.came = came;
+    if (came.length) add('zca', 'info', R.find(r => came.some(x => r.ids.has(x))).line, plural(came.length, 'product') + ' ' + (came.length === 1 ? 'was' : 'were') + ' <b>added</b> during the log: ' + came.join(', ') + '.', 'ca-added');
+    if (gone.length) add('zca', 'info', R.find(r => gone.some(x => !r.ids.has(x))).line, plural(gone.length, 'product') + ' ' + (gone.length === 1 ? 'was' : 'were') + ' <b>removed</b> during the log: ' + gone.join(', ') + (b.size ? '' : '; the box has none left') + '.', 'ca-removed');
+  }
+  const exp = C.list.filter(p => p.state === 'expired');
+  if (exp.length) add('zca', 'warn', exp[0].last, plural(exp.length, 'product') + ' had <b>ended</b> by the box\'s date (' + esc(zDay(now)) + '): ' + exp.slice(0, 4).map(p => p.id + ' on ' + zDay(p.end)).join(', ') + '.', 'ca-expired');
+  if (C.suspended.length) add('zca', 'warn', C.suspended[0].line, 'Nagra reports a <b>suspended</b> purchase' + (C.suspended[0].id != null ? ' (product ' + C.suspended[0].id + ')' : '') + ': it stays in the list but does not unlock channels.', 'ca-suspended');
+  if (C.list.length && !exp.length) add('zca', 'ok', C.list[0].first, 'The subscription holds ' + plural(C.list.length, 'product') + ': ' + C.list.slice(0, 5).map(p => p.id + (isFinite(p.end) ? ' until ' + zDay(p.end) : '')).join(', ') + (C.list.length > 5 ? ', …' : '') + '.');
+  if (R.length && R[R.length - 1].none) add('zca', 'warn', R[R.length - 1].line, 'At the end of the log the CA lists <b>no products</b> for this box.', 'ca-none');
+  const cmdN = {}; for (const c of C.cmds) cmdN[c.type] = (cmdN[c.type] || 0) + 1;
+  if (C.cmds.length) add('zca', 'info', C.cmds[0].line, 'The operator sent ' + plural(C.cmds.length, 'command') + ' to the box (' + Object.entries(cmdN).map(([t, n]) => (t === '30' ? 'scrolling message' : 'type ' + t) + ' ×' + n).join(', ') + ').');
+  if (C.finger.length) add('zca', 'info', C.finger[0], 'A fingerprint (the box\'s ID on screen) was shown ' + plural(C.finger.length, 'time') + '.');
+  // ---------- the channel list ----------
+  const S = Z.si;
+  for (const o of S.full.values()) add('zlist', 'warn', o.line, 'The box\'s <b>' + esc(o.name.replace(/_tab$/, '')) + '</b> table is full (' + fmtN(o.max) + ' entries): ' + plural(o.n, 'entry', 'entries') + ' could not be saved, so some channels are left out of the lists.', 'db-full');
+  if (S.missing.size) add('zlist', S.missing.size > 20 ? 'warn' : 'info', S.missing.values().next().value.line, 'The operator\'s channel list names <b>' + plural(S.missing.size, 'channel') + '</b> the box has not found yet (they are on frequencies it has not read), so they have no place in its list.', 'missing');
+  if (S.lcn999.length) add('zlist', 'info', S.lcn999[0], 'Channels with no channel number were put at <b>999</b> (' + plural(S.lcn999.length, 'time') + ').', 'lcn999');
+  if (S.batChange.length) add('zlist', 'info', S.batChange[0].line, 'The operator sent a new channel list (bouquet version ' + S.batChange[0].from + ' → ' + S.batChange[S.batChange.length - 1].to + ').');
+  if (S.nitAdd.size) add('zlist', 'info', -1, 'The network table added ' + plural(S.nitAdd.size, 'frequency', 'frequencies') + '.');
+  if (S.bouquets.size) add('zlist', 'ok', -1, plural(S.bouquets.size, 'bouquet') + ' in the list: ' + Array.from(S.bouquets).slice(0, 8).map(b => b.charAt(0) + b.slice(1).toLowerCase()).join(', ') + (S.bouquets.size > 8 ? ', …' : '') + '.');
+  // ---------- software and updates ----------
+  const U = Z.upd;
+  if (U.offer) add('zupd', 'info', U.offer.line, 'A newer software, <b>' + esc(U.offer.to) + '</b>, was on offer (the box has ' + esc(U.offer.from) + ').', 'ota');
+  if (U.otaFound && !U.offer) add('zupd', 'info', U.otaFound, 'The box found a software update on the broadcast.', 'ota');
+  if (U.start.length) add('zupd', 'info', U.start[0], 'The box restarted to install an update' + (U.start.length > 1 ? ' (' + plural(U.start.length, 'time') + ')' : '') + '.', 'ota');
+  for (const x of U.loadFail.slice(0, 2)) add('zupd', 'fail', x.line, 'At the U-Boot prompt, <b>' + esc(x.file) + '</b> could not be read from the USB drive (missing, misnamed, or the drive is not FAT32).', 'usb-file');
+  const wr = U.console.filter(c => /^spi_wrc/.test(c.cmd)).length;
+  if (U.console.length) add('zupd', 'info', U.console[0].line, 'Someone typed ' + plural(U.console.length, 'command') + ' at the U-Boot prompt' + (wr ? ', writing flash ' + plural(wr, 'time') : '') + ' (' + Array.from(new Set(U.console.map(c => c.cmd.split(/\s/)[0]))).slice(0, 5).join(', ') + ').');
+  if (U.noFile.length) add('zupd', 'info', U.noFile[0], 'A USB drive was in, but it held no upgrade file (<code>sky_usb.cfg</code>), so no USB upgrade started.', 'usb-nofile');
+  if (Z.decomp.length) add('zupd', 'fail', Z.decomp[0], 'The main program has to be written again: the copy in flash is damaged.', 'decomp');
+  // ---------- ads ----------
+  const A = Z.ads;
+  if (A.ok.length || A.fail.length || A.timeout.length) {
+    if (!A.ok.length) add('zads', 'fail', (A.fail[0] != null ? A.fail : A.timeout)[0], '<b>No ads were received</b>: the box waited for the ad data and gave up ' + plural(A.fail.length + A.timeout.length, 'time') + '.', 'ads-none');
+    // The box retries: a failure followed by a success is how it works. Mostly failing is not.
+    else if (A.fail.length + A.timeout.length > A.ok.length * 2) add('zads', 'warn', A.fail[0] != null ? A.fail[0] : A.timeout[0], 'Receiving ads failed ' + plural(A.fail.length + A.timeout.length, 'time') + ', and worked only ' + plural(A.ok.length, 'time') + '.', 'ads-fail');
+    else add('zads', 'ok', A.ok[0], 'Ads were received ' + plural(A.ok.length, 'time') + (A.pics.size ? ' (pictures of ' + plural(A.pics.size, 'size') + ', such as ' + Array.from(A.pics).slice(0, 2).join(' and ') + ')' : '') + '.');
+  }
+  // ---------- recording and timeshift ----------
+  const P = Z.pvr, pe = new Map();
+  for (const e of P.err) { const o = pe.get(e.what) || { line: e.line, n: 0 }; o.n++; pe.set(e.what, o); }
+  for (const [w, o] of pe) add('zpvr', /^No USB disk/.test(w) ? 'warn' : 'fail', o.line, '<b>' + esc(w) + '</b>' + (o.n > 1 ? ' (' + plural(o.n, 'time') + ')' : '') + (/^No USB disk/.test(w) ? ': recording and pausing live TV need one.' : '.'), /^No USB disk/.test(w) ? 'pvr-nodisk' : 'pvr');
+  if (P.disk && !P.err.length) add('zpvr', 'ok', P.disk, 'A USB disk was mounted for recording, and no recording error was logged.');
+  Z.startedText = startedText; Z.blankX = blankX; Z.WHY_BLANK = WHY_BLANK;
+  zapAreas(Z, d);
+}
+// Each part of the box in plain words, for the Summary: a status, a sentence, what to do.
+const ZAP_TODO = {
+  nopmt: 'Check the channel\'s entry in the PAT on that frequency at the headend; the channel list may point to a channel that has moved.',
+  nostream: 'Check the channel on another box. If it plays there, send this log to the software team; if not, check the channel\'s tables (PAT and PMT) at the headend.',
+  nodata: 'Check the channel on another box. If it plays there, send this log to the software team; if not, the channel\'s video is missing at the headend.',
+  noshow: 'Send this log to the software team: the picture was decoded but not shown.',
+  tune: 'Check the signal on those frequencies with a meter: slow tuning points to a weak signal.',
+  stream: 'The channel\'s tables (PAT and PMT) arrive slowly: check how often the headend repeats them.',
+  decode: 'The first picture comes slowly: check the time between key frames (GOP) at the headend.',
+  sync: 'Send this log to the software team: sound and picture take long to start together.',
+};
+function zapAreas(Z, d) {
+  const F = Z.find, A = [], at = i => zwhen(d, i), rank = { fail: 0, warn: 1, ok: 2, info: 3 }, C = Z.ca;
+  for (const k in F) F[k].sort((a, b) => rank[a.sev] - rank[b.sev]);
+  const pick = (k, ...kinds) => F[k].find(f => (f.sev === 'fail' || f.sev === 'warn') && (!kinds.length || kinds.includes(f.kind)));
+  const say = f => htmlText(f.html);
+  const area = (id, icon, title, target, o) => A.push(Object.assign({ id, icon, title, target }, o));
+  // The box itself.
+  {
+    const c = Z.crashes[0], h = pick('zbox', 'hang'), sem = pick('zbox', 'sem'), mem = pick('zbox', 'memory', 'leak'), sl = pick('zbox', 'slow-boot');
+    const o = Z.decomp.length ? { status: 'bad', word: 'Cannot start', say: 'The main program in flash is damaged, so the box cannot start: U-Boot could not unpack it.', todo: 'Write the software again: a USB upgrade from the U-Boot prompt, or the factory tool.' }
+      : c ? { status: 'bad', word: 'Crashed', say: 'The box crashed at ' + at(c.line) + (c.ctx ? ', ' + c.ctx : '') + ': ' + (c.kind === 'memory' ? 'its memory was corrupted' : 'its software stopped on an error') + '.' + (c.then === 'watchdog' ? ' Its watchdog restarted it.' : '') + (Z.crashes.length > 1 ? ' It crashed ' + plural(Z.crashes.length, 'time') + ' in all.' : ''), todo: 'Send this log to the software team: the fault is in the box\'s software (' + c.file + '), not in its parts.' }
+      : h ? { status: 'bad', word: 'Restarted', say: say(h), todo: 'Send this log to the software team, with what was being done when it stopped.' }
+      : sem ? { status: 'bad', word: 'Out of resources', say: say(sem), todo: 'Send this log to the software team: a resource is not being released.' }
+      : mem ? { status: mem.sev === 'fail' ? 'bad' : 'warn', word: 'Low memory', say: say(mem), todo: 'If the box slows down or restarts, send this log to the software team.' }
+      : sl ? { status: 'warn', word: 'Slow start', say: say(sl), todo: 'Compare with another box on the same software; if this one is slower, send both logs.' }
+      : { status: 'ok', word: 'Stable', say: 'No crashes, hangs or shortage of memory.' + (Z.startedText ? ' ' + Z.startedText + '.' : '') };
+    area('zbox', 'power', 'The box itself', 'zboxCard', o);
+  }
+  // The cable signal.
+  if (Z.tunes.length) {
+    const nl = pick('zsig', 'nolock'), ns = pick('zsig', 'nosignal'), slow = pick('zsig', 'slow-lock');
+    const TODO = 'Check the signal level and MER at the box with a meter, and the cable and its connectors. If other boxes on the same cable work, try another wall socket or cable.';
+    const o = Z.sigEnd ? { status: 'bad', word: 'No signal', say: 'There was no signal at the end of the log: the tuner could not lock onto ' + MHZ(Z.sigEnd.freq) + '.', todo: TODO }
+      : nl ? { status: nl.sev === 'fail' ? 'bad' : 'warn', word: nl.sev === 'fail' ? 'Poor signal' : 'Unstable', say: say(nl), todo: TODO }
+      : ns ? { status: 'warn', word: 'Unstable', say: say(ns), todo: TODO }
+      : slow ? { status: 'warn', word: 'Weak', say: say(slow), todo: TODO }
+      : { status: 'ok', word: 'Locked', say: 'The tuner locked onto every frequency it was asked for (' + plural(Z.freqs.length, 'frequency', 'frequencies') + ').' };
+    area('zsig', 'signal', 'Cable signal', 'zzapCard', o);
+  }
+  // Channel changes.
+  const zk = Z.zaps.filter(z => z.kind === 'ok' || z.kind === 'slow');
+  if (zk.length || Z.blank.length) {
+    const b = Z.blankX[0];
+    const o = b ? { status: 'bad', word: 'Blank screen', say: 'After ' + (Z.blankX.length === 1 ? 'a channel change' : plural(Z.blankX.length, 'channel change')) + ' the screen stayed blank: ' + Z.WHY_BLANK[b.why] + ' (first at ' + at(b.line) + (b.tune ? ', ' + MHZ(b.tune.freq) : '') + ').' + (Z.vErr.length >= 3 && /^no(data|show)$/.test(b.why) ? ' The video data also arrived damaged, as a weak signal makes it.' : ''), todo: Z.vErr.length >= 3 && /^no(data|show)$/.test(b.why) ? 'Check the signal level and MER at the box with a meter first, then the channel on another box.' : ZAP_TODO[b.why] }
+      : Z.zapMed > 3000 ? { status: 'warn', word: 'Slow', say: 'A channel change took ' + fmtDur(Z.zapMed) + ' as a rule' + (Z.slowStage ? ', most of it ' + ZSTAGE[Z.slowStage] : '') + '. Boxes usually take about 2 s.', todo: ZAP_TODO[Z.slowStage] || ZAP_TODO.sync }
+      : Z.slow.length >= Math.max(2, zk.length * 0.15) ? { status: 'warn', word: 'Sometimes slow', say: plural(Z.slow.length, 'channel change') + ' of ' + zk.length + ' took over ' + fmtDur(ZAP_SLOW) + (Z.slowStage ? ', most of it ' + ZSTAGE[Z.slowStage] : '') + '; the slowest ' + fmtDur(Z.slow[0].ms) + '.', todo: ZAP_TODO[Z.slowStage] || ZAP_TODO.sync }
+      : zk.length ? { status: 'ok', word: 'Fast', say: 'A channel change took ' + fmtDur(Z.zapMed) + ' as a rule (' + plural(zk.length, 'change') + ' timed, the slowest ' + fmtDur(Z.zapMax) + ').' }
+      : { status: 'info', word: 'Not timed', say: 'Channels were changed, but none was watched long enough to time it.' };
+    area('zzap', 'switch', 'Channel change', 'zzapCard', o);
+  }
+  // Picture and sound.
+  if (Z.vidOn || Z.zaps.length || Z.stall.length || Z.hdcp.length) {
+    const f = pick('zav');
+    const W = { 'no-video': 'No picture', 'no-video-why': 'No picture', stall: 'Freezes', black: 'Black screen', audio: 'Sound drops', hdcp: 'HDMI', 'data-error': 'Damaged picture' }, TD = { 'data-error': 'Check the signal level and MER at the box with a meter, and the cable and its connectors.', 'no-video': 'Check the TV input and the HDMI cable first, then the signal and the subscription.', 'no-video-why': 'Sort out the part named first; the picture follows.', stall: 'Check the signal on that frequency. If it is good, check the channel on another box.', black: 'Check the signal on that frequency. If it is good, check the channel on another box.', audio: 'Check the channel on another box; if its sound plays there, send this log to the software team.', hdcp: 'Try another HDMI cable or TV input. If it keeps failing on this TV, send this log with the TV\'s model.' };
+    area('zav', 'tv', 'Picture and sound', 'zzapCard', f ? { status: f.sev === 'fail' ? 'bad' : 'warn', word: W[f.kind] || 'Check', say: say(f), todo: TD[f.kind] || '' } : { status: 'ok', word: 'Playing', say: 'Pictures and sound played without stopping' + (Z.res ? ' (last ' + Z.res + ' fps)' : '') + '.' });
+  }
+  // The subscription (conditional access).
+  if (C.init.length || C.access.length || C.msgs.length || C.list.length) {
+    // A picture on screen counts as allowed: older software does not log Nagra's answer.
+    const has = k => C.msgBy.find(o => o.code === k), okAcc = C.access.some(a => !ZACC_DENY.has(a.v)) || Z.vidOn > 0, deny = has('1-20');
+    const prods = C.list.length ? ' The box holds ' + plural(C.list.length, 'product') + ': ' + C.list.slice(0, 4).map(p => p.id + (isFinite(p.end) ? ' until ' + zDay(p.end) : '')).join(', ') + '.' : '';
+    const nuid = Z.box.nuid ? ' (NUID ' + Z.box.nuid + ')' : '';
+    const exp = pick('zca', 'ca-expired'), none = pick('zca', 'ca-none'), sus = pick('zca', 'ca-suspended');
+    const o = has('18-206') ? { status: 'bad', word: 'Not activated', say: 'The box is not activated: the CA refused the channels until the operator activates it (CA message 18-206).' + prods, todo: 'Ask the operator to activate this box' + nuid + '.' }
+      : has('2-200') ? { status: 'bad', word: 'CA error', say: 'The CA had no valid secure device to decrypt with (CA message 2-200), so scrambled channels could not play.', todo: 'Restart the box. If the message stays, send this log to the operator and to Skyworth' + nuid + '.' }
+      : has('19-51') ? { status: 'bad', word: 'Refused', say: 'The CA refused the channels (CA message 19-51, Nagra access code 116).' + prods, todo: 'Ask the operator to check this box\'s account' + nuid + '.' }
+      : deny && !okAcc ? { status: 'bad', word: 'Not subscribed', say: 'No scrambled channel could be watched: they are not in the subscription (CA message 1-20, ' + plural(deny.n, 'time') + ').' + prods, todo: 'Check the subscription with the operator' + nuid + '.' }
+      : deny ? { status: 'warn', word: 'Some channels', say: (deny.chids.size ? plural(deny.chids.size, 'channel') + (deny.chids.size === 1 ? ' is' : ' are') : 'Some channels are') + ' not in the subscription (CA message 1-20); the others played.' + prods, todo: 'Nothing is wrong with the box: those channels need a package that includes them.' }
+      : none ? { status: 'warn', word: 'No products', say: say(none), todo: 'Ask the operator to check this box\'s products' + nuid + '.' }
+      : exp ? { status: 'warn', word: 'Expired', say: say(exp), todo: 'Renew the subscription with the operator.' }
+      : sus ? { status: 'warn', word: 'Suspended', say: say(sus), todo: 'Ask the operator why the purchase is suspended' + nuid + '.' }
+      : { status: 'ok', word: okAcc ? 'Subscribed' : 'Running', say: (okAcc ? 'The CA allowed the channels that were watched.' : 'The CA started; no scrambled channel was tried.') + prods };
+    area('zca', 'key', 'Subscription', 'zcaCard', o);
+  }
+  // The channel list.
+  if (F.zlist.length) {
+    const f = pick('zlist');
+    const S = Z.si, n = [S.bouquets.size && plural(S.bouquets.size, 'bouquet'), S.nitAdd.size && plural(S.nitAdd.size, 'frequency', 'frequencies')].filter(Boolean).join(' on ');
+    area('zlist', 'list', 'Channel list', 'zsiCard', f ? { status: 'warn', word: f.kind === 'db-full' ? 'List full' : 'Incomplete', say: say(f), todo: f.kind === 'db-full' ? 'Send this log to the software team: the table needs to hold more entries for this network.' : 'Let the box stay on for a few minutes so it reads every frequency, or run a channel search.' } : { status: 'ok', word: 'Up to date', say: 'The box read the operator\'s channel list' + (n ? ': ' + n : '') + '.' });
+  }
+  // Software updates. A USB disk in for recording is checked for an upgrade file now and then: that alone is not an update.
+  if (F.zupd.some(f => f.kind !== 'usb-nofile')) {
+    const f = pick('zupd');
+    area('zupd', 'refresh', 'Software update', 'zboxCard', f ? { status: f.sev === 'fail' ? 'bad' : 'warn', word: f.kind === 'decomp' ? 'Damaged' : 'Failed', say: say(f), todo: f.kind === 'usb-file' ? 'Copy the file to the root of a FAT32 USB drive, with its name exactly as typed.' : 'Write the software again: a USB upgrade from the U-Boot prompt, or the factory tool.' } : { status: 'info', word: Z.upd.start.length ? 'Installing' : 'Checked', say: F.zupd.map(say).slice(0, 2).join(' ') });
+  }
+  if (F.zads.length) { const f = pick('zads'); area('zads', 'ad', 'Ads', 'zsiCard', f ? { status: f.sev === 'fail' ? 'bad' : 'warn', word: f.sev === 'fail' ? 'Not received' : 'Unreliable', say: say(f), todo: 'Check that the operator is sending the ads on this network, and the signal on the ad frequency.' } : { status: 'ok', word: 'Received', say: say(F.zads[0]) }); }
+  if (F.zpvr.length) { const f = pick('zpvr'); area('zpvr', 'record', 'Recording', 'zsiCard', f ? f.kind === 'pvr-nodisk' ? { status: 'warn', word: 'No disk', say: say(f), todo: 'Plug in a USB disk to record or to pause live TV.' } : { status: 'bad', word: 'Failed', say: say(f), todo: 'Try another USB disk (FAT32 or NTFS, with free space). If it keeps failing, send this log to the software team.' } : { status: 'ok', word: 'Working', say: say(F.zpvr[0]) }); }
+  Z.areas = A;
+  // Key moments: start-ups, crashes, blank screens, slow changes, the CA's messages.
+  const ev = Z.steps.filter(s => s.key).map(s => ({ cat: s.cat, line: s.line, t: s.t, label: s.label, status: s.status, n: s.n, plain: s.plain }));
+  for (const b of Z.boots) if (b.banner) ev.push({ cat: 'power', line: b.line, t: d.t[b.line], label: 'Start-up' + (b.no ? ' ' + b.no : '') + ': ' + ZBOOT_WHY[b.why], status: b.why === 'watchdog' ? 'fail' : 'info', n: 1, plain: 'Start-up' + (b.no ? ' ' + b.no : '') + ': the box ' + ZBOOT_WHY[b.why], boot: true });
+  for (const z of Z.blankX) ev.push({ cat: 'tv', line: z.line, t: d.t[z.line], label: 'Blank screen for ' + fmtDur(z.dur) + ' after a channel change' + (z.tune ? ' (' + MHZ(z.tune.freq) + ')' : ''), status: 'fail', n: 1, plain: 'The screen stayed blank after a channel change' });
+  for (const z of Z.slow.slice(0, 6)) ev.push({ cat: 'tv', line: z.line, t: d.t[z.line], label: 'Slow channel change: ' + fmtDur(z.ms) + (z.slowest ? ', mostly ' + ZSTAGE[z.slowest] : '') + (z.tune ? ' (' + MHZ(z.tune.freq) + ')' : ''), status: 'warn', n: 1, plain: 'A slow channel change (' + fmtDur(z.ms) + ')' });
+  for (const u of Z.tunes.filter(u => u.fail >= 0)) ev.push({ cat: 'tv', line: u.fail, t: d.t[u.fail], label: 'No lock on ' + MHZ(u.freq) + (u.waited ? ' after ' + fmtDur(u.waited) : ''), status: 'fail', n: 1, plain: 'No signal on ' + MHZ(u.freq) });
+  // The same moment within a few seconds is told once.
+  ev.sort((a, b) => a.line - b.line);
+  const out = [];
+  for (const e of ev) { const p = out[out.length - 1]; if (p && p.label === e.label && isFinite(e.t) && e.t - p.t < 5000) { p.n += e.n; continue; } out.push(e); }
+  Z.keyEvents = out;
+  const top = A.slice().sort((a, b) => ({ bad: 0, warn: 1, info: 2, ok: 3 })[a.status] - ({ bad: 0, warn: 1, info: 2, ok: 3 })[b.status])[0];
+  Z.verdict = !top || top.status === 'ok' ? { cls: 'ok', text: 'Working', ic: 'check-circle' } : top.status === 'bad' ? { cls: 'bad', text: 'Problem found', ic: 'x-circle' } : top.status === 'warn' ? { cls: 'warn', text: 'Needs attention', ic: 'alert' } : { cls: 'info', text: 'Nothing wrong seen', ic: 'info' };
+  Z.headline = top && top.status !== 'ok' ? top.say : 'The box started, tuned and played' + (zk.length ? ', and changed channel in ' + fmtDur(Z.zapMed) + ' as a rule' : '') + '.';
+}
+
 // The investigation as text, for a ticket or a chat.
 function rcaText(res) {
   const R = res.R, c = res.cause, out = [];
@@ -4072,9 +4843,10 @@ const PRIV = [
 const privCount = (p, n) => fmtN(n) + ' ' + (n === 1 ? p.one : p.many);
 const hex2 = n => (n & 255).toString(16).padStart(2, '0');
 const PRIV_STAND = {
-  mac: (n, v) => { const s = v[2], m = ['02', '00', '00', '00', hex2(n >> 8), hex2(n)].join(s); return /[A-F]/.test(v) ? m.toUpperCase() : m; },
+  mac: (n, v) => { if (/^0x/i.test(v)) return '0x02: 0x0: 0x0: 0x0: 0x' + hex2(n >> 8) + ': 0x' + hex2(n); const s = v[2], m = ['02', '00', '00', '00', hex2(n >> 8), hex2(n)].join(s); return /[A-F]/.test(v) ? m.toUpperCase() : m; },
   ssid: n => 'WiFi-' + n,
-  serial: n => 'SERIAL-' + n,
+  // A set-top box's NUID or CA serial is groups of digits: its stand-in keeps the groups, so it still reads as one.
+  serial: (n, v) => /^[0-9A-Fa-f]{2}(?: [0-9A-Fa-f]{2,4}){2,}$/.test(v) ? (() => { const len = v.replace(/ /g, '').length; let s = ('0'.repeat(len) + n).slice(-len), k = 0; return v.replace(/[0-9A-Fa-f]/g, () => s[k++]); })() : /^0x[0-9a-f]+$/i.test(v) ? '0x' + n.toString(16).padStart(v.length - 2, '0') : 'SERIAL-' + n,
   ip: (n, v) => v.indexOf(':') >= 0 ? (/^fe80/i.test(v) ? 'fe80::' : '2001:db8::') + n.toString(16) : n <= 254 ? '203.0.113.' + n : n <= 508 ? '198.51.100.' + (n - 254) : '192.0.2.' + ((n - 509) % 254 + 1),
   lan: (n, v) => { const p = v.split('.'), net = p[0] === '10' ? '10.0' : p[0] === '172' ? '172.16' : p[0] === '169' ? '169.254' : p[0] === '100' ? '100.64' : '192.168'; return net + '.' + Math.floor((n - 1) / 254) + '.' + ((n - 1) % 254 + 1); },
   email: (n, v) => v.indexOf('@') >= 0 ? 'user' + n + '@example.com' : '+91-00000-' + String(n).padStart(5, '0'),
@@ -4115,6 +4887,13 @@ const PRIV_RULES = [
   { re: /(\[ro\.(?:boot\.)?serialno\]:\s*\[)([^\]\r\n]{4,64})(\])/g, kind: v => NOT_A_VALUE.test(v) ? '' : 'serial' },
   { re: /(\b(?:serial(?:no|_?num(?:ber)?)?|android_?id|imei\d?|meid|chip_?id|device_?id|deviceid|stb_?id|customer_?id|subscriber_?id|account_?id)\s*["']?\s*[=:]\s*["']?)([A-Za-z0-9][A-Za-z0-9_.:-]{5,63})()/gi, kind: v => NOT_A_VALUE.test(v) ? '' : 'serial' },
   { re: /(mfg\/product\/ver\/serial [^\/\r\n]*\/[^\/\r\n]*\/[^\/\r\n]*\/)([^\s\/,]{4,64})()/g, kind: v => NOT_A_VALUE.test(v) ? '' : 'serial' },
+  // A set-top box's CA identity: Nagra's NUID and CA serial, the smartcard's serial and unique address.
+  { re: /(\bm_b(?:Nuid|CASn):\s*)([0-9A-Fa-f]{2}(?: [0-9A-Fa-f]{2,4}){2,})()/g, kind: v => /^[0 ]+$/.test(v) ? '' : 'serial' },
+  { re: /(\bdwCASnInt:\s*)(0x[0-9a-fA-F]{4,})()/g, kind: () => 'serial' },
+  { re: /(\bm_bCardSerialNumber\[\d+\]:)(\d+(?: \d+){2,})()/g, kind: () => 'serial' },
+  { re: /(\bUA : )([0-9A-Fa-f]+(?: [0-9A-Fa-f]+){3,})()/g, kind: () => 'serial' },
+  // U-Boot writes the box's MAC address as six hex bytes, each 0x and one or two digits, after "MAC:".
+  { re: /(\bMAC:\s+)(0x[0-9A-Fa-f]{1,2}(?::\s*0x[0-9A-Fa-f]{1,2}){5})()/g, kind: v => /^(?:0x0+:\s*){5}0x0+$|^(?:0xff:\s*){5}0xff$/i.test(v) ? '' : 'mac' },
   // Wi-Fi names, by the name they are logged under.
   { re: /(\bssid\s*[=:]\s*")([^"\r\n]{1,32})(")/gi, kind: v => NOT_A_VALUE.test(v) ? '' : 'ssid' },
   // 'Guest's Phone': the closing quote is the one followed by a space, punctuation or the end.
@@ -4126,8 +4905,12 @@ const PRIV_RULES = [
 ];
 // The found values of `kind` wherever else they appear, standing as a word of their own
 // (a short Wi-Fi name like "Jio" only inside quotes, so JioSettings is left alone).
+// A long number (a NUID) is replaced between any two non-digits: in a file name it follows "NUID" and comes before "_".
+const PRIV_NUM = /^\d{8,}$/;
+const privNum = (t, map) => { const v = Array.from(map.keys()).filter(x => PRIV_NUM.test(x)).sort((a, b) => b.length - a.length); return v.length ? t.replace(new RegExp('(^|\\D)(' + v.map(escRe).join('|') + ')(?!\\d)', 'g'), (m, a, x) => a + map.get(x)) : t; };
 function privLiteral(t, found, kind) {
-  const all = Array.from(found[kind].keys()).filter(v => v.length >= 2);
+  const all = Array.from(found[kind].keys()).filter(v => v.length >= 2 && !PRIV_NUM.test(v));
+  t = privNum(t, found[kind]);
   if (!all.length) return t;
   const long = all.filter(v => v.length >= 5).sort((a, b) => b.length - a.length), short = all.filter(v => v.length < 5).sort((a, b) => b.length - a.length);
   if (long.length) t = t.replace(new RegExp('(^|[^A-Za-z0-9_])(' + long.map(escRe).join('|') + ')(?![A-Za-z0-9_])', 'g'), (m, a, v) => a + found[kind].get(v));
@@ -4148,6 +4931,13 @@ function privMask(text, on) {
       return on[k] ? pre + s + (typeof post === 'string' ? post : '') : m;
     });
   }
+  // A NUID is written without its spaces too, often in a file name: all twelve digits, or the first ten.
+  for (const [v, s] of Array.from(found.serial.entries())) {
+    if (!/^\d{2}(?: \d{4}){2} \d{2}$/.test(v)) continue;
+    const a = v.replace(/ /g, ''), b = s.replace(/ /g, '');
+    if (!found.serial.has(a)) found.serial.set(a, b);
+    if (!found.serial.has(a.slice(0, 10))) found.serial.set(a.slice(0, 10), b.slice(0, 10));
+  }
   if (on.ssid) t = privLiteral(t, found, 'ssid');
   if (on.serial) t = privLiteral(t, found, 'serial');
   return { text: t, found };
@@ -4157,7 +4947,9 @@ function privKnown(s, found, on) {
   let t = String(s);
   for (const p of PRIV) {
     if (!on[p.k] || !found[p.k].size) continue;
-    const vals = Array.from(found[p.k].keys()).filter(v => v.length >= 2).sort((a, b) => b.length - a.length);
+    t = privNum(t, found[p.k]);
+    const vals = Array.from(found[p.k].keys()).filter(v => v.length >= 2 && !PRIV_NUM.test(v)).sort((a, b) => b.length - a.length);
+    if (!vals.length) continue;
     const ci = p.k === 'mac' || p.k === 'ip';
     t = t.replace(new RegExp('(^|[^A-Za-z0-9_])(' + vals.map(escRe).join('|') + ')(?![A-Za-z0-9_])', ci ? 'gi' : 'g'), (m, a, v) => a + (found[p.k].get(ci ? v.toLowerCase() : v) || v));
   }
@@ -4225,7 +5017,8 @@ async function buildReport(safe) {
   doc.classList.add('lp-static');
   doc.querySelector('#landing').setAttribute('hidden', '');
   doc.querySelector('#workspace').removeAttribute('hidden');
-  doc.querySelector('#fileTitle').textContent = S.name;
+  // A safe copy cleans the name too: a capture's file name often carries the box's NUID.
+  doc.querySelector('#fileTitle').textContent = clean(S.name);
   doc.querySelector('#fileMeta').innerHTML = els.fileMeta.innerHTML;
   const chip = doc.querySelector('#reportChip');
   chip.removeAttribute('hidden');
@@ -4240,8 +5033,8 @@ async function buildReport(safe) {
   // The still copy was drawn from the original log: it gets the same stand-ins.
   if (safe) for (const s of ['#view-overview', '#view-summary', '#fileMeta']) privScrubDom(doc.querySelector(s), found, safe);
   const meta = {
-    app: 'Log Prism', v: 1, version: VERSION, name: S.name, created: created.toISOString(),
-    source: { name: S.sourceName, size: S.size, lines: D.n },
+    app: 'Log Prism', v: 1, version: VERSION, name: clean(S.name), created: created.toISOString(),
+    source: { name: clean(S.sourceName), size: S.size, lines: D.n },
     bookmarks: Array.from(S.bm.entries()).map(([i, note]) => [i, clean(note)]),
     ask: S.inv ? { text: clean(S.inv.text), pad: S.invPad, cand: S.invCand } : null,
   };
@@ -4257,7 +5050,7 @@ async function buildReport(safe) {
   const app = doc.querySelector('#lp-app');
   app.parentNode.insertBefore(metaEl, app);
   app.parentNode.insertBefore(dataEl, app);
-  const title = doc.querySelector('title'); if (title) title.textContent = S.name + ' · Skyworth Log Prism';
+  const title = doc.querySelector('title'); if (title) title.textContent = clean(S.name) + ' · Skyworth Log Prism';
   return '<!DOCTYPE html>\n' + doc.outerHTML;
 }
 // safe: null for the whole log, or which private details to hide.
@@ -4267,7 +5060,7 @@ async function downloadReport(safe) {
   const b = els.btnDownload; b.disabled = true;
   try {
     const html = await buildReport(safe);
-    const file = S.name + (safe ? '-safe' : '') + '.html';
+    const file = (safe ? privKnown(S.name, privFound(), safe) : S.name) + (safe ? '-safe' : '') + '.html';
     saveFile(html, file, 'text/html;charset=utf-8');
     const hid = safe ? PRIV.filter(p => safe[p.k] && privFound()[p.k].size).map(p => privCount(p, privFound()[p.k].size)) : [];
     toast('Saved ' + file + '. ' + (safe ? (hid.length ? 'Replaced by stand-ins: ' + hid.join(', ') + '.' : 'Nothing private was found.') : 'It opens offline with search built in.'), null, safe ? 7000 : undefined);
@@ -4380,7 +5173,7 @@ function renderHeader() {
   els.fileTitle.title = S.name;
   document.title = S.name + ' · Skyworth Log Prism';
   const st = D.stats;
-  els.fileMeta.innerHTML = metaHTML([S.sourceName, fmtBytes(S.size), plural(D.n, 'line'), st.fmtLabel, st.timed ? fmtDur(st.span) : null]);
+  els.fileMeta.innerHTML = metaHTML([S.sourceName, fmtBytes(S.size), plural(D.n, 'line'), st.fmtLabel, st.timed && st.span > 0 ? fmtDur(st.span) : null]);
   if (S.report && S.report.created) {
     const dt = new Date(S.report.created);
     els.reportChip.hidden = false;
@@ -4416,8 +5209,8 @@ function renderOverview() {
   const set = st.segs.length > 1, utc = D.utc ? ' UTC' : '';
   const kpis = [
     { l: 'Lines', i: 'list', v: fmtN(n), s: fmtBytes(S.size) + ' · ' + st.fmtLabel, go: 'data-go="x"', kc: 'var(--grad)' },
-    { l: 'Time span', i: 'clock', v: st.timed ? fmtDur(st.span) : '-', s: !st.timed ? 'no timestamps found' : set ? 'clock set during the log' : fmtT(st.tMin, false) + ' → ' + fmtT(st.tMax, false) + utc,
-      t: set ? 'The box\'s clock was set during the log, so the time span leaves out the jump. It covers ' + st.segs.map(s => fmtT(s[0], false) + ' → ' + fmtT(s[1], false)).join(' and ') + '.' : '', kc: 'linear-gradient(90deg,#97cadb,#018abe)' },
+    { l: 'Time span', i: 'clock', v: st.timed ? fmtDur(st.span) : '-', s: !st.timed ? 'no timestamps found' : D.zap && set ? plural(st.segs.length, 'start-up') + ', each timed from its start' : set ? 'clock set during the log' : fmtT(st.tMin, false) + ' → ' + fmtT(st.tMax, false) + utc + (D.uptime ? ' since start-up' : ''),
+      t: D.zap && set ? 'The box restarted during the log. Its times count from each start-up, so the time span adds up the time of each.' : set ? 'The box\'s clock was set during the log, so the time span leaves out the jump. It covers ' + st.segs.map(s => fmtT(s[0], false) + ' → ' + fmtT(s[1], false)).join(' and ') + '.' : '', kc: 'linear-gradient(90deg,#97cadb,#018abe)' },
     { l: 'Errors', i: 'x-circle', v: fmtN(e), s: pct(e) + ' of lines · ' + plural(errTags, 'tag'), go: 'data-go="x" data-levels="4,5"', kc: 'var(--s-err)', kc2: 'var(--lv4)', kv: e ? 'var(--lv4)' : 'var(--ok-fg)', kb: e ? 'rgba(204,26,63,.07)' : 'rgba(12,163,12,.07)' },
     { l: 'Warnings', i: 'alert', v: fmtN(w), s: pct(w) + ' of lines', go: 'data-go="x" data-levels="3"', kc: 'var(--s-warn)', kc2: 'var(--lv3)', kv: w ? 'var(--lv3)' : 'var(--ok-fg)', kb: w ? 'rgba(201,133,0,.09)' : 'rgba(12,163,12,.07)' },
     { l: 'Exceptions', i: 'bug', v: fmtN(D.exc.groups.length), s: D.exc.occ ? plural(D.exc.occ, 'occurrence') + ' · ' + plural(D.exc.groups.length, 'kind') : 'no stack traces', go: 'data-go="scroll" data-target="excCard"', kc: 'linear-gradient(90deg,#c21d6f,#e0368a)', kc2: 'var(--c-exc)', kv: D.exc.groups.length ? 'var(--c-exc)' : 'var(--ok-fg)', kb: D.exc.groups.length ? 'rgba(224,54,138,.07)' : 'rgba(12,163,12,.07)' },
@@ -4432,6 +5225,7 @@ function renderOverview() {
   if (D.known.length) h += knownCard();
   if (D.update) h += updateCard(D.update);
   h += highlightsCard();
+  if (D.zap) h += zboxCard() + (D.zap.tunes.length || D.zap.zaps.length ? zzapCard() : '') + (zArea('zca') ? zcaCard() : '') + (zArea('zlist') || zArea('zads') || zArea('zpvr') ? zsiCard() : '');
   if (D.net.verdict) h += netCard();
   if (D.storage.verdict) h += storageCard();
   if (D.capture.anrs.length || D.capture.tombs.length) h += crashRepCard();
@@ -4738,7 +5532,7 @@ function renderInvBanner() {
 }
 
 /* ---------- Overview jump bar ---------- */
-const OV_NAV = [['invCard', 'Investigation'], ['knownCard', 'Known issues'], ['hlCard', 'Highlights'], ['updCard', 'Update'], ['netCard', 'Network'], ['stoCard', 'Storage'], ['crashCard', 'Freezes & crashes'], ['apiCard', 'Requests'], ['tlCard', 'Activity'], ['eventsCard', 'Events'], ['excCard', 'Exceptions'], ['pkgCard', 'Packages'], ['capCard', 'Files'], ['distRow', 'Levels & tags'], ['sigCard', 'Repeated'], ['seCard', 'SELinux']];
+const OV_NAV = [['invCard', 'Investigation'], ['knownCard', 'Known issues'], ['hlCard', 'Highlights'], ['updCard', 'Update'], ['zboxCard', 'Set-top box'], ['zzapCard', 'Channels'], ['zcaCard', 'Subscription'], ['zsiCard', 'Channel list'], ['netCard', 'Network'], ['stoCard', 'Storage'], ['crashCard', 'Freezes & crashes'], ['apiCard', 'Requests'], ['tlCard', 'Activity'], ['eventsCard', 'Events'], ['excCard', 'Exceptions'], ['pkgCard', 'Packages'], ['capCard', 'Files'], ['distRow', 'Levels & tags'], ['sigCard', 'Repeated'], ['seCard', 'SELinux']];
 function renderOvNav() {
   const nav = $('#ovNav'); if (!nav) return;
   nav.innerHTML = '<span class="ov-nav-k">' + ic('list') + 'Jump to</span>' + OV_NAV.filter(([id]) => document.getElementById(id)).sort((a, b) => document.getElementById(a[0]).compareDocumentPosition(document.getElementById(b[0])) & 2 ? 1 : -1).map(([id, l]) => '<button data-go="scroll" data-target="' + id + '"' + (id === 'invCard' ? ' class="inv-tab"' : '') + '>' + (id === 'invCard' ? ic('sparkles') : '') + esc(l) + '</button>').join('');
@@ -4766,6 +5560,102 @@ function storageCard() {
     '<span class="verdict ' + v.cls + '">' + ic(v.ic) + esc(v.text) + '</span></div><div class="upd-head">' + esc(Z.headline) + '</div>' +
     (facts.length ? '<div class="nfacts">' + facts.join('') + '</div>' : '') +
     '<div class="upd-cols"><div><h3 class="sec-t">What the log shows</h3>' + findingsHTML(Z.findings) + '</div><div><h3 class="sec-t">Sequence</h3>' + steps + '</div></div></section>';
+}
+/* ---------- set-top box diagnosis ---------- */
+const zBox = (k, icn, val, sub, line) => '<div class="cmp-box"><div class="cmp-k">' + ic(icn) + esc(k) + '</div><div class="cmp-model">' + esc(val) + '</div><div class="cmp-ver">' + (sub ? esc(sub) : '&nbsp;') + '</div>' + (line != null && line >= 0 ? '<div class="cmp-src"><button class="linkbtn" data-go="x" data-line="' + line + '">line ' + fmtN(line + 1) + '</button></div>' : '') + '</div>';
+const zVerdict = list => { const r = { bad: 0, warn: 1, info: 2, ok: 3 }, a = list.filter(Boolean).sort((x, y) => r[x.status] - r[y.status])[0]; return !a ? { cls: 'info', text: 'Nothing to judge', ic: 'info' } : a.status === 'bad' ? { cls: 'bad', text: a.word, ic: 'x-circle' } : a.status === 'warn' ? { cls: 'warn', text: a.word, ic: 'alert' } : a.status === 'ok' ? { cls: 'ok', text: a.word, ic: 'check-circle' } : { cls: 'info', text: a.word, ic: 'info' }; };
+const zArea = id => D.zap.areas.find(a => a.id === id);
+function zCardHead(id, chip, icn, title, sub, areas) {
+  const v = zVerdict(areas), lead = areas.filter(Boolean).sort((x, y) => ({ bad: 0, warn: 1, info: 2, ok: 3 })[x.status] - ({ bad: 0, warn: 1, info: 2, ok: 3 })[y.status])[0];
+  return '<section class="card upd' + ({ ok: ' good', warn: ' warn', info: ' plain' }[v.cls] || '') + '" id="' + id + '"><div class="card-h" style="margin-bottom:0"><div><h2 class="card-t"><span class="ic-chip ' + chip + '">' + ic(icn) + '</span>' + esc(title) + '</h2><p class="card-sub">' + sub + '</p></div><span class="verdict ' + v.cls + '">' + ic(v.ic) + esc(v.text) + '</span></div>' + (lead ? '<div class="upd-head">' + esc(lead.say) + '</div>' : '');
+}
+// A sequence from steps and key events, each moment once, in order. With several start-ups each
+// one is marked, since the times start again from it.
+const zSeq = list => { const seen = new Set(); if (D.zboots.length > 1 && list.length) list = list.concat(D.events.filter(e => e.boot)); return list.filter(s => { const k = s.line + '|' + s.label; if (seen.has(k)) return false; seen.add(k); return true; }).sort((a, b) => a.line - b.line).map(s => ({ line: s.line, t: s.t, status: s.status === 'fail' || s.status === 'warn' || s.status === 'ok' ? s.status : 'info', label: s.label, n: s.n })); };
+const zCols = (find, steps, more) => '<div class="upd-cols"><div><h3 class="sec-t">What the log shows</h3>' + (find.length ? findingsHTML(find) : '<div class="empty">Nothing to report.</div>') + '</div><div><h3 class="sec-t">Sequence</h3>' + (steps.length ? '<div class="scroll-y" style="max-height:440px">' + stepsHTML(steps.slice(0, 300)) + '</div>' : '<div class="empty">' + (more || 'No events of this kind.') + '</div>') + '</div></div>';
+// Free memory across the log, one start-up after another: the lowest point is marked.
+function zMemChart(Z) {
+  const M = Z.mem; if (M.length < 8) return '';
+  const step = Math.max(1, Math.ceil(M.length / 500)), pts = M.filter((x, k) => !(k % step)), W = 1000, H = 90, hi = Math.max(...pts.map(x => x[1])) * 1.08;
+  const xs = k => (k / Math.max(1, pts.length - 1) * W).toFixed(1), ys = v => (H - v / hi * H).toFixed(1);
+  let path = '', prevB = -1;
+  pts.forEach((x, k) => { const b = zbootOf(D, x[2]); path += (b !== prevB ? 'M' : 'L') + xs(k) + ',' + ys(x[1]); prevB = b; });
+  const lo = Z.memLow, lk = pts.reduce((a, x, k) => Math.abs(x[2] - lo[2]) < Math.abs(pts[a][2] - lo[2]) ? k : a, 0);
+  const cuts = []; pts.forEach((x, k) => { if (k && zbootOf(D, x[2]) !== zbootOf(D, pts[k - 1][2])) cuts.push(k); });
+  return '<div class="zmem"><h3 class="sec-t">Free memory</h3><svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" role="img" aria-label="' + esc('Free memory across the log, from ' + sizeBytes(M[0][1]) + ' to ' + sizeBytes(M[M.length - 1][1]) + '; lowest ' + sizeBytes(lo[1])) + '">' +
+    cuts.map(k => '<line class="zmem-cut" x1="' + xs(k) + '" x2="' + xs(k) + '" y1="0" y2="' + H + '"/>').join('') +
+    '<line class="zmem-lo" x1="' + xs(lk) + '" x2="' + xs(lk) + '" y1="' + ys(pts[lk][1]) + '" y2="' + H + '"/><path class="zmem-l" d="' + path + '"/></svg>' +
+    '<div class="zmem-ax"><span>' + esc(sizeBytes(M[0][1])) + ' at first</span><span><button class="linkbtn" data-go="x" data-line="' + lo[2] + '">lowest ' + esc(sizeBytes(lo[1])) + '</button>' + (cuts.length ? ' · a gap marks each start-up' : '') + '</span><span>' + esc(sizeBytes(M[M.length - 1][1])) + ' at the end</span></div></div>';
+}
+function zboxCard() {
+  const Z = D.zap, B = Z.box, F = Z.find;
+  const facts = [zBox('Box', 'cpu', B.chip || 'MStar set-top box', [B.ram && B.ram + ' memory', B.hw && 'hardware ' + B.hw, 'eCos'].filter(Boolean).join(' · '), B.ubootLine),
+    zBox('Software', 'refresh', B.sw || (B.build ? 'built ' + B.build : '-'), [B.build && B.sw && 'built ' + B.build, B.svn && 'HDI svn ' + B.svn, B.uboot && 'U-Boot ' + B.uboot].filter(Boolean).join(' · '), B.swLine != null ? B.swLine : B.buildLine)];
+  if (B.caVer || B.nuid) facts.push(zBox('Conditional access', 'key', B.nuid ? 'NUID ' + B.nuid : 'Nagra', [B.caVer && 'Nagra ' + B.caVer + (/^D-/.test(B.caVer) ? ' (development build)' : ''), B.casn && 'CA serial ' + B.casn].filter(Boolean).join(' · '), B.caLine));
+  if (isFinite(B.clock)) facts.push(zBox('The box\'s clock', 'clock', zClock(B.clock), 'its own date, from the broadcast; the log times count from start-up', null));
+  const clk = Z.boots.some(b => b.clock);
+  const rows = Z.boots.map(b => '<tr data-go="x" data-line="' + b.line + '"><td class="n">' + b.no + '</td><td>' + esc(ZBOOT_WHY[b.why] || b.why) + (b.crash ? ' <span class="zpill bad">after a crash</span>' : '') + (b.decomp ? ' <span class="zpill bad">program damaged</span>' : '') + '</td><td class="n">' + (isFinite(b.picMs) ? esc(fmtDur(b.picMs)) : b.why === 'running' ? '' : '-') + '</td>' + (clk ? '<td class="t">' + (b.clock ? esc(zClock(b.clock.wall)) : '') + '</td>' : '') + '<td class="t">' + esc(b.end >= 0 ? fmtT(D.t[b.end], false) : '-') + '</td></tr>').join('');
+  const boots = Z.boots.length ? '<div class="tbl-wrap" style="max-height:300px;margin-top:14px"><table class="tbl"><thead><tr><th class="n">Start-up</th><th>How it started</th><th class="n">First picture</th>' + (clk ? '<th>Box clock</th>' : '') + '<th>Last line at</th></tr></thead><tbody>' + rows + '</tbody></table></div>' : '';
+  const steps = zSeq(Z.steps.filter(s => s.area === 'zbox' || s.area === 'zupd' || s.cat === 'power').concat(D.events.filter(e => e.boot)));
+  return zCardHead('zboxCard', 'g1', 'power', 'Set-top box diagnosis', 'From the box\'s serial console: U-Boot, its software and the Nagra CA. Times count from each start-up. Click any line to open it in the Explorer.', [zArea('zbox'), zArea('zupd')]) +
+    '<div class="nfacts">' + facts.join('') + '</div>' + boots + zMemChart(Z) + zCols(F.zbox.concat(F.zupd), steps, 'No start-ups or crashes in this log.') + '</section>';
+}
+const ZST_ORDER = ['tune', 'stream', 'decode', 'sync'], ZST_SHORT = { tune: 'Tuning', stream: 'Streams', decode: 'First picture', sync: 'In step' };
+function zStageBar(st, scale, big) {
+  const parts = ZST_ORDER.filter(k => isFinite(st[k]) && st[k] > 0);
+  if (!parts.length) return '';
+  return '<span class="zst' + (big ? ' big' : '') + '" role="img" aria-label="' + esc(parts.map(k => ZST_SHORT[k] + ' ' + fmtDur(st[k])).join(', ')) + '">' + parts.map(k => '<i class="zs-' + k + '" style="width:' + Math.max(0.6, st[k] / scale * 100).toFixed(2) + '%" title="' + esc(ZST_SHORT[k] + ': ' + fmtDur(st[k])) + '"></i>').join('') + '</span>';
+}
+function zzapCard() {
+  const Z = D.zap, F = Z.find, zk = Z.zaps.filter(z => z.kind === 'ok' || z.kind === 'slow');
+  const facts = [];
+  if (zk.length) facts.push(zBox('Channel change', 'switch', fmtDur(Z.zapMed) + ' as a rule', plural(zk.length, 'change') + ' timed · the slowest ' + fmtDur(Z.zapMax), Z.slow.length ? Z.slow[0].line : zk[0].line));
+  const allMs = [].concat(...Z.freqs.map(o => o.ms)), fails = Z.freqs.reduce((a, o) => a + o.fail, 0);
+  if (Z.freqs.length) facts.push(zBox('Tuning', 'signal', plural(Z.freqs.length, 'frequency', 'frequencies'), [allMs.length && 'locks in ' + fmtDur(median(allMs)), fails ? plural(fails, 'failed lock') : 'no failed lock'].filter(Boolean).join(' · '), Z.freqs.find(o => o.fail) ? Z.freqs.find(o => o.fail).failLine : null));
+  if (Z.res || Z.vidOn) facts.push(zBox('Picture', 'tv', Z.res ? Z.res + ' fps' : plural(Z.vidOn, 'picture') + ' shown', [Z.stallE.length && plural(Z.stallE.length, 'stop') + ' while playing', Z.hdcp.length && plural(Z.hdcp.length, 'HDCP failure')].filter(Boolean).join(' · ') || 'played without stopping', null));
+  // Where the time of a channel change goes, the middle of each stage.
+  let where = '';
+  if (zk.length >= 3) {
+    const med = {}; for (const k of ZST_ORDER) med[k] = median(zk.map(z => z.st[k]).filter(isFinite));
+    const tot = ZST_ORDER.reduce((a, k) => a + (isFinite(med[k]) ? med[k] : 0), 0);
+    if (tot > 0) where = '<div class="zwhere"><h3 class="sec-t">Where the time of a channel change goes</h3>' + zStageBar(med, tot, true) + '<div class="zst-lg">' + ZST_ORDER.filter(k => isFinite(med[k])).map(k => '<span><i class="zs-' + k + '"></i>' + esc(ZST_SHORT[k]) + ' <b>' + esc(fmtDur(med[k])) + '</b></span>').join('') + '</div><p class="zst-note">Tuning: to the frequency\'s lock. Streams: reading the channel\'s tables (PAT and PMT). First picture: descrambling and the first key frame. In step: sound and picture together. The middle value of each, over ' + plural(zk.length, 'change') + '.</p></div>';
+  }
+  // The changes worth a look: blank, late and slow first.
+  const pick = Z.blankX.concat(Z.late || [], Z.slow).filter((z, k, a) => a.indexOf(z) === k).slice(0, 40);
+  const scale = Math.max(ZAP_BLANK, ...pick.map(z => z.ms || z.dur || 0));
+  const RES = { blank: ['bad', 'Blank'], late: ['warn', 'Very late'], slow: ['warn', 'Slow'] };
+  const zrows = pick.map(z => { const r = RES[z.kind] || RES.slow; return '<tr data-go="x" data-line="' + z.line + '"><td class="t">' + esc(zwhen(D, z.line)) + '</td><td>' + (z.chid != null ? esc(z.chid) : '-') + (z.key ? ' <span class="muted">' + esc(z.key) + '</span>' : '') + '</td><td class="n">' + (z.tune ? esc(MHZ(z.tune.freq)) : '-') + '</td><td class="n">' + esc(fmtDur(z.vidOn ? z.ms : z.dur)) + '</td><td class="zst-cell">' + (z.st ? zStageBar(z.st, scale) : '<span class="muted">' + esc({ ca: 'the CA refused it', signal: 'no signal', nopmt: 'not in the PAT', nostream: 'streams not found', nodata: 'no picture data', noshow: 'decoded, not shown' }[z.why] || '') + '</span>') + '</td><td><span class="zpill ' + r[0] + '">' + r[1] + '</span></td></tr>'; }).join('');
+  const zt = pick.length ? '<h3 class="sec-t" style="margin-top:18px">Changes worth a look</h3><div class="tbl-wrap" style="max-height:340px"><table class="tbl"><thead><tr><th>When</th><th>Channel</th><th class="n">Frequency</th><th class="n">Took</th><th>Where the time went</th><th>Result</th></tr></thead><tbody>' + zrows + '</tbody></table></div>' : '';
+  const frows = Z.freqs.map(o => '<tr data-go="x" data-line="' + (o.fail ? o.failLine : o.first) + '"><td class="n">' + esc(MHZ(o.freq)) + '</td><td class="n">' + esc(fmtN(o.sr / 1000)) + ' kS/s</td><td class="n">' + esc(o.qam) + '</td><td class="n">' + fmtN(o.n) + '</td><td class="n">' + (o.fail ? '<b class="num e">' + fmtN(o.fail) + '</b>' : '0') + '</td><td class="n">' + (isFinite(o.med) ? esc(fmtDur(o.med)) : '-') + '</td></tr>').join('');
+  const ft = Z.freqs.length ? '<details class="tbl-d"' + (Z.freqs.some(o => o.fail) ? ' open' : '') + '><summary>Every frequency (' + Z.freqs.length + ')</summary><div class="tbl-wrap" style="max-height:300px;margin-top:8px"><table class="tbl"><thead><tr><th class="n">Frequency</th><th class="n">Symbol rate</th><th class="n">QAM</th><th class="n">Tunes</th><th class="n">Failed</th><th class="n">Lock</th></tr></thead><tbody>' + frows + '</tbody></table></div></details>' : '';
+  const steps = zSeq(Z.steps.filter(s => s.area === 'zsig' || s.area === 'zzap' || s.area === 'zav').concat(D.events.filter(e => e.cat === 'tv')));
+  return zCardHead('zzapCard', 'g3', 'switch', 'Signal and channel changes', 'Every tune and channel change, timed from the key to the picture, and why a picture did not come. The box logs no signal level or MER; a lock that fails or comes slowly, and damaged video data, stand in for them.', [zArea('zsig'), zArea('zzap'), zArea('zav')]) +
+    (facts.length ? '<div class="nfacts">' + facts.join('') + '</div>' : '') + where + zt + ft + zCols(F.zsig.concat(F.zzap, F.zav), steps) + '</section>';
+}
+function zcaCard() {
+  const Z = D.zap, C = Z.ca, B = Z.box, F = Z.find, acc = C.acc;
+  const facts = [];
+  if (B.nuid || B.caVer) facts.push(zBox('This box', 'key', B.nuid ? 'NUID ' + B.nuid : 'Nagra CA', [B.caVer && 'CA ' + B.caVer, B.casn && 'serial ' + B.casn].filter(Boolean).join(' · '), B.caLine));
+  const nOk = (acc[0] || 0) + (acc[1] || 0) + (acc[2] || 0), nNo = C.access.length - nOk;
+  if (C.access.length) facts.push(zBox('Channels', nNo ? 'x-circle' : 'check-circle', nOk + ' allowed · ' + nNo + ' refused', Object.keys(acc).map(k => acc[k] + ' ' + (ZACCESS_SHORT[k] || 'code ' + k)).join(' · '), null));
+  if (C.list.length) facts.push(zBox('Subscription', 'box', plural(C.list.length, 'product'), C.list.slice(0, 3).map(p => p.id).join(', ') + (C.list.length > 3 ? ', …' : ''), C.list[0].first));
+  const ST = { expired: ['bad', 'Ended'], ending: ['warn', 'Ends soon'], valid: ['ok', 'Valid'], '': ['info', '-'] };
+  const prows = C.list.map(p => { const s = ST[p.state] || ST['']; return '<tr data-go="x" data-line="' + p.first + '"><td class="n">' + esc(p.id) + '</td><td class="t">' + (isFinite(p.begin) ? esc(zClock(p.begin)) : '-') + '</td><td class="t">' + (isFinite(p.end) ? esc(zClock(p.end)) : '-') + '</td><td><span class="zpill ' + s[0] + '">' + s[1] + '</span>' + (C.gone && C.gone.includes(p.id) ? ' <span class="zpill warn">removed</span>' : C.came && C.came.includes(p.id) ? ' <span class="zpill info">added</span>' : '') + '</td></tr>'; }).join('');
+  const pt = C.list.length ? '<h3 class="sec-t" style="margin-top:14px">Products</h3><div class="tbl-wrap" style="max-height:260px"><table class="tbl"><thead><tr><th class="n">Product</th><th>From (UTC)</th><th>Until (UTC)</th><th>State</th></tr></thead><tbody>' + prows + '</tbody></table></div>' + (isFinite(B.clock) ? '<p class="zst-note">The CA gives the dates in UTC; the box\'s own date was ' + esc(zClock(B.clock)) + '.</p>' : '') : '';
+  const mrows = C.msgBy.map(o => { const x = ZCAMSG[o.code]; return '<tr data-go="x" data-line="' + o.line + '"><td class="n"><code>' + esc(o.code) + '</code></td><td>' + esc(x ? x.s.charAt(0).toUpperCase() + x.s.slice(1) : 'Not known to Log Prism') + '</td><td class="n">' + fmtN(o.n) + '</td><td class="n">' + (o.chids.size ? fmtN(o.chids.size) : '-') + '</td></tr>'; }).join('');
+  const mt = C.msgBy.length ? '<h3 class="sec-t" style="margin-top:14px">Messages the box showed</h3><div class="tbl-wrap" style="max-height:220px"><table class="tbl"><thead><tr><th class="n">Code</th><th>Meaning</th><th class="n">Times</th><th class="n">Channels</th></tr></thead><tbody>' + mrows + '</tbody></table></div>' : '';
+  const steps = zSeq(Z.steps.filter(s => s.area === 'zca' || s.cat === 'ca'));
+  return zCardHead('zcaCard', 'g4', 'key', 'Subscription and conditional access', 'What Nagra allowed for each channel, the messages the box put on screen, and the products the CA holds for this box.', [zArea('zca')]) +
+    (facts.length ? '<div class="nfacts">' + facts.join('') + '</div>' : '') + pt + mt + zCols(F.zca, steps, 'No CA messages were shown.') + '</section>';
+}
+function zsiCard() {
+  const Z = D.zap, F = Z.find, list = F.zlist.concat(F.zads, F.zpvr);
+  const S = Z.si, facts = [];
+  if (S.bouquets.size || S.nitAdd.size) facts.push(zBox('Channel list', 'list', plural(S.bouquets.size, 'bouquet'), [S.nitAdd.size && plural(S.nitAdd.size, 'frequency', 'frequencies'), S.net != null && 'network ' + S.net].filter(Boolean).join(' · '), null));
+  if (Z.ads.ok.length || Z.ads.fail.length) facts.push(zBox('Ads', 'ad', plural(Z.ads.ok.length, 'reception'), Z.ads.fail.length + Z.ads.timeout.length ? plural(Z.ads.fail.length + Z.ads.timeout.length, 'failed try', 'failed tries') : 'none failed', Z.ads.ok[0]));
+  const steps = zSeq(Z.steps.filter(s => s.area === 'zlist' || s.area === 'zads' || s.area === 'zpvr'));
+  return zCardHead('zsiCard', 'g5', 'list', 'Channel list, ads and recording', 'The operator\'s channel list as the box stored it, the ads it received, and recording to a USB disk.', [zArea('zlist'), zArea('zads'), zArea('zpvr')]) +
+    (facts.length ? '<div class="nfacts">' + facts.join('') + '</div>' : '') + zCols(list, steps) + '</section>';
 }
 /* ---------- freezes and crash dumps, explained ---------- */
 function crashRepCard() {
@@ -4926,6 +5816,7 @@ function plainSystem() {
 }
 // Key moments, in words anyone can follow.
 function plainMoment(ev) {
+  if (ev.plain) return ev.plain;
   const L = ev.label;
   const map = [[/^Ethernet link down/, 'The network cable stopped working'], [/^Ethernet link up/, 'The network cable is working'], [/^Internet access verified/, 'Internet confirmed working'], [/^Internet check failed/, 'Connected, but no internet'],
     [/^Wi-Fi disconnected by the access point: reason 34|beacon loss/, 'Wi-Fi dropped: the signal was too weak'], [/^Wi-Fi disconnected by the access point/, 'The router disconnected the box'], [/^Wi-Fi disconnected by this box/, 'The box left the Wi-Fi'], [/^Wi-Fi associated/, 'Wi-Fi connected'],
@@ -4943,6 +5834,7 @@ function summaryModel() {
   if (D.net.verdict) areas.push(plainNet(D.net));
   if (D.storage.verdict) areas.push(plainStorage(D.storage));
   if (D.isAndroid) areas.push(plainApps(), plainSystem());
+  if (D.zap) areas.push(...D.zap.areas);
   for (const a of areas) a.short = areaShort(a);
   const rank = { bad: 0, warn: 1, info: 2, ok: 3 };
   const top = areas.slice().sort((x, y) => rank[x.status] - rank[y.status])[0];
@@ -4950,18 +5842,21 @@ function summaryModel() {
   // In time order (freeze reports and crash dumps sit after the log), the same thing within a minute told once.
   const moments = [];
   for (const ev of D.events.filter(e => isFinite(e.t)).sort((a, b) => a.t - b.t || a.line - b.line)) {
-    if (ev.status === 'info' && !/^(Boot completed|USB device attached|USB storage mounted|Clock jumped)/.test(ev.label)) continue;
+    if (ev.status === 'info' && !ev.plain && !/^(Boot completed|USB device attached|USB storage mounted|Clock jumped)/.test(ev.label)) continue;
     const s = !quietDeath(ev) && plainMoment(ev); if (!s) continue;
     const p = moments.find(x => x.s === s && ev.t - x.last < 60000);
     const rep = ev.anr || ev.tomb ? 1 : 0, same = ev.cat === 'crash' && p && ev.t - p.last < 5000;
     if (p) { p.nRep += rep; p.nLog += same ? 0 : 1 - rep; p.n = Math.max(p.nLog, p.nRep); p.last = ev.t; if (ev.status === 'fail') p.status = 'fail'; continue; }
-    moments.push({ s, t: ev.t, last: ev.t, line: ev.line, status: ev.status, n: 1, nRep: rep, nLog: 1 - rep });
+    moments.push({ s, t: ev.t, last: ev.t, line: ev.line, status: ev.status, n: 1, nRep: rep, nLog: 1 - rep, boot: !!ev.boot });
   }
   const id = boxIdentity(D);
-  return { areas, top, overall, moments: moments.length > 14 ? moments.filter(m => m.status === 'fail').slice(0, 14) : moments, model: id.model, soft: id.soft, android: id.android };
+  // Too many to read: the failures, and on a set-top box the start-ups that tell its times apart.
+  return { areas, top, overall, moments: moments.length > 14 ? moments.filter(m => m.status === 'fail' || m.boot).slice(0, 18) : moments, model: id.model, soft: id.soft, android: id.android, os: id.os };
 }
 // Which box and software a log is from: the update apps say it, then getprop, then the build fingerprint.
+// A set-top box says it itself: its chip, and the software version its update check reads.
 function boxIdentity(d) {
+  if (d.zap) { const B = d.zap.box; return { model: B.chip ? B.chip + ' set-top box' : 'Set-top box', soft: B.sw || (B.build ? 'built ' + B.build : ''), android: '', os: 'eCos' }; }
   const F = d.capture.facts, U = d.update, fp = (F.fingerprint || '').split('/');
   return {
     model: (U && U.dev && U.dev.model) || F['product.model'] || fp[1] || '',
@@ -4971,11 +5866,12 @@ function boxIdentity(d) {
 }
 function summaryText(M) {
   const icon = { ok: '✓', warn: '!', bad: '✗', info: '·' }, out = ['Skyworth Log Prism summary: ' + S.name];
-  if (M.model) out.push('Box: ' + M.model + (M.soft ? ', software ' + M.soft : ''));
+  if (M.model) out.push('Box: ' + M.model + (M.soft ? ', software ' + M.soft : '') + (M.os ? ', ' + M.os : ''));
+  if (D.zap) { const B = D.zap.box; if (B.caVer || B.nuid) out.push('CA: ' + [B.caVer && 'Nagra ' + B.caVer, B.nuid && 'NUID ' + B.nuid].filter(Boolean).join(', ')); }
   out.push('', M.overall === 'ok' ? 'All good: nothing in this log needs fixing.' : 'Main problem: ' + M.top.say, ...(M.overall !== 'ok' && M.top.todo ? ['What to do: ' + M.top.todo] : []), '');
   if (D.known.length) { out.push('Known issues:'); for (const k of D.known) out.push('  ' + k.it.id + ': ' + k.it.title + (k.it.fix ? ' Fix: ' + k.it.fix : '') + (k.it.link ? ' ' + k.it.link : '')); out.push(''); }
   for (const a of M.areas) out.push(icon[a.status] + ' ' + a.title + ': ' + a.say + (a.todo && a.status !== 'ok' ? ' What to do: ' + a.todo : ''));
-  if (M.moments.length) { out.push('', 'What happened, in order' + (D.utc ? ' (UTC)' : '') + ':'); for (const m of M.moments) out.push('  ' + fmtT(m.t, false) + '  ' + m.s + (m.n > 1 ? ' (x' + m.n + ')' : '')); }
+  if (M.moments.length) { out.push('', 'What happened, in order' + (D.utc ? ' (UTC)' : D.uptime ? ' (time since start-up)' : '') + ':'); for (const m of M.moments) out.push('  ' + fmtT(m.t, false) + '  ' + m.s + (m.n > 1 ? ' (x' + m.n + ')' : '')); }
   if (M.advice.length) { out.push('', 'To be sure, capture this next:'); for (const x of M.advice) out.push('  - ' + x.title + ': ' + x.why + (x.cmd ? '\n      ' + x.cmd : '')); }
   return out.join('\n') + '\n';
 }
@@ -4985,12 +5881,13 @@ function renderSummary() {
   const kick = M.overall === 'bad' ? 'The main problem' : M.overall === 'warn' ? 'Worth a look' : M.overall === 'ok' ? 'All good' : 'Not enough to judge';
   const head = M.overall === 'ok' ? 'Nothing in this log needs fixing.' : M.top ? M.top.say : 'This log has no box activity Log Prism can explain.';
   const span = st.span > 0 ? fmtDur(st.span) : '';
-  const meta = [M.model && ('Box <b>' + esc(M.model) + '</b>' + (M.soft ? ', software ' + esc(M.soft) : '') + (M.android ? ', Android ' + esc(M.android) : '')), span && ('log of <b>' + esc(span) + '</b>'), D.utc && 'times in <b>UTC</b>', fmtN(D.n) + ' lines', D.capture.set && D.capture.manifest.length ? plural(D.capture.manifest.length, 'file') : ''].filter(Boolean).map(x => '<span>' + x + '</span>').join(' ');
+  const nStart = D.zap ? D.zap.boots.filter(b => b.banner).length : 0;
+  const meta = [M.model && ('Box <b>' + esc(M.model) + '</b>' + (M.soft ? ', software ' + esc(M.soft) : '') + (M.android ? ', Android ' + esc(M.android) : '') + (M.os ? ', ' + esc(M.os) : '')), span && ('log of <b>' + esc(span) + '</b>'), D.utc && 'times in <b>UTC</b>', D.uptime && 'times <b>since start-up</b>' + (nStart > 1 ? ', ' + plural(nStart, 'start-up') : ''), fmtN(D.n) + ' lines', D.capture.set && D.capture.manifest.length ? plural(D.capture.manifest.length, 'file') : ''].filter(Boolean).map(x => '<span>' + x + '</span>').join(' ');
   const tiles = M.areas.map(a => '<article class="sum-tile sv-' + a.status + '"><div class="sum-tile-h"><span class="ic-chip">' + ic(a.icon) + '</span><h3>' + esc(a.title) + '</h3><span class="sum-word">' + ic(tm[a.status]) + esc(a.word) + '</span></div>' +
     (a.bars ? '<div class="sum-bars">' + barsHTML(a.bars) + '<span>Wi-Fi signal</span></div>' : '') +
     '<p class="sum-say">' + esc(a.say) + '</p>' + (a.todo && a.status !== 'ok' ? '<p class="sum-todo"><b>What to do:</b> ' + esc(a.todo) + '</p>' : '') +
     (a.target && document.getElementById(a.target) ? '<button class="linkbtn sum-more" data-card="' + a.target + '">See the details ' + ic('arrow') + '</button>' : '') + '</article>').join('');
-  const moments = M.moments.length ? '<section class="card sum-when"><div class="card-h"><div><h2 class="card-t"><span class="ic-chip g6">' + ic('clock') + '</span>What happened, in order</h2><p class="card-sub">The moments that matter, ' + (D.utc ? 'in UTC' : 'in the box\'s own clock') + '. Click one to see the log there.</p></div></div><ol class="sum-steps">' +
+  const moments = M.moments.length ? '<section class="card sum-when"><div class="card-h"><div><h2 class="card-t"><span class="ic-chip g6">' + ic('clock') + '</span>What happened, in order</h2><p class="card-sub">The moments that matter, ' + (D.utc ? 'in UTC' : D.uptime ? 'in time since the box started' : 'in the box\'s own clock') + '. Click one to see the log there.</p></div></div><ol class="sum-steps">' +
     M.moments.map(m => '<li><button class="sum-step" data-go="x" data-line="' + m.line + '"><span class="sum-t">' + esc(fmtT(m.t, false)) + '</span><span class="step-d st-' + (m.status === 'fail' ? 'fail' : m.status === 'warn' ? 'warn' : m.status === 'ok' ? 'ok' : 'info') + '">' + ic(m.status === 'fail' ? 'x' : m.status === 'ok' ? 'check' : m.status === 'warn' ? 'alert' : 'info') + '</span><span>' + esc(m.s) + (m.n > 1 ? ' <small>×' + m.n + '</small>' : '') + '</span></button></li>').join('') + '</ol></section>' : '';
   els.vSummary.innerHTML = '<div class="sum">' +
     '<section class="sum-hero sv-' + M.overall + '"><div class="sum-kick">' + ic(tm[M.overall]) + esc(kick) + '</div><h2 class="sum-h">' + esc(head) + '</h2>' +
@@ -5044,8 +5941,17 @@ function areaShort(a) {
   }
   if (a.id === 'apps') { const T = appTrouble(); return T.length ? appName(T[0].app) + ' ' + T[0].kind : 'App problem'; }
   if (a.id === 'system') return { Restarted: 'Box restarted by itself', 'Low memory': 'Low memory', 'Too hot': 'Box too hot' }[a.word] || 'Box restarted during the log';
+  if (/^z/.test(a.id)) return ZAP_SHORT[a.id + ':' + a.word] || a.title + ': ' + a.word.toLowerCase();
   return a.word;
 }
+const ZAP_SHORT = {
+  'zbox:Cannot start': 'Main program damaged: box cannot start', 'zbox:Crashed': 'Box crashed', 'zbox:Restarted': 'Box hung: watchdog restarted it', 'zbox:Out of resources': 'Box ran out of semaphores', 'zbox:Low memory': 'Low free memory', 'zbox:Slow start': 'Slow start-up',
+  'zsig:No signal': 'No signal', 'zsig:Poor signal': 'Poor cable signal', 'zsig:Unstable': 'Signal drops on some frequencies', 'zsig:Weak': 'Weak signal: slow tuning',
+  'zzap:Blank screen': 'Blank screen after a channel change', 'zzap:Slow': 'Slow channel change', 'zzap:Sometimes slow': 'Some slow channel changes',
+  'zav:No picture': 'No picture at all', 'zav:Freezes': 'Picture freezes', 'zav:Black screen': 'Picture goes black', 'zav:Sound drops': 'Sound drops', 'zav:HDMI': 'HDMI handshake (HDCP) fails',
+  'zca:Not activated': 'Box not activated', 'zca:CA error': 'CA error 2-200', 'zca:Refused': 'CA refused the box (19-51)', 'zca:Not subscribed': 'Not subscribed', 'zca:Some channels': 'Some channels not subscribed', 'zca:No products': 'No products on the box', 'zca:Expired': 'Subscription ended', 'zca:Suspended': 'Purchase suspended',
+  'zlist:List full': 'Channel list full', 'zlist:Incomplete': 'Channel list incomplete', 'zupd:Damaged': 'Software in flash damaged', 'zupd:Failed': 'Software update failed', 'zads:Not received': 'Ads not received', 'zads:Unreliable': 'Ads unreliable', 'zpvr:Failed': 'Recording failed',
+};
 
 /* ==========================================================================
    Known issues: what the team already knows, in a small JSON file it keeps.
@@ -5178,6 +6084,7 @@ function onKnownClick(e) {
 function captureAdvice(d, M) {
   const out = [], add = (title, why, cmd, note) => out.push({ title, why, cmd, note });
   const ALL = 'adb logcat -b all -v threadtime -d > logcat.txt';
+  if (d.zap) return zapAdvice(d, M, add, out);
   if (!d.isAndroid && !d.capture.set) { add('Capture an Android log', 'This is not an Android logcat, so little can be said about the box itself.', ALL, 'Run it on a computer connected to the box; over the network, first: adb connect <the box\'s address>'); return out; }
   const st = d.stats, span = st.span;
   const bufs = new Set();
@@ -5195,6 +6102,20 @@ function captureAdvice(d, M) {
   if (!M.model) add('Add the box\'s details', 'The log does not say which box or which software this is.', 'adb shell getprop > getprop.txt', 'Zip it together with the log, and open the zip.');
   if (span > 0 && span < 60e3 && M.overall !== 'ok') add('Capture for longer', 'The log covers only ' + fmtDur(span) + ', and problems often start before they show.', 'adb logcat -b all -v threadtime > logcat.txt', 'Start it before you reproduce the problem, and stop it a minute after.');
   return out.slice(0, 4);
+}
+// A set-top box is read from its serial console, so the advice is about the capture itself.
+function zapAdvice(d, M, add, out) {
+  const Z = d.zap;
+  let bad = 0; for (let i = 0; i < d.n; i++) { const s = d.raw[i]; if (s.indexOf('▒') >= 0 || s.indexOf('�') >= 0) bad++; }
+  if (bad > Math.max(20, d.n * 0.005)) add('Fix the serial connection', fmtN(bad) + ' lines arrived garbled, so parts of this log cannot be read. That is the cable or its settings, not the box.', '115200 baud, 8 data bits, no parity, 1 stop bit, no flow control', 'Connect the adapter\'s ground (GND) as well as RX and TX, and keep the cable short.');
+  if (!Z.boots.some(b => b.banner) && M.areas.some(a => a.status === 'bad' || a.status === 'warn')) add('Capture from switch-on', 'This log starts while the box was already running, so it misses the start-up: the box\'s identity, its CA details and what it did first.', '', 'Start the capture in MobaXterm or Tera Term first, then switch the box on.');
+  const ca = M.areas.find(a => a.id === 'zca');
+  // The message on screen usually says why; only an unexplained refusal needs Nagra's own prints.
+  if (ca && /^(Refused|CA error)$/.test(ca.word) && !d.tags.some(t => /^Nagra /.test(t))) add('Add the Nagra CA prints', 'The CA refused channels, but this software does not log what Nagra decided. A build with the Nagra (CAK) prints on says why.', '', 'Ask the software team for a debug build, then capture the same channels again.');
+  const crashed = M.areas.find(a => a.id === 'zbox' && a.word === 'Restarted');
+  if (crashed) add('Keep the capture running through the restart', 'The box stopped responding and its watchdog restarted it. Capture from well before it happens: the last lines show what it was doing.', '', 'Do not stop the capture when the box restarts; U-Boot then says why it started again.');
+  if (d.stats.span > 0 && d.stats.span < 60e3 && M.overall !== 'ok') add('Capture for longer', 'The log covers only ' + fmtDur(d.stats.span) + ', and problems often start before they show.', '', 'Start the capture before you reproduce the problem, and stop it a minute after.');
+  return out.slice(0, 3);
 }
 function adviceHTML(list) {
   if (!list.length) return '';
@@ -5264,7 +6185,7 @@ function compareModel() {
   if (!C.dgOther) C.dgOther = logDigest(C.d, C.name, false);
   if (!C.dgOpen) C.dgOpen = logDigest(D, S.name, true);
   const A = C.open === 'after' ? C.dgOther : C.dgOpen, B = C.open === 'after' ? C.dgOpen : C.dgOther;   // A before, B after
-  const areas = ['update', 'net', 'storage', 'apps', 'system'].map(id => {
+  const areas = ['update', 'net', 'storage', 'apps', 'system', 'zbox', 'zsig', 'zzap', 'zav', 'zca', 'zlist', 'zupd', 'zads', 'zpvr'].map(id => {
     const a = A.M.areas.find(x => x.id === id), b = B.M.areas.find(x => x.id === id);
     if (!a && !b) return null;
     const ra = a ? RANK[a.status] : 3, rb = b ? RANK[b.status] : 3;
@@ -5302,6 +6223,12 @@ function compareModel() {
     ['Apps that crashed or froze', fmtN(A.T.length), fmtN(B.T.length), [A.T.length, B.T.length, -1]],
     ['Internet drops', fmtN(A.drops), fmtN(B.drops), [A.drops, B.drops, -1]],
   ];
+  // Set-top boxes: restarts, failed locks and channel changes, side by side.
+  if (A.d.zap || B.d.zap) {
+    const zn = x => { const Z = x.d.zap; return Z ? { starts: Z.boots.filter(b => b.banner).length, crash: Z.crashes.length + Z.boots.filter(b => b.why === 'watchdog' && !b.crash).length, nolock: Z.freqs.reduce((a, o) => a + o.fail, 0), zap: Z.zapMed, blank: Z.blankX.length } : null; };
+    const a = zn(A), b = zn(B), v = (o, k, f) => o && isFinite(o[k]) ? (f ? f(o[k]) : fmtN(o[k])) : '-', pair = (k) => a && b && isFinite(a[k]) && isFinite(b[k]) ? [a[k], b[k], -1] : null;
+    nums.push(['Crashes and hangs', v(a, 'crash'), v(b, 'crash'), pair('crash')], ['Failed locks', v(a, 'nolock'), v(b, 'nolock'), pair('nolock')], ['Channel change, as a rule', v(a, 'zap', fmtDur), v(b, 'zap', fmtDur), pair('zap')], ['Blank screens', v(a, 'blank'), v(b, 'blank'), pair('blank')]);
+  }
   if (A.rssi != null || B.rssi != null) nums.push(['Wi-Fi signal', A.rssi != null ? A.rssi + ' dBm' : '-', B.rssi != null ? B.rssi + ' dBm' : '-', A.rssi != null && B.rssi != null ? [A.rssi, B.rssi, 1] : null]);
   if (A.reqCalls || B.reqCalls) nums.push(['Failed requests', A.reqCalls ? A.reqFail + ' of ' + A.reqCalls : '-', B.reqCalls ? B.reqFail + ' of ' + B.reqCalls : '-', A.reqCalls && B.reqCalls ? [A.reqFail / A.reqCalls, B.reqFail / B.reqCalls, -1] : null]);
   return { A, B, areas, changes, newKinds, goneKinds, status, head, nums };
@@ -5390,7 +6317,9 @@ async function dirEntries(dir) {
   return out;
 }
 // Pictures, apps, documents and the system's own files are not logs: a folder often holds some.
-const NOT_LOG = /(^|\/)(\.ds_store|thumbs\.db|desktop\.ini)$|\.(png|jpe?g|gif|bmp|webp|svg|ico|heic|pdf|docx?|xlsx?|pptx?|odt|mp4|mkv|avi|mov|mp3|wav|m4a|apk|aab|exe|msi|dll|so|bin|img|iso|jar|class|dex|db|sqlite|7z|rar|tar)$/i;
+// A serial capture saved as RTF is sometimes renamed .rtf.doc to send it as a document: that is a log.
+const NOT_LOG_RE = /(^|\/)(\.ds_store|thumbs\.db|desktop\.ini)$|\.(png|jpe?g|gif|bmp|webp|svg|ico|heic|pdf|docx?|xlsx?|pptx?|odt|mp4|mkv|avi|mov|mp3|wav|m4a|apk|aab|exe|msi|dll|so|bin|img|iso|jar|class|dex|db|sqlite|7z|rar|tar)$/i;
+const NOT_LOG = { test: p => NOT_LOG_RE.test(p) && !/\.rtf\.docx?$/i.test(p) };
 // Picked files: each one a box. A picked folder: each log in it a box, and each subfolder one box.
 function boxesFromFiles(files) {
   const byBox = new Map(), skipped = [];
@@ -5433,7 +6362,7 @@ function renderFleetPick() {
   const P = FLEET_PICK, box = els.fleetPick;
   els.fleetZone.hidden = !!P; els.fleetHint.hidden = !!P; box.hidden = !P;
   if (!P) { box.innerHTML = ''; return; }
-  const kind = b => b.items.length > 1 ? plural(b.items.length, 'file') + ', one box' : /\.zip$/i.test(b.items[0].path) ? 'zip' : /\.html?$/i.test(b.items[0].path) ? 'saved report' : 'log';
+  const kind = b => b.items.length > 1 ? plural(b.items.length, 'file') + ', one box' : /\.zip$/i.test(b.items[0].path) ? 'zip' : /\.html?$/i.test(b.items[0].path) ? 'saved report' : /\.rtf(\.docx?)?$/i.test(b.items[0].path) ? 'serial log (RTF)' : 'log';
   const size = b => fmtBytes(b.items.reduce((a, x) => a + (x.size || 0), 0));
   const rows = P.boxes.map((b, i) => [b, i]).sort((x, y) => x[0].name.localeCompare(y[0].name, undefined, { numeric: true }));
   const n = fleetPickN(), skipShown = P.skipped.slice(0, 50);
@@ -5579,6 +6508,7 @@ function highlightsCard() {
   const tagSpan = g => '<span class="tagref tc' + D.tagColor[g] + '">' + esc(D.tags[g] || '-') + '</span>';
   if (D.update) out.push({ sev: D.update.verdict.cls === 'ok' ? 'ok' : D.update.verdict.cls === 'bad' ? 'fail' : 'info', ic: 'refresh', html: '<b>' + esc(D.update.verdict.text) + '.</b> ' + esc(D.update.headline) + (D.update.mismatch ? ' Package <code>' + esc(D.update.pkg.model) + '</code> ≠ device <code>' + esc(D.update.dev.model) + '</code>.' : '') + ' <button class="linkbtn" data-go="scroll" data-target="updCard">See the diagnosis</button>' });
   const N = D.net;
+  if (D.zap) out.push({ sev: { ok: 'ok', warn: 'warn', bad: 'fail', info: 'info' }[D.zap.verdict.cls], ic: 'power', html: '<b>Set-top box:</b> ' + esc(D.zap.headline) + ' <button class="linkbtn" data-go="scroll" data-target="zboxCard">See the diagnosis</button>' });
   if (N.verdict) out.push({ sev: { ok: 'ok', warn: 'warn', bad: 'fail', info: 'info' }[N.verdict.cls], ic: 'wifi', html: '<b>Network:</b> ' + esc(N.headline) + ' <button class="linkbtn" data-go="scroll" data-target="netCard">See the diagnosis</button>' });
   if (N.api.calls) {
     const bad = N.apis.filter(r => r.fail).slice(0, 2);
@@ -5640,6 +6570,7 @@ function renderTlTable() {
 const CATS = {
   update: { label: 'Update', ic: 'refresh' }, usb: { label: 'USB', ic: 'usb' }, app: { label: 'Apps', ic: 'app' },
   exc: { label: 'Exceptions', ic: 'bug' }, crash: { label: 'Crashes', ic: 'bolt' }, net: { label: 'Network', ic: 'wifi' }, storage: { label: 'Storage', ic: 'disk' }, sys: { label: 'System', ic: 'cpu' },
+  power: { label: 'Start-ups', ic: 'power' }, tv: { label: 'Channels', ic: 'tv' }, ca: { label: 'Subscription', ic: 'key' },
 };
 function eventsCard() {
   return '<section class="card" id="eventsCard"><div class="card-h"><div><h2 class="card-t"><span class="ic-chip g6">' + ic('sparkles') + '</span>Key events</h2><p class="card-sub">What happened, in order. Repeats within a few seconds are folded (×n).</p></div></div><div id="evBody">' + eventsBody() + '</div></section>';
@@ -6203,7 +7134,7 @@ function drawRows() {
     if (row._k === key) continue;
     row._k = key; row._i = i;
     const l = D.lvl[i];
-    row.className = 'row l' + l + (i === S.sel ? ' sel' : '') + (p === cur ? ' cur' : '') + (S.isMatch && S.f.only && !S.isMatch[i] ? ' ctx' : '') + (D.cont[i] ? ' cont' : '') + (S.inv && S.inv.hit[i] ? ' inv' : '');
+    row.className = 'row l' + l + (i === S.sel ? ' sel' : '') + (p === cur ? ' cur' : '') + (S.isMatch && S.f.only && !S.isMatch[i] ? ' ctx' : '') + (D.cont[i] === 1 ? ' cont' : '') + (S.inv && S.inv.hit[i] ? ' inv' : '');
     row.innerHTML = rowHTML(i);
   }
   if (!S.wrap || !need) return false;
